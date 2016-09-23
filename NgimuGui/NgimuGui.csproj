@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1E1AB79E-3664-4195-82F9-3907CDA71882}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NgimuGui</RootNamespace>
+    <AssemblyName>NGIMU GUI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>x-io_icon_white_transparent.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\Libraries\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\Libraries\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Cmd, Version=1.3.1.29269, Culture=neutral, PublicKeyToken=31e959b17b549b50, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Rug.Cmd.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Forms.Console, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Rug.Forms.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.LiteGL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Rug.LiteGL.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Osc, Version=1.2.6.24251, Culture=neutral, PublicKeyToken=00d4b1a864aec191, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Rug.Osc.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Osc.Ahoy">
+      <HintPath>..\Libraries\Rug.Osc.Ahoy.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="3DView\Form3DView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="3DView\Form3DView.designer.cs">
+      <DependentUpon>Form3DView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Colors.cs" />
+    <Compile Include="ConnectionManagerInfo.cs" />
+    <Compile Include="Controls\AdvancedRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\HiLowStatusItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PathSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PathSelector.Designer.cs">
+      <DependentUpon>PathSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ReceivedErrorMessagesWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ReceivedErrorMessagesWindow.Designer.cs">
+      <DependentUpon>ReceivedErrorMessagesWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SearchingForConnectionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SearchingForConnectionsDialog.Designer.cs">
+      <DependentUpon>SearchingForConnectionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\AuxiliarySerialTerminalWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\AuxiliarySerialTerminalWindow.Designer.cs">
+      <DependentUpon>AuxiliarySerialTerminalWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\FolderBrowserLauncher.cs" />
+    <Compile Include="DialogsAndWindows\DataLoggerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\DataLoggerWindow.Designer.cs">
+      <DependentUpon>DataLoggerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ExceptionDialog.Designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\FlashingDialogHelper.cs" />
+    <Compile Include="DialogsAndWindows\OptionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\OptionsDialog.Designer.cs">
+      <DependentUpon>OptionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SerialConnectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SerialConnectionDialog.Designer.cs">
+      <DependentUpon>SerialConnectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SDCardFileConverterWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SDCardFileConverterWindow.Designer.cs">
+      <DependentUpon>SDCardFileConverterWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\FirmwareUploaderWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\FirmwareUploaderWindow.Designer.cs">
+      <DependentUpon>FirmwareUploaderWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\UdpConnectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\UdpConnectionDialog.Designer.cs">
+      <DependentUpon>UdpConnectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReceivedErrorMessages.cs" />
+    <Compile Include="GuiTerminal.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options.cs" />
+    <Compile Include="Panels\ClockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\ClockPanel.Designer.cs">
+      <DependentUpon>ClockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\FilterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\FilterPanel.designer.cs">
+      <DependentUpon>FilterPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\AddressInstance.cs" />
+    <Compile Include="Panels\SerialTerminal.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\SerialTerminal.Designer.cs">
+      <DependentUpon>SerialTerminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\SettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\SettingsPanel.Designer.cs">
+      <DependentUpon>SettingsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Terminal.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\Terminal.Designer.cs">
+      <DependentUpon>Terminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBoxWithHelpText.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DialogsAndWindows\GraphWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\GraphWindow.Designer.cs">
+      <DependentUpon>GraphWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="3DView\Form3DView.resx">
+      <DependentUpon>Form3DView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PathSelector.resx">
+      <DependentUpon>PathSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\ReceivedErrorMessagesWindow.resx">
+      <DependentUpon>ReceivedErrorMessagesWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\SearchingForConnectionsDialog.resx">
+      <DependentUpon>SearchingForConnectionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\AuxiliarySerialTerminalWindow.resx">
+      <DependentUpon>AuxiliarySerialTerminalWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\DataLoggerWindow.resx">
+      <DependentUpon>DataLoggerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\OptionsDialog.resx">
+      <DependentUpon>OptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\SerialConnectionDialog.resx">
+      <DependentUpon>SerialConnectionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\SDCardFileConverterWindow.resx">
+      <DependentUpon>SDCardFileConverterWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\FirmwareUploaderWindow.resx">
+      <DependentUpon>FirmwareUploaderWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\UdpConnectionDialog.resx">
+      <DependentUpon>UdpConnectionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ClockPanel.resx">
+      <DependentUpon>ClockPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\FilterPanel.resx">
+      <DependentUpon>FilterPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\SerialTerminal.resx">
+      <DependentUpon>SerialTerminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\SettingsPanel.resx">
+      <DependentUpon>SettingsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\Terminal.resx">
+      <DependentUpon>Terminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Content Include="3DView\Compass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x-io_icon_white_transparent-small.ico" />
+    <EmbeddedResource Include="DialogsAndWindows\GraphWindow.resx">
+      <DependentUpon>GraphWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="..\Libraries\Shaders\Box.frag.glsl">
+      <Link>Shaders\Box.frag.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\Box.vert.glsl">
+      <Link>Shaders\Box.vert.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\GraphLine.frag.glsl">
+      <Link>Shaders\GraphLine.frag.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\GraphLine.vert.glsl">
+      <Link>Shaders\GraphLine.vert.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\GridLine.frag.glsl">
+      <Link>Shaders\GridLine.frag.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\GridLine.vert.glsl">
+      <Link>Shaders\GridLine.vert.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\LitMaterial.frag.glsl">
+      <Link>Shaders\LitMaterial.frag.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\LitMaterial.vert.glsl">
+      <Link>Shaders\LitMaterial.vert.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\TexturedLitMaterial.frag.glsl">
+      <Link>Shaders\TexturedLitMaterial.frag.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Libraries\Shaders\TexturedLitMaterial.vert.glsl">
+      <Link>Shaders\TexturedLitMaterial.vert.glsl</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="3DView\Arrow.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="3DView\Floor Tile.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="3DView\NGIMU Board Solid Body.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="3DView\NGIMU Housing Solid Body.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="x-io_icon_white_transparent.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NgimuApi\NgimuApi.csproj">
+      <Project>{fc4852f8-a108-4497-acbb-588d8ecad64b}</Project>
+      <Name>NgimuApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NgimuGui.TypeDescriptors\NgimuGui.TypeDescriptors.csproj">
+      <Project>{CA7CEF59-DCAF-4CC0-BE86-8DDF677FD7E2}</Project>
+      <Name>NgimuGui.TypeDescriptors</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)Tools\Rpx.exe" "$(TargetPath)" "$(TargetDir)\Rug.Cmd.dll" "$(TargetDir)\Rug.Osc.dll" "$(TargetDir)\Rug.Osc.Ahoy.dll" "$(TargetDir)\Rug.LiteGL.dll" "$(TargetDir)\NgimuApi.dll" "$(TargetDir)\Rug.Forms.Console.dll" "$(TargetDir)\OpenTK.dll" "$(TargetDir)\OpenTK.GLControl.dll" /o "$(TargetDir)\Compressed\$(TargetFileName)" /i "$(ProjectDir)x-io_icon_white_transparent.ico" /v Normal /d
+"$(SolutionDir)Tools\Rpx.bat" "$(TargetDir)" "Compressed"
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

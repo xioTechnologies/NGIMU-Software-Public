@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AutoConnect_CheckingSerial" xml:space="preserve">
+    <value>Checking for available serial ports.</value>
+  </data>
+  <data name="AutoConnect_CheckingSerialAndUdp" xml:space="preserve">
+    <value>Checking for available serial ports and network adapters.</value>
+  </data>
+  <data name="AutoConnect_CheckingUdp" xml:space="preserve">
+    <value>Checking for available network adapters.</value>
+  </data>
+  <data name="AutoConnect_FoundDevice" xml:space="preserve">
+    <value>Found device on: "{0}".</value>
+  </data>
+  <data name="AutoConnect_FoundMoreThanOneDevice" xml:space="preserve">
+    <value>Found more than one device.</value>
+  </data>
+  <data name="AutoConnect_SearchingForDevicesOn" xml:space="preserve">
+    <value>Searching for devices on: "{0}".</value>
+  </data>
+  <data name="EulerAngles_ArrayLengthNot3" xml:space="preserve">
+    <value>Array length must be 3.</value>
+  </data>
+  <data name="Exception_UnknownConnectionType" xml:space="preserve">
+    <value>Unknown connection type.</value>
+  </data>
+  <data name="FileReadConnectionImplementation_ErrorReading" xml:space="preserve">
+    <value>Error while reading OSC.</value>
+    <comment>**Needs to change</comment>
+  </data>
+  <data name="FileReadConnectionImplementation_Reading" xml:space="preserve">
+    <value>Reading file "{0}".</value>
+  </data>
+  <data name="FileWriteConnectionImplementation_Writing" xml:space="preserve">
+    <value>Writing to file "{0}".</value>
+  </data>
+  <data name="CommandXml_CouldNotLoad" xml:space="preserve">
+    <value>Could not load IMU command addresses from XML.</value>
+  </data>
+  <data name="CommandXml_MissingRootNode" xml:space="preserve">
+    <value>Missing root node.</value>
+  </data>
+  <data name="Connection_CouldNotSendPacket" xml:space="preserve">
+    <value>Could not send OSC packet.</value>
+  </data>
+  <data name="Connection_Disconnected" xml:space="preserve">
+    <value>Disconnected from "{0}".</value>
+  </data>
+  <data name="Connection_ErrorWhileProcessingPacket" xml:space="preserve">
+    <value>Error while processing OSC packet.</value>
+  </data>
+  <data name="Connection_FailedToConnect" xml:space="preserve">
+    <value>Failed to connect to "{0}".</value>
+  </data>
+  <data name="Connection_ReceivedCorruptedPacket" xml:space="preserve">
+    <value>Received corrupted OSC packet.</value>
+  </data>
+  <data name="Data_AlreadyConnected" xml:space="preserve">
+    <value>Already connected.</value>
+  </data>
+  <data name="Data_NotConnected" xml:space="preserve">
+    <value>Not connected.</value>
+  </data>
+  <data name="SettingsProcess_CouldNotMute" xml:space="preserve">
+    <value>Error could not mute OSC traffic.</value>
+  </data>
+  <data name="SettingsProcess_CouldNotUnmute" xml:space="preserve">
+    <value>Error could not unmute OSC traffic.</value>
+  </data>
+  <data name="SettingsProcess_ProcessAlreadyRunning" xml:space="preserve">
+    <value>Settings {0} process is already running.</value>
+  </data>
+  <data name="Settings_CouldNotLoad" xml:space="preserve">
+    <value>Could not load settings from XML.</value>
+  </data>
+  <data name="Settings_MissingAttribute_Name" xml:space="preserve">
+    <value>One or more setting does not have a "Name" attribute.</value>
+  </data>
+  <data name="Settings_MissingAttribute_OscAddress" xml:space="preserve">
+    <value>One or more setting does not have a "OscAddress" attribute.</value>
+  </data>
+  <data name="Settings_MissingRootNode" xml:space="preserve">
+    <value>Missing root node.</value>
+  </data>
+  <data name="Settings_UnknownSettingType" xml:space="preserve">
+    <value>Unknown setting type "{0}".</value>
+  </data>
+  <data name="Quaternion_ArrayLengthNot4" xml:space="preserve">
+    <value>Array length must be 4.</value>
+  </data>
+  <data name="RemoteVariableFactory_UnsupportedType" xml:space="preserve">
+    <value>Unsupported type "{0}".</value>
+  </data>
+  <data name="RotationMatrix_ArrayLengthNot9" xml:space="preserve">
+    <value>Array length must be 9.</value>
+  </data>
+  <data name="SerialConnectionImplementation_Connected" xml:space="preserve">
+    <value>Connected to "{0}".</value>
+  </data>
+  <data name="SettingsRead_AlreadyRunning" xml:space="preserve">
+    <value>Settings read process is already running.</value>
+    <comment>Replacement here is "Read process" etc </comment>
+  </data>
+  <data name="SettingsRead_CommunicationError" xml:space="preserve">
+    <value>A communication error occured while reading settings.</value>
+  </data>
+  <data name="SettingsRead_CouldNotDoAll" xml:space="preserve">
+    <value>Could not read all settings.</value>
+  </data>
+  <data name="SettingsRead_Retrying" xml:space="preserve">
+    <value>Retrying {0} of {1} settings.</value>
+  </data>
+  <data name="SettingsRead_Successful" xml:space="preserve">
+    <value>Successfully read {0} of {1} settings.</value>
+    <comment>e.g. Successfully read 3 of 3 settings.</comment>
+  </data>
+  <data name="SettingsWrite_AlreadyRunning" xml:space="preserve">
+    <value>Settings write process is already running.</value>
+    <comment>Replacement here is "Read process" etc </comment>
+  </data>
+  <data name="SettingsWrite_CommunicationError" xml:space="preserve">
+    <value>A communication error occured while writing settings.</value>
+  </data>
+  <data name="SettingsWrite_CouldNotDoAll" xml:space="preserve">
+    <value>Could not write all settings.</value>
+  </data>
+  <data name="SettingsWrite_Retrying" xml:space="preserve">
+    <value>Retrying {0} of {1} settings.</value>
+  </data>
+  <data name="SettingsWrite_Successful" xml:space="preserve">
+    <value>Successfully wrote {0} of {1} settings.</value>
+    <comment>e.g. Successfully read 3 of 3 settings.</comment>
+  </data>
+  <data name="UdpConnectionImplementation_Connected" xml:space="preserve">
+    <value>Connected to "{0}".</value>
+  </data>
+  <data name="UdpConnectionImplementation_ErrorReceiving" xml:space="preserve">
+    <value>Error while listening for OSC.</value>
+  </data>
+  <data name="UdpConnectionImplementation_FailedToConnect" xml:space="preserve">
+    <value>Failed to connect to "{0}".</value>
+  </data>
+  <data name="UdpConnectionImplementation_IPAddressChanged" xml:space="preserve">
+    <value>Adapter IP address changed.</value>
+  </data>
+  <data name="AsyncProcess_RetryLimitReached" xml:space="preserve">
+    <value>Retry limit reached.</value>
+  </data>
+  <data name="CommandProcess_AlreadyRunning" xml:space="preserve">
+    <value>Settings read process is already running.</value>
+    <comment>Replacement here is "Read process" etc </comment>
+  </data>
+  <data name="CommandProcess_CommunicationError" xml:space="preserve">
+    <value>A communication error occured while executing commands.</value>
+  </data>
+  <data name="CommandProcess_CouldNotDoAll" xml:space="preserve">
+    <value>Could not execute all commands.</value>
+  </data>
+  <data name="CommandProcess_Retrying" xml:space="preserve">
+    <value>Retrying {0} of {1} commands.</value>
+  </data>
+  <data name="CommandProcess_Starting" xml:space="preserve">
+    <value>Executing {0} commands.</value>
+  </data>
+  <data name="CommandProcess_Successful" xml:space="preserve">
+    <value>Successfully executed {0} of {1} commands.</value>
+    <comment>e.g. Successfully read 3 of 3 settings.</comment>
+  </data>
+  <data name="SettingsRead_Starting" xml:space="preserve">
+    <value>Reading {0} settings.</value>
+  </data>
+  <data name="SettingsWrite_Starting" xml:space="preserve">
+    <value>Writing {0} settings.</value>
+  </data>
+  <data name="UdpConnectionInfo_StringFormat" xml:space="preserve">
+    <value>Send: {0}, {1}; Receive: {2}, {3}; {4}</value>
+    <comment>e.g. Send: {Send IP Address}, {Send Port}; Receive: {Adapter IP Address}, {Receive Port}; {Adapter Name}</comment>
+  </data>
+  <data name="SettingsRead_NoValidSettings" xml:space="preserve">
+    <value>No settings to read.</value>
+  </data>
+  <data name="SettingsWrite_NoValidSettings" xml:space="preserve">
+    <value>Cannot write undefined setting values.</value>
+  </data>
+</root>

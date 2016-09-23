@@ -1,0 +1,18 @@
+﻿/* THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT MODIFY. */ 
+
+using System.Net;
+using System.Net.NetworkInformation;
+using NgimuApi.Maths;
+
+namespace NgimuApi
+{
+[$RootCategory] 
+
+	/// <summary>
+	/// Contains all concrete category types.
+	/// </summary>
+    public sealed class SettingsCategoryTypes
+    {
+[$CategoryClasses]         
+    }
+}

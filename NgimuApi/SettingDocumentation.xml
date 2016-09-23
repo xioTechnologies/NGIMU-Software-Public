@@ -1,0 +1,165 @@
+<!-- THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT MODIFY. -->
+<Documentation>
+  <NoItemSelectedText>Click on a setting to view documentation.</NoItemSelectedText>
+  <Setting Address="/crystal">
+  </Setting>
+  <Setting Address="/gyroscope/misalignment">
+  </Setting>
+  <Setting Address="/gyroscope/sensitivity">
+  </Setting>
+  <Setting Address="/gyroscope/bias">
+  </Setting>
+  <Setting Address="/accelerometer/misalignment">
+  </Setting>
+  <Setting Address="/accelerometer/sensitivity">
+  </Setting>
+  <Setting Address="/accelerometer/bias">
+  </Setting>
+  <Setting Address="/softiron">
+  </Setting>
+  <Setting Address="/hardiron">
+  </Setting>
+  <Setting Address="/calibration/date">
+  </Setting>
+  <Setting Address="/calibration/temperature">
+  </Setting>
+  <Setting Address="/name">Custom name of the device.  May be up to 63 characters long.</Setting>
+  <Setting Address="/serialnumber">32-bit serial number represented as 6 hexadecimal digits unique to each device.</Setting>
+  <Setting Address="/firmware">Current firmware version running on the device.</Setting>
+  <Setting Address="/bootloader">Current bootloader version running on the device.  The bootloader is programmed during production and cannot be updated by the end user.</Setting>
+  <Setting Address="/hardware">Hardware version of the device.</Setting>
+  <Setting Address="/wifi/enabled">
+  </Setting>
+  <Setting Address="/wifi/firmware">
+  </Setting>
+  <Setting Address="/wifi/mac">
+  </Setting>
+  <Setting Address="/wifi/ip">
+  </Setting>
+  <Setting Address="/wifi/mode">
+  </Setting>
+  <Setting Address="/wifi/antenna">
+  </Setting>
+  <Setting Address="/wifi/region">
+  </Setting>
+  <Setting Address="/wifi/ap/band">
+  </Setting>
+  <Setting Address="/wifi/ap/2ghzchannel">
+  </Setting>
+  <Setting Address="/wifi/ap/5ghzchannel">
+  </Setting>
+  <Setting Address="/wifi/client/ssid">
+  </Setting>
+  <Setting Address="/wifi/client/key">
+  </Setting>
+  <Setting Address="/wifi/client/dhcp">
+  </Setting>
+  <Setting Address="/wifi/client/ip">
+  </Setting>
+  <Setting Address="/wifi/client/subnet">
+  </Setting>
+  <Setting Address="/wifi/client/gateway">
+  </Setting>
+  <Setting Address="/wifi/client/lowpower">
+  </Setting>
+  <Setting Address="/wifi/send/ip">
+  </Setting>
+  <Setting Address="/wifi/send/port">
+  </Setting>
+  <Setting Address="/wifi/receive/port">
+  </Setting>
+  <Setting Address="/wifi/throughput">
+  </Setting>
+  <Setting Address="/wifi/synchronisation/enabled">If enabled then the device will function as a synchronisation master and will periodically broadcast synchronisation messages to all other devices on the network.  The other devices will function as synchronisation slaves and will adjust their date/time to stay in sync with the master.  Only one device on the network may be enabled as a synchronisation master.</Setting>
+  <Setting Address="/wifi/synchronisation/port">The synchronisation master send port is the UDP send port for synchronisation messages sent by the device when configured as a synchronisation master.  This port must be the same as the UDP receive port configured on each synchronisation slave.</Setting>
+  <Setting Address="/serial/enabled">
+  </Setting>
+  <Setting Address="/serial/baud">
+  </Setting>
+  <Setting Address="/serial/error">
+  </Setting>
+  <Setting Address="/serial/rtscts">
+  </Setting>
+  <Setting Address="/serial/invert">
+  </Setting>
+  <Setting Address="/sd/prefix">
+  </Setting>
+  <Setting Address="/sd/number">
+  </Setting>
+  <Setting Address="/sd/size">
+  </Setting>
+  <Setting Address="/sd/period">
+  </Setting>
+  <Setting Address="/ahrs/gain">The AHRS gain determines the how much influence accelerometer and magnetometer measurements have relative to gyroscope measurements.  A large gain will mean that accelerometer and magnetometer measurements have a greater influence on the measurement of orientation.  A low gain value will mean that the measurement of orientation is predominantly determined by gyroscope measurements.  A gain of zero will mean that the measurement of orientation is derived from gyroscope measurements only.</Setting>
+  <Setting Address="/ahrs/gyroscope">If the gyroscope bias correction is enabled then the algorithm will detect periods when the device is stationary to correct for gyroscope bias errors.\par
+      It is recommended that gyroscope bias correction is enabled for most applications.  Only applications that may expect extremely slow and smooth motion should consider disabling gyroscope bias correction as such motion may be incorrectly detected as being stationary.</Setting>
+  <Setting Address="/ahrs/magnetometer">If the magnetometer is ignored then the heading component of orientation will be derived from only gyroscope measurements.  The heading will therefore not be a measurement relative to magnetic north but will instead be a measurement relative to an arbitrary direction that will drift over time. \par
+      It is recommended that the magnetometer is ignored when the device is used in environments where the dominant ambient magnetic field is not that of the Earth.  For example, when operating near large metal structures.  It is therefore often necessary for the magnetometer to be ignored when operating in indoor environments.</Setting>
+  <Setting Address="/ahrs/magnetic/min">The minimum valid magnetic field intensity in uT.  The AHRS algorithm will automatically ignore magnetometer measurements while the magnetic field intensity is not within a valid range.  This prevents unexpected large magnetic distortions from influencing the measurement of orientation.  The heading component of orientation will be derived from only gyroscope measurements while the magnetic field intensity is detected as being invalid.</Setting>
+  <Setting Address="/ahrs/magnetic/max">The maximum valid magnetic field intensity in uT.  The AHRS algorithm will automatically ignore magnetometer measurements while the magnetic field intensity is not within a valid range.  This prevents unexpected large magnetic distortions from influencing the measurement of orientation.  The heading component of orientation will be derived from only gyroscope measurements while the magnetic field intensity is detected as being invalid.</Setting>
+  <Setting Address="/rate/sensors">
+  </Setting>
+  <Setting Address="/rate/magnitudes">
+  </Setting>
+  <Setting Address="/rate/quaternion">
+  </Setting>
+  <Setting Address="/rate/matrix">
+  </Setting>
+  <Setting Address="/rate/euler">
+  </Setting>
+  <Setting Address="/rate/linear">
+  </Setting>
+  <Setting Address="/rate/earth">
+  </Setting>
+  <Setting Address="/rate/altitude">
+  </Setting>
+  <Setting Address="/rate/temperature">
+  </Setting>
+  <Setting Address="/rate/humidity">
+  </Setting>
+  <Setting Address="/rate/battery">
+  </Setting>
+  <Setting Address="/rate/analogue">
+  </Setting>
+  <Setting Address="/rate/rssi">
+  </Setting>
+  <Setting Address="/auxserial/enabled">
+  </Setting>
+  <Setting Address="/auxserial/baud">
+  </Setting>
+  <Setting Address="/auxserial/error">
+  </Setting>
+  <Setting Address="/auxserial/rtscts">
+  </Setting>
+  <Setting Address="/auxserial/invert">
+  </Setting>
+  <Setting Address="/auxserial/passthrough">
+  </Setting>
+  <Setting Address="/auxserial/string">
+  </Setting>
+  <Setting Address="/auxserial/buffer">
+  </Setting>
+  <Setting Address="/auxserial/timeout">
+  </Setting>
+  <Setting Address="/auxserial/framing">
+  </Setting>
+  <Setting Address="/idle">If CPU idle mode is enabled then the CPU will continuously cycle between idle mode and active mode to reduce power consumption and extend battery life.  Users wishing to achieve best possible throughput and latency can disable CPU idle mode for a marginal increase in performance.\par
+      It is recommended that CPU idle mode is set to {\i Enabled for battery only} so that power consumption is automatically reduced while the device is powered from a battery, and best possible performance is achieved while USB or external power is connected.</Setting>
+  <Setting Address="/leds">Disabling the LEDs will only provide a marginal reduction in power consumption.  This setting is intended to benefit situations where light from the LEDs is undesirable.\par
+      The {\i identify} command may still be used when the LEDs are disabled.  The green status LED will still blink each time the button is pressed to indicate that the device is switched on.</Setting>
+  <Setting Address="/currentlimit">If USB/external current limit is enabled then the device will not draw more than 500 mA from either USB or the external power input of the serial interface.  If USB/external current limit is disabled then the device will not draw more than 1.8 A.  This higher limit enables faster battery charging.\par
+      It is recommended that USB/external current limit is disabled if no battery is connected because peak current demands of the device may exceed 500 mA even if the average current demand is much lower.  Limiting the current to less than the demand may result in the device resetting unexpectedly.</Setting>
+  <Setting Address="/sleeptimer">Number of seconds the device will remain switched on before automatically entering sleep mode.  A value of 0 seconds will disable the sleep timer.\par
+      The sleep timer is automatically disabled while USB is connected and will restart on each of the following events:\line
+      {  }• Button press\line
+      {  }• Reception of any message\line
+      {  }• Motion detection (if {\i motion trigger wakeup} enabled)</Setting>
+  <Setting Address="/motiontrigger">If motion trigger wakeup is enabled then the device will wakeup from sleep mode when motion is detected.</Setting>
+  <Setting Address="/muted">Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi {\i low power mode} is enabled.  The device can be unmuted at any time by sending the {\i unmute} command.</Setting>
+  <Setting Address="/battery/voltage">The minimum operating battery voltage in Volts.  This value is used to calculate the battery percentage and time to empty.\par
+        Changes to this setting will only take effect after the device has been disconnected from all power sources and the battery disconnected.</Setting>
+  <Setting Address="/battery/capacity">The capacity of the connected battery in mAh.  This value is used to calculate the battery percentage, time to empty, battery health, and number of charge/discharge cycles.\par
+        Changes to this setting will only take effect after the device has been disconnected from all power sources and the battery disconnected.</Setting>
+  <Setting Address="/battery/health">The current battery health expressed as a percentage representing the battery's measured capacity compared to its expected capacity.  This value will only be accurate after several charge/discharge cycles.</Setting>
+  <Setting Address="/battery/cycles">The total number of charge/discharge cycles of the current battery.  A value of 1.0 indicates that the battery has been charged and discharged to its full capacity once.</Setting>
+</Documentation>

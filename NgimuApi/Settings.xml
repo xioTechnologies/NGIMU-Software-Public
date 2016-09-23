@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <NoItemText>
+    Click on a setting to view documentation.
+  </NoItemText>
+
+  <!--
+  <Category MemberName="ExampleCategory" UIText="Example Category" >
+    <Setting MemberName="ExampleSetting" UIText="Example Setting" DocumentationTitle="Example setting value" OscAddress="/example/setting" Type="String" >
+      This is the documentation text for the example setting.  This is the syntax for starting a new paragraph.\par
+      This is the syntax for a new line.\line
+      This is the syntax for {\f1 fixed-width} text.  This is the syntax for {\i italic} text.
+    </Setting>
+  </Category>
+  -->
+
+  <Category MemberName="Calibration" UIText="Calibration Parameters" Hidden="True">
+    <Setting MemberName="CrystalTrim" UIText="Crystal Trim" Type="Float" OscAddress="/crystal" >
+    </Setting>
+    <Setting MemberName="GyroscopeMisalignment" UIText="Gyroscope Misalignment" Type="RotationMatrix" OscAddress="/gyroscope/misalignment" >
+    </Setting>
+    <Setting MemberName="GyroscopeSensitivity" UIText="Gyroscope Sensitivity" Type="Vector3" OscAddress="/gyroscope/sensitivity">
+    </Setting>
+    <Setting MemberName="GyroscopeBias" UIText="Gyroscope Bias" Type="Vector3" OscAddress="/gyroscope/bias">
+    </Setting>
+    <Setting MemberName="AccelerometerMisalignment" UIText="Accelerometer Misalignment" Type="RotationMatrix" OscAddress="/accelerometer/misalignment" >
+    </Setting>
+    <Setting MemberName="AccelerometerSensitivity" UIText="Accelerometer Sensitivity" Type="Vector3" OscAddress="/accelerometer/sensitivity" >
+    </Setting>
+    <Setting MemberName="AccelerometerBias" UIText="Accelerometer Bias" Type="Vector3" OscAddress="/accelerometer/bias" >
+    </Setting>
+    <Setting MemberName="SoftIronMatrix" UIText="Soft Iron Matrix" Type="RotationMatrix" OscAddress="/softiron" >
+    </Setting>
+    <Setting MemberName="HardIronBias" UIText="Hard Iron Bias" Type="Vector3" OscAddress="/hardiron" >
+    </Setting>
+    <Setting MemberName="CalibrationDate" UIText="Calibration Date" Type="String" OscAddress="/calibration/date" >
+    </Setting>
+    <Setting MemberName="CalibrationTemperature" UIText="Calibration Temperature" Type="Float" OscAddress="/calibration/temperature" >
+    </Setting>
+  </Category>
+
+  <Category MemberName="DeviceInformation" UIText="Device Information">
+    <Setting MemberName="DeviceName" UIText="Device Name" Type="String" OscAddress="/name">
+      Custom name of the device.  May be up to 63 characters long.
+    </Setting>
+    <Setting MemberName="SerialNumber" UIText="Serial Number" Type="String" OscAddress="/serialnumber" Readonly="True">
+      32-bit serial number represented as 6 hexadecimal digits unique to each device.
+    </Setting>
+    <Setting MemberName="FirmwareVersion" UIText="Firmware Version" Type="String" OscAddress="/firmware" Readonly="True">
+      Current firmware version running on the device.
+    </Setting>
+    <Setting MemberName="BootloaderVersion" UIText="Bootloader Version" Type="String" OscAddress="/bootloader" Readonly="True">
+      Current bootloader version running on the device.  The bootloader is programmed during production and cannot be updated by the end user.
+    </Setting>
+    <Setting MemberName="HardwareVersion" UIText="Hardware Version" Type="String" OscAddress="/hardware" Readonly="True">
+      Hardware version of the device.
+    </Setting>
+  </Category>
+
+  <Category MemberName="Wifi" UIText="Wi-Fi">
+    <Setting MemberName="WifiEnabled" UIText="Enabled" DocumentationTitle="Wi-Fi Enabled" Type="Bool" OscAddress="/wifi/enabled">
+    </Setting>
+    <Setting MemberName="WifiFirmwareVersion" UIText="Firmware Version" DocumentationTitle="Wi-Fi Firmware Version" Type="String" OscAddress="/wifi/firmware" Readonly="True">
+    </Setting>
+    <Setting MemberName="WifiMacAddress" UIText="MAC Address" DocumentationTitle="Wi-Fi MAC Address" Type="MacAddress" OscAddress="/wifi/mac" Readonly="True">
+    </Setting>
+    <Setting MemberName="WifiIPAddress" UIText="IP Address" DocumentationTitle="Wi-Fi IP Address" Type="IPAddress" OscAddress="/wifi/ip" Readonly="True">
+    </Setting>
+    <Setting MemberName="WifiMode" UIText="Mode" DocumentationTitle="Wi-Fi Mode" Type="WifiMode" OscAddress="/wifi/mode">
+    </Setting>
+    <Setting MemberName="WifiAntenna" UIText="Antenna" DocumentationTitle="Wi-Fi Antenna" Type="WifiAntenna" OscAddress="/wifi/antenna">
+    </Setting>
+    <Setting MemberName="WifiRegion" UIText="Region" DocumentationTitle="Wi-Fi Region" Type="WifiRegion" OscAddress="/wifi/region">
+    </Setting>
+    <Category MemberName="AP" UIText="AP">
+      <Setting MemberName="WifiAPBand" UIText="Band" DocumentationTitle="Wi-Fi AP Band" Type="WifiBand" OscAddress="/wifi/ap/band">
+      </Setting>
+      <Setting MemberName="WifiAP2GHzChannel" UIText="2.4 GHz Channel" DocumentationTitle="Wi-Fi AP 2.4 GHz Channel" Type="Wifi2GHzChannel" OscAddress="/wifi/ap/2ghzchannel">
+      </Setting>
+      <Setting MemberName="WifiAP5GHzChannel" UIText="5 GHz Channel" DocumentationTitle="Wi-Fi AP 5 GHz Channel" Type="Wifi5GHzChannel" OscAddress="/wifi/ap/5ghzchannel">
+      </Setting>
+    </Category>
+    <Category MemberName="Client" UIText="Client">
+      <Setting MemberName="WifiClientSSID" UIText="SSID" DocumentationTitle="Wi-Fi Client SSID" Type="String" OscAddress="/wifi/client/ssid">
+      </Setting>
+      <Setting MemberName="WifiClientKey" UIText="Key" DocumentationTitle="Wi-Fi Client Key" Type="String" OscAddress="/wifi/client/key">
+      </Setting>
+      <Setting MemberName="WifiClientDhcpEnabled" UIText="DHCP Enabled" DocumentationTitle="Wi-Fi Client DHCP Enabled" Type="Bool" OscAddress="/wifi/client/dhcp">
+      </Setting>
+      <Setting MemberName="WifiClientIPAddress" UIText="IP Address" DocumentationTitle="Wi-Fi Client IP Address" Type="IPAddress" OscAddress="/wifi/client/ip">
+      </Setting>
+      <Setting MemberName="WifiClientSubnet" UIText="Subnet" DocumentationTitle="Wi-Fi Client Subnet" Type="IPAddress" OscAddress="/wifi/client/subnet">
+      </Setting>
+      <Setting MemberName="WifiClientGateway" UIText="Gateway" DocumentationTitle="Wi-Fi Client Gateway" Type="IPAddress" OscAddress="/wifi/client/gateway">
+      </Setting>
+      <Setting MemberName="WifiClientLowPower" UIText="Low Power Mode" DocumentationTitle="Wi-Fi Client SSIDLow Power Mode" Type="Bool" OscAddress="/wifi/client/lowpower">
+      </Setting>
+    </Category>
+    <Category MemberName="Udp" UIText="UDP">
+      <Setting MemberName="WifiSendIPAddress" UIText="Send IP Address" DocumentationTitle="UDP Send IP Address" Type="IPAddress" OscAddress="/wifi/send/ip">
+      </Setting>
+      <Setting MemberName="WifiSendPort" UIText="Send Port" DocumentationTitle="UDP Send Port" Type="UdpPort" OscAddress="/wifi/send/port">
+      </Setting>
+      <Setting MemberName="WifiReceivePort" UIText="Receive Port" DocumentationTitle="UDP Receive Port" Type="UdpPort" OscAddress="/wifi/receive/port">
+      </Setting>
+      <Setting MemberName="WifiMaximiseThroughput" UIText="Maximise Throughput" DocumentationTitle="UDP Maximise Throughput" Type="Bool" OscAddress="/wifi/throughput">
+      </Setting>
+    </Category>
+    <Category MemberName="SynchronisationMaster" UIText="Synchronisation Master" Hidden="True">
+      <Setting MemberName="SynchronisationMasterEnabled" UIText="Enabled" DocumentationTitle="Synchronisation Master Enabled" Type="bool" OscAddress="/wifi/synchronisation/enabled">
+        If enabled then the device will function as a synchronisation master and will periodically broadcast synchronisation messages to all other devices on the network.  The other devices will function as synchronisation slaves and will adjust their date/time to stay in sync with the master.  Only one device on the network may be enabled as a synchronisation master.
+      </Setting>
+      <Setting MemberName="SynchronisationMasterPort" UIText="Send Port" DocumentationTitle="Synchronisation Master Send Port" Type="UdpPort" OscAddress="/wifi/synchronisation/port">
+        The synchronisation master send port is the UDP send port for synchronisation messages sent by the device when configured as a synchronisation master.  This port must be the same as the UDP receive port configured on each synchronisation slave.
+      </Setting>
+    </Category>
+  </Category>
+
+  <Category MemberName="Serial" UIText="Serial">
+    <Setting MemberName="SerialEnabled" UIText="Enabled" DocumentationTitle="Serial Enabled" Type="Bool" OscAddress="/serial/enabled">
+    </Setting>
+    <Setting MemberName="SerialBaudRate" UIText="Baud Rate" DocumentationTitle="Serial Baud Rate" Type="UInt32" OscAddress="/serial/baud">
+    </Setting>
+    <Setting MemberName="SerialBaudRateError" UIText="Baud Rate Error (%)" DocumentationTitle="Serial Baud Rate Error" Type="Float" OscAddress="/serial/error" Readonly="True">
+    </Setting>
+    <Setting MemberName="SerialRtsCtsEnabled" UIText="RTS/CTS Enabled" DocumentationTitle="Serial RTS/CTS Enabled" Type="Bool" OscAddress="/serial/rtscts">
+    </Setting>
+    <Setting MemberName="SerialInvertDataLines" UIText="Invert Data Lines" DocumentationTitle="Serial Invert Data Lines" Type="Bool" OscAddress="/serial/invert">
+    </Setting>
+  </Category>
+  
+  <Category MemberName="SDCard" UIText="SD Card">
+    <Setting MemberName="sdCardFileNamePrefix" UIText="File Name Prefix" DocumentationTitle="SD Card File Name Prefix" Type="String" OscAddress="/sd/prefix">
+    </Setting>
+    <Setting MemberName="sdCardFileNumber" UIText="File Number" DocumentationTitle="SD Card File Number" Type="UInt32" OscAddress="/sd/number">
+    </Setting>
+    <Setting MemberName="sdCardMaxFileSize" UIText="Maximum File Size (MB)" DocumentationTitle="SD Card Maximum File Size" Type="UInt32" OscAddress="/sd/size">
+    </Setting>
+    <Setting MemberName="sdCardMaxFilePeriod" UIText="Maximum File Period (s)" DocumentationTitle="SD Card Maximum File Period" Type="UInt32" OscAddress="/sd/period">
+    </Setting>
+  </Category>  
+
+  <Category MemberName="Ahrs" UIText="AHRS">
+    <Setting MemberName="AhrsGain" UIText="Gain" DocumentationTitle="AHRS Gain" Type="Float" OscAddress="/ahrs/gain">
+      The AHRS gain determines the how much influence accelerometer and magnetometer measurements have relative to gyroscope measurements.  A large gain will mean that accelerometer and magnetometer measurements have a greater influence on the measurement of orientation.  A low gain value will mean that the measurement of orientation is predominantly determined by gyroscope measurements.  A gain of zero will mean that the measurement of orientation is derived from gyroscope measurements only.
+    </Setting>
+    <Setting MemberName="AhrsGyroscopeBiasCorrection" UIText="Gyroscope Bias Correction" DocumentationTitle="AHRS Gyroscope Bias Correction" Type="Bool" OscAddress="/ahrs/gyroscope">
+      If the gyroscope bias correction is enabled then the algorithm will detect periods when the device is stationary to correct for gyroscope bias errors.\par
+      It is recommended that gyroscope bias correction is enabled for most applications.  Only applications that may expect extremely slow and smooth motion should consider disabling gyroscope bias correction as such motion may be incorrectly detected as being stationary.
+    </Setting>
+    <Setting MemberName="AhrsIgnoreMagnetometer" UIText="Ignore Magnetometer" DocumentationTitle="AHRS Ignore Magnetometer" Type="Bool" OscAddress="/ahrs/magnetometer">
+      If the magnetometer is ignored then the heading component of orientation will be derived from only gyroscope measurements.  The heading will therefore not be a measurement relative to magnetic north but will instead be a measurement relative to an arbitrary direction that will drift over time. \par
+      It is recommended that the magnetometer is ignored when the device is used in environments where the dominant ambient magnetic field is not that of the Earth.  For example, when operating near large metal structures.  It is therefore often necessary for the magnetometer to be ignored when operating in indoor environments.
+    </Setting>
+    <Category MemberName="MagneticFieldRejection" UIText="Magnetic Field Rejection">
+      <Setting MemberName="AhrsMinimumMagneticField" UIText="Minimum Magnetic Field (uT)" DocumentationTitle="AHRS Minimum Magnetic Field" Type="Float" OscAddress="/ahrs/magnetic/min">
+        The minimum valid magnetic field intensity in uT.  The AHRS algorithm will automatically ignore magnetometer measurements while the magnetic field intensity is not within a valid range.  This prevents unexpected large magnetic distortions from influencing the measurement of orientation.  The heading component of orientation will be derived from only gyroscope measurements while the magnetic field intensity is detected as being invalid.
+      </Setting>
+      <Setting MemberName="AhrsMaximumMagneticField" UIText="Maximum Magnetic Field (uT)" DocumentationTitle="AHRS Maximum Magnetic Field" Type="Float" OscAddress="/ahrs/magnetic/max">
+        The maximum valid magnetic field intensity in uT.  The AHRS algorithm will automatically ignore magnetometer measurements while the magnetic field intensity is not within a valid range.  This prevents unexpected large magnetic distortions from influencing the measurement of orientation.  The heading component of orientation will be derived from only gyroscope measurements while the magnetic field intensity is detected as being invalid.
+      </Setting>
+    </Category>
+  </Category>
+
+  <Category MemberName="SendRates" UIText="Send Rates">
+    <Setting MemberName="SendRateSensors" UIText="Sensors" DocumentationTitle="Sensors Send Rate" Type="Float" OscAddress="/rate/sensors">
+    </Setting>
+    <Setting MemberName="SendRateMagnitudes" UIText="Magnitudes" DocumentationTitle="Magnitudes Send Rate" Type="Float" OscAddress="/rate/magnitudes">
+    </Setting>
+    <Setting MemberName="SendRateQuaternion" UIText="Quaternion" DocumentationTitle="Quaternion Send Rate" Type="Float" OscAddress="/rate/quaternion">
+    </Setting>
+    <Setting MemberName="SendRateRotationMatrix" UIText="Rotation Matrix" DocumentationTitle="Rotation Matrix Send Rate" Type="Float" OscAddress="/rate/matrix">
+    </Setting>
+    <Setting MemberName="SendRateEulerAngles" UIText="Euler Angles" DocumentationTitle="Euler Angles Send Rate" Type="Float" OscAddress="/rate/euler">
+    </Setting>
+    <Setting MemberName="SendRateLinearAcceleration" UIText="Linear Acceleration" DocumentationTitle="Linear Acceleration Send Rate" Type="Float" OscAddress="/rate/linear">
+    </Setting>
+    <Setting MemberName="SendRateEarthAcceleration" UIText="Earth Acceleration" DocumentationTitle="Earth Acceleration Send Rate" Type="Float" OscAddress="/rate/earth">
+    </Setting>
+    <Setting MemberName="SendRateAltitude" UIText="Altitude" DocumentationTitle="Altitude Send Rate" Type="Float" OscAddress="/rate/altitude">
+    </Setting>
+    <Setting MemberName="SendRateTemperature" UIText="Temperature" DocumentationTitle="Temperature Send Rate" Type="Float" OscAddress="/rate/temperature">
+    </Setting>
+    <Setting MemberName="SendRateHumidity" UIText="Humidity" DocumentationTitle="Humidity Send Rate" Type="Float" OscAddress="/rate/humidity">
+    </Setting>
+    <Setting MemberName="SendRateBattery" UIText="Battery" DocumentationTitle="Battery Send Rate" Type="Float" OscAddress="/rate/battery">
+    </Setting>
+    <Setting MemberName="SendRateAnalogueInputs" UIText="Analogue Inputs" DocumentationTitle="Analogue Inputs Send Rate" Type="Float" OscAddress="/rate/analogue">
+    </Setting>
+    <Setting MemberName="SendRateRssi" UIText="RSSI" DocumentationTitle="RSSI Send Rate" Type="Float" OscAddress="/rate/rssi">
+    </Setting>
+  </Category>
+
+  <Category MemberName="AuxiliarySerial" UIText="Auxiliary Serial">
+    <Setting MemberName="AuxSerialEnabled" UIText="Enabled" DocumentationTitle="Auxiliary Serial Enabled" Type="Bool" OscAddress="/auxserial/enabled">
+    </Setting>
+    <Setting MemberName="AuxSerialBaudRate" UIText="Baud Rate" DocumentationTitle="Auxiliary Serial Baud Rate" Type="UInt32" OscAddress="/auxserial/baud">
+    </Setting>
+    <Setting MemberName="AuxSerialBaudRateError" UIText="Baud Rate Error (%)" DocumentationTitle="Auxiliary Serial Baud Rate Error" Type="Float" OscAddress="/auxserial/error" Readonly="True">
+    </Setting>
+    <Setting MemberName="AuxSerialRtsCtsEnabled" UIText="RTS/CTS Enabled" DocumentationTitle="Auxiliary Serial RTS/CTS Enabled" Type="Bool" OscAddress="/auxserial/rtscts">
+    </Setting>
+    <Setting MemberName="AuxSerialInvertDataLines" UIText="Invert Data Lines" DocumentationTitle="Auxiliary Serial Invert Data Lines" Type="Bool" OscAddress="/auxserial/invert">
+    </Setting>
+    <Setting MemberName="AuxSerialOscPassthrough" UIText="OSC Passthrough" DocumentationTitle="Auxiliary Serial OSC Passthrough" Type="Bool" OscAddress="/auxserial/passthrough">
+    </Setting>
+    <Setting MemberName="AuxSerialSendAsString" UIText="Send As String" DocumentationTitle="Auxiliary Serial Send As String" Type="Bool" OscAddress="/auxserial/string">
+    </Setting>
+    <Category MemberName="SendCondition" UIText="Send Condition">
+      <Setting MemberName="AuxSerialBufferSize" UIText="Buffer Size" Type="UInt32" DocumentationTitle="Auxiliary Serial Send Buffer Size" OscAddress="/auxserial/buffer">
+      </Setting>
+      <Setting MemberName="AuxSerialTimeout" UIText="Timeout (ms)" Type="UInt32" DocumentationTitle="Auxiliary Serial Send Timeout" OscAddress="/auxserial/timeout">
+      </Setting>
+      <Setting MemberName="AuxSerialFramingCharacter" UIText="Framing Character" DocumentationTitle="Auxiliary Serial Send Framing Character" Type="Int32" OscAddress="/auxserial/framing">
+      </Setting>
+    </Category>
+  </Category>
+
+  <Category MemberName="PowerManagement" UIText="Power Management">
+    <Setting MemberName="CpuIdleMode" UIText="CPU Idle Mode" Type="CpuIdleMode" OscAddress="/idle">
+      If CPU idle mode is enabled then the CPU will continuously cycle between idle mode and active mode to reduce power consumption and extend battery life.  Users wishing to achieve best possible throughput and latency can disable CPU idle mode for a marginal increase in performance.\par
+      It is recommended that CPU idle mode is set to {\i Enabled for battery only} so that power consumption is automatically reduced while the device is powered from a battery, and best possible performance is achieved while USB or external power is connected.
+    </Setting>
+    <Setting MemberName="LedsEnabled" UIText="LEDs Enabled" Type="Bool" OscAddress="/leds">
+      Disabling the LEDs will only provide a marginal reduction in power consumption.  This setting is intended to benefit situations where light from the LEDs is undesirable.\par
+      The {\i identify} command may still be used when the LEDs are disabled.  The green status LED will still blink each time the button is pressed to indicate that the device is switched on.
+    </Setting>
+    <Setting MemberName="UsbExternalCurrentLimit" UIText="USB/External Current Limit" Type="Bool" OscAddress="/currentlimit">
+      If USB/external current limit is enabled then the device will not draw more than 500 mA from either USB or the external power input of the serial interface.  If USB/external current limit is disabled then the device will not draw more than 1.8 A.  This higher limit enables faster battery charging.\par
+      It is recommended that USB/external current limit is disabled if no battery is connected because peak current demands of the device may exceed 500 mA even if the average current demand is much lower.  Limiting the current to less than the demand may result in the device resetting unexpectedly.
+    </Setting>
+    <Setting MemberName="SleepTimer" UIText="Sleep Timer (s)" DocumentationTitle="Sleep Timer" Type="UInt32" OscAddress="/sleeptimer">
+      Number of seconds the device will remain switched on before automatically entering sleep mode.  A value of 0 seconds will disable the sleep timer.\par
+      The sleep timer is automatically disabled while USB is connected and will restart on each of the following events:\line
+      {  }• Button press\line
+      {  }• Reception of any message\line
+      {  }• Motion detection (if {\i motion trigger wakeup} enabled)
+    </Setting>
+    <Setting MemberName="MotionTriggerWakeup" UIText="Motion Trigger Wakeup" Type="Bool" OscAddress="/motiontrigger">
+      If motion trigger wakeup is enabled then the device will wakeup from sleep mode when motion is detected.
+    </Setting>
+    <Setting MemberName="MutedOnStartup" UIText="Muted On Startup" Type="Bool" OscAddress="/muted">
+      Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi {\i low power mode} is enabled.  The device can be unmuted at any time by sending the {\i unmute} command.
+    </Setting>
+    <Category MemberName="Battery" UIText="Battery">
+      <Setting MemberName="BatteryMinimumVoltage" UIText="Minimum Voltage (V)" DocumentationTitle="Battery Minimum Voltage" Type="Float" OscAddress="/battery/voltage" Readonly="False">
+        The minimum operating battery voltage in Volts.  This value is used to calculate the battery percentage and time to empty.\par
+        Changes to this setting will only take effect after the device has been disconnected from all power sources and the battery disconnected.
+      </Setting>
+      <Setting MemberName="BatteryCapacity" UIText="Capacity (mAh)" DocumentationTitle="Battery Capacity" Type="Float" OscAddress="/battery/capacity" Readonly="False">
+        The capacity of the connected battery in mAh.  This value is used to calculate the battery percentage, time to empty, battery health, and number of charge/discharge cycles.\par
+        Changes to this setting will only take effect after the device has been disconnected from all power sources and the battery disconnected.
+      </Setting>
+      <Setting MemberName="BatteryHealth" UIText="Health (%)" DocumentationTitle="Battery Health" Type="Float" OscAddress="/battery/health" Readonly="True">
+        The current battery health expressed as a percentage representing the battery's measured capacity compared to its expected capacity.  This value will only be accurate after several charge/discharge cycles.
+      </Setting>
+      <Setting MemberName="BatteryChargeDischargeCycles" UIText="Charge/Discharge Cycles" DocumentationTitle="Battery Charge/Discharge Cycles" Type="Float" OscAddress="/battery/cycles" Readonly="True">
+        The total number of charge/discharge cycles of the current battery.  A value of 1.0 indicates that the battery has been charged and discharged to its full capacity once.
+      </Setting>
+    </Category>
+  </Category>
+
+</Settings>

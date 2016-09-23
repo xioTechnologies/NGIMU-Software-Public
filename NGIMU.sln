@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgimuGui", "NgimuGui\NgimuGui.csproj", "{1E1AB79E-3664-4195-82F9-3907CDA71882}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgimuApi", "NgimuApi\NgimuApi.csproj", "{FC4852F8-A108-4497-ACBB-588D8ECAD64B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9C9008A5-82A8-4DF3-8667-81460C23999D} = {9C9008A5-82A8-4DF3-8667-81460C23999D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgimuGui.TypeDescriptors", "NgimuGui.TypeDescriptors\NgimuGui.TypeDescriptors.csproj", "{CA7CEF59-DCAF-4CC0-BE86-8DDF677FD7E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsObjectModelCodeGenerator", "Tools\SettingsObjectModelCodeGenerator\SettingsObjectModelCodeGenerator.csproj", "{9C9008A5-82A8-4DF3-8667-81460C23999D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{5429C2B9-EBAA-4907-8971-BA561AAF150D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E1AB79E-3664-4195-82F9-3907CDA71882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E1AB79E-3664-4195-82F9-3907CDA71882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E1AB79E-3664-4195-82F9-3907CDA71882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E1AB79E-3664-4195-82F9-3907CDA71882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC4852F8-A108-4497-ACBB-588D8ECAD64B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC4852F8-A108-4497-ACBB-588D8ECAD64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC4852F8-A108-4497-ACBB-588D8ECAD64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC4852F8-A108-4497-ACBB-588D8ECAD64B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7CEF59-DCAF-4CC0-BE86-8DDF677FD7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7CEF59-DCAF-4CC0-BE86-8DDF677FD7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7CEF59-DCAF-4CC0-BE86-8DDF677FD7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7CEF59-DCAF-4CC0-BE86-8DDF677FD7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9008A5-82A8-4DF3-8667-81460C23999D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9008A5-82A8-4DF3-8667-81460C23999D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9008A5-82A8-4DF3-8667-81460C23999D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9008A5-82A8-4DF3-8667-81460C23999D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9C9008A5-82A8-4DF3-8667-81460C23999D} = {5429C2B9-EBAA-4907-8971-BA561AAF150D}
+	EndGlobalSection
+EndGlobal

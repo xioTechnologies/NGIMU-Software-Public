@@ -1,0 +1,6 @@
+**.suo
+**.csproj.user
+**/bin/
+**/obj/
+**/bin-archive/
+NGIMU.sln.GhostDoc.xml

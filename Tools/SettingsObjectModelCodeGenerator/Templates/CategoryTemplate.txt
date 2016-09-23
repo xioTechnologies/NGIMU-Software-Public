@@ -1,0 +1,52 @@
+﻿public sealed class [$CategroryClassName] : SettingCategrory
+{
+    private [$ParentCategroryClassName] parent; 
+
+	/// <summary>
+	/// Gets the Connection that this setting category is bound to or null if it is unbound.
+	/// </summary>
+	public override Connection Connection { get { return parent.Connection; } }
+
+	/// <summary>
+	/// Gets the category text including the full path from the root category.
+	/// </summary>
+	public override string Text { get { return "[$CategroryText]"; } }
+
+	/// <summary>
+	/// Gets the category prefix text.
+	/// </summary>
+	protected override int CategoryPrefix { get { return [$CategoryPrefix]; } }
+
+	/// <summary>
+	/// Gets the parent category of this category or null if this category is the root category.
+	/// </summary>
+	public override SettingCategrory Parent { get { return parent; } }
+
+	/// <summary>
+	/// Gets a flag to indicate if this category is hidden.
+	/// </summary>
+	public override bool IsHidden { get { return [$CategroryIsHidden]; } }
+
+[$Members]
+
+    internal [$CategroryClassName]([$ParentCategroryClassName] parent)
+    {
+        this.parent = parent; 
+[$Members_Initiation]
+    }
+
+	internal override void AttachSettings(Settings settings)
+	{
+[$Members_Attach]
+		Finalise();
+	}
+
+	/// <summary>
+	/// Copy the values of all the settings in this category to another
+	/// </summary>
+	/// <param name="other">Another category</param>
+    public void CopyTo([$CategroryClassName] other)
+    {
+[$Members_Copy]
+    }
+}

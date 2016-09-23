@@ -1,0 +1,64 @@
+﻿public sealed partial class [$CategroryClassName] : SettingCategrory
+{
+    private Connection connection;
+
+	/// <summary>
+	/// Gets the Connection that this setting category is bound to or null if it is unbound.
+	/// </summary>
+	public override Connection Connection { get { return connection; } }
+
+	/// <summary>
+	/// Gets the category text including the full path from the root category.
+	/// </summary>
+	public override string Text { get { return "Settings"; } }
+
+	/// <summary>
+	/// Gets the category prefix text.
+	/// </summary>
+	protected override int CategoryPrefix { get { return [$CategoryPrefix]; } }
+
+	/// <summary>
+	/// Gets the parent category of this category or null if this category is the root category.
+	/// </summary>
+	public override SettingCategrory Parent { get { return null; } }
+
+	/// <summary>
+	/// Gets a flag to indicate if this category is hidden.
+	/// </summary>
+	public override bool IsHidden { get { return [$CategroryIsHidden]; } }
+
+[$Members]
+
+    public [$CategroryClassName]()
+    {
+[$Members_Initiation]
+		
+		AttachSettings(this);
+
+		Finalise();
+    }
+
+	internal override void AttachSettings(Settings settings)
+	{
+[$Members_Attach]
+	}
+
+    internal [$CategroryClassName](Connection connection) : this() 
+    {
+        this.connection = connection;
+
+		foreach (ISettingValue value in AllValues) 
+		{
+			Connection.Attach(value.OscAddress, value.OnMessageReceived);
+		}
+    }
+
+	/// <summary>
+	/// Copy the values of all the settings in this category to another
+	/// </summary>
+	/// <param name="other">Another category</param>
+    public void CopyTo([$CategroryClassName] other)
+    {
+[$Members_Copy]
+    }
+}

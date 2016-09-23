@@ -1,0 +1,3083 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rug.Cmd</name>
+    </assembly>
+    <members>
+        <member name="T:Rug.Cmd.ArgumentKey">
+            <summary>
+            Argument lookup key e.g. '/Option' where Prefix = '/', Symbol = 'O' and Name = 'Option'
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ArgumentKey.Prefix">
+            <summary>
+            Argument prefix e.g '/' 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ArgumentKey.Symbol">
+            <summary>
+            Argument Symbol (short lookup string) 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ArgumentKey.Name">
+            <summary>
+            Arguemnt Name (long lookup string)
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentKey.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Argument Lookup Key e.g. '/Option'
+            </summary>
+            <param name="prefix">key prefix e.g. '/'</param>
+            <param name="name">key long lookup string e.g. 'Option'</param>
+            <param name="symbol">key short lookup string e.g. 'O'</param>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentKey.Equals(System.Object)">
+            <summary>
+            Equals, this can be another ArgumentKey or a string in the form Prefix + (Name or Symbol) e.g. '/Option'
+            </summary>
+            <param name="obj">another ArgumentKey or a string in the form Prefix + (Name or Symbol) e.g. '/Option'</param>
+            <returns>true if the object supplyed equals this ArgumentKey</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentKey.GetHashCode">
+            <summary>
+            Get a hash of this ArgumentKey 
+            </summary>
+            <returns>a hash of this ArgumentKey</returns>
+        </member>
+        <member name="T:Rug.Cmd.ArgumentParser">
+            <summary>
+            Parse command line arguments
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.Name">
+            <summary>
+            Gets the name of the appliaction
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.AboutTitleText">
+            <summary>
+            Gets or sets the title for the about text
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.AboutText">
+            <summary>
+            Gets or sets the about text
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.AboutTextLong">
+            <summary>
+            Gets or sets the long about text
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.CreditsText">
+            <summary>
+            Gets or sets the credits text
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.UsageText">
+            <summary>
+            Gets or sets the usage text
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.LegalText">
+            <summary>
+            Gets or sets the legal text
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.FirstArgument">
+            <summary>
+            Gets or sets the IArgumentValue to use for the first arguemnt 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.DefaultArgument">
+            <summary>
+            Gets or sets the StringListArgument to use as the default argument
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.HasApplicationAbout">
+            <summary>
+            Has this application got any about text at all 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.HasApplicationDocument">
+            <summary>
+            Gets or sets HasApplicationDocument flag. If true the '/?D' argument will be visible in the arguments list
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new ArgumentParser
+            </summary>
+            <param name="appName">usually the name of the .exe file (without the extention), e.g. 'rpx.exe' = 'RPX'</param>
+            <param name="description">description text</param>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.HelpMode">
+            <summary>
+            True if the /? switch was defined 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.Keys">
+            <summary>
+            All the ArgumentKey(s)
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ArgumentParser.Item(System.String)">
+            <summary>
+            Gets IArgumentValue for a string e.g. '/O' or '/Option'
+            </summary>
+            <param name="key">string key to match e.g. '/O' or '/Option' </param>
+            <returns>IArgumentValue that has that key or null if none was found</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.ContainsKey(System.String)">
+            <summary>
+            Does this ArgumentParser contain string key e.g. '/O' or '/Option'
+            </summary>
+            <param name="key">string key to match e.g. '/O' or '/Option'</param>
+            <returns>true if the key was found</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.GetForKey(System.String,Rug.Cmd.ArgumentKey@)">
+            <summary>
+            Gets the IArgumentValue and ArgumentKey for a given string key 
+            </summary>
+            <param name="keyIn">string key to match e.g. '/O' or '/Option'</param>
+            <param name="outKey">the ArgumentKey acociated with the resulting IArgumentValue</param>
+            <returns>IArgumentValue that has that key or null if none was found</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.ContainsSymbol(System.String)">
+            <summary>
+            Does this parser contain a symbol (Searches on the symbols only)
+            </summary>
+            <param name="symbol">symbol</param>
+            <returns>true if the symbol was found</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.ContainsName(System.String)">
+            <summary>
+            Does this parser contain a name (Searches on the name only)
+            </summary>
+            <param name="name">name</param>
+            <returns>true if the name was found</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.GetForName(System.String)">
+            <summary>
+            Get the argument for a name 
+            </summary>
+            <param name="name">name</param>
+            <returns>the argument if the name was found or null if it was not</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.Add(System.String,System.String,Rug.Cmd.IArgumentValue)">
+            <summary>
+            Adds a IArgumentValue to the parsers Switches collection.
+            </summary>
+            <param name="prefix">prefix for the switch. typically '/' </param>
+            <param name="key">the key for the switch</param>
+            <param name="value">the argument to add</param>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.Add(System.String,System.String,System.String,Rug.Cmd.IArgumentValue)">
+            <summary>
+            Adds a IArgumentValue to the parsers Switches collection.
+            </summary>
+            <param name="prefix">prefix for the switch. typically '/' </param>
+            <param name="symbol">the explicit symbol to use</param>
+            <param name="key">the key for the switch</param>
+            <param name="value">the argument to add</param>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.Reset">
+            <summary>
+            Resets the parser and all its arguments 
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.WasDefined(System.String)">
+            <summary>
+            Was the arguemnt with the name get defined last time the parser was run? 
+            </summary>
+            <param name="name">the name of the argument</param>
+            <returns>true if the argument was defined</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.Parse(System.String[])">
+            <summary>
+            Parse argument from args array
+            </summary>
+            <param name="args">the command line arguments</param>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.GetShortArgumentsUsage">
+            <summary>
+            Get the short arguments usage in the form of a string
+            </summary>
+            <returns>the short help string</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.WriteShortArgumentsUsage">
+            <summary>
+            Writes the short arguments usage to the console 
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.WriteArgumentsUsageOnly">
+            <summary>
+            Writes only the arguments usage to the console 
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.WriteLongArgumentsUsage">
+            <summary>
+            Write the full arguemnts usage help to the console
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.GetLongArgumentsUsage">
+            <summary>
+            Get the full arguments usage help string
+            </summary>
+            <returns>the full help string</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.GetIndividualHelpString(Rug.Cmd.ArgumentKey)">
+            <summary>
+            Get the individual help stirng for an argument
+            </summary>
+            <param name="k">the key for the argument</param>
+            <returns>the help string</returns>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.WriteIndividualHelpToConsole(Rug.Cmd.ArgumentKey)">
+            <summary>
+            Write the individual help for an argument to the console
+            </summary>
+            <param name="k">the key for the argument</param>		
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.WriteApplicationAboutToConsole(System.Boolean)">
+            <summary>
+            Write the application about to the console
+            </summary>
+            <param name="colourise">true if it should be colourised</param>
+        </member>
+        <member name="M:Rug.Cmd.ArgumentParser.WriteApplicationDocumentationToPath(System.String)">
+            <summary>
+            Write the application documentation to a file path
+            </summary>
+            <param name="path">path of the file to write to</param>
+        </member>
+        <member name="T:Rug.Cmd.BoolSwitch">
+            <summary>
+            The simplest kind of switch it is undefined by default.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.BoolSwitch.#ctor(System.String,System.String)">
+            <summary>
+            The simplest kind of switch it is undefined by default.
+            </summary>
+            <param name="shortHelp">Short help for the argument overview</param>
+            <param name="help">Long help for the arguent usage</param>
+        </member>
+        <member name="M:Rug.Cmd.BoolSwitch.Reset">
+            <summary>
+            Resets the argument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.BoolSwitch.SetValue(System.String)">
+            <summary>
+            Sets the value of this switch. e.g. 'true'
+            </summary>
+            <param name="value">string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="T:Rug.Cmd.PlusMinusSwitch">
+            <summary>
+            Plus minus switch, use PlusMinusSwitch.KeyPrefix as the the 'prefix' argument when adding to the ArgumentParser
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.PlusMinusSwitch.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            Plus minus switch, use PlusMinusSwitch.KeyPrefix as the the 'prefix' argument when adding to the ArgumentParser
+            </summary>
+            <param name="shortHelp">Short help for the argument overview</param>
+            <param name="help">Long help for the arguent usage</param>
+            <param name="default">The default value</param>
+        </member>
+        <member name="M:Rug.Cmd.PlusMinusSwitch.Reset">
+            <summary>
+            Resets the argument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.PlusMinusSwitch.SetValue(System.String)">
+            <summary>
+            Sets the value of this switch. e.g. 'true'
+            </summary>
+            <param name="value">string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="T:Rug.Cmd.EnumSwitch">
+            <summary>
+            Switch for the value of a enuration.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.EnumSwitch.#ctor(System.String,System.String,System.Type)">
+            <summary>
+            Switch for the value of a enuration.
+            </summary>
+            <param name="shortHelp">Short help for the argument overview</param>
+            <param name="help">Long help for the arguent usage</param>
+            <param name="enumeration">Type of the enumeration</param>
+        </member>
+        <member name="M:Rug.Cmd.EnumSwitch.Reset">
+            <summary>
+            Resets the argument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.EnumSwitch.SetValue(System.String)">
+            <summary>
+            Sets the value of this switch. it will attempt to parse the enum from the enumeration type.
+            </summary>
+            <param name="value">string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="T:Rug.Cmd.StringArgument">
+            <summary>
+            Collects the next imediate argument is uses as its value
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.StringArgument.#ctor(System.String,System.String,System.String)">
+            <summary>
+            If defined the next imediate argument is uses as its value
+            </summary>
+            <param name="name">symbol name for the string in the arguments list readout. e.g. /?</param>
+            <param name="shortHelp">Short help for the argument overview</param>
+            <param name="help">Long help for the arguent usage</param>
+        </member>
+        <member name="M:Rug.Cmd.StringArgument.Reset">
+            <summary>
+            Resets the argument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.StringArgument.SetValue(System.String)">
+            <summary>
+            Sets the string value of this switch
+            </summary>
+            <param name="value">string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="T:Rug.Cmd.OptionalStringArgument">
+            <summary>
+            If defined and the next imediate argument is not a switch then it is used as its value
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.OptionalStringArgument.#ctor(System.String,System.String,System.String)">
+            <summary>
+            If defined an the next imediate argument is not a switch then it is uses as its value
+            </summary>
+            <param name="name">symbol name for the string in the arguments list readout. e.g. /?</param>
+            <param name="shortHelp">Short help for the argument overview</param>
+            <param name="help">Long help for the arguent usage</param>
+        </member>
+        <member name="M:Rug.Cmd.OptionalStringArgument.Reset">
+            <summary>
+            Resets the argument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.OptionalStringArgument.SetValue(System.String)">
+            <summary>
+            Sets the string value of this switch
+            </summary>
+            <param name="value">string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="T:Rug.Cmd.CsvArgument">
+            <summary>
+            Turns a CSV Argument string into a list of strings
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.CsvArgument.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Turns a CSV Argument string into a list of strings
+            </summary>
+            <param name="name">symbol name for the string in the arguments list readout. e.g. /?</param>
+            <param name="shortHelp">Short help for the argument overview</param>
+            <param name="help">Long help for the arguent usage</param>
+        </member>
+        <member name="M:Rug.Cmd.CsvArgument.Reset">
+            <summary>
+            Resets the argument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.CsvArgument.SetValue(System.String)">
+            <summary>
+            Sets the value of this switch. will split the supplyed string by the ',' char and put the result in a list
+            </summary>
+            <param name="strValue">CSV string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="T:Rug.Cmd.StringListArgument">
+            <summary>
+            Once defiend will collect strings untill escaped by another switch
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.StringListArgument.Value">
+            <summary>
+            List of al the strings gathered by this StringListArgument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.StringListArgument.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Once defiend will collect strings untill escaped by another switch
+            </summary>
+            <param name="name">symbol name for the string in the arguments list readout. e.g. /?</param>
+            <param name="shortHelp">Short help for the argument overview</param>
+            <param name="help">Long help for the arguent usage</param>
+        </member>
+        <member name="M:Rug.Cmd.StringListArgument.Reset">
+            <summary>
+            Resets the argument
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.StringListArgument.SetValue(System.String)">
+            <summary>
+            Adds the string to the list
+            </summary>
+            <param name="value">string to add</param>
+            <returns>true</returns>
+        </member>
+        <member name="P:Rug.Cmd.BaseArgument.ShortHelp">
+            <summary>
+            Gets the short help string 
+            This is the string that is seen when the user is show a overview of all the arguments
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.BaseArgument.Help">
+            <summary>
+            Gets the long help string 
+            This is the string that is seen when the user is show the spacific usage for this argument
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.BaseArgument.Defined">
+            <summary>
+            Gets or sets a value indicating whether this argument was defiend in the parsed command line
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.BaseArgument.ObjectValue">
+            <summary>
+            Get the object value of this argument 
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.BaseArgument.Reset">
+            <summary>
+            Undefines the argument and resets it to its default value
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.BaseArgument.ArgumentString">
+            <summary>
+            Get short string for the command line usage readout
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.BaseArgument.Parse(Rug.Cmd.ArgumentParser,System.String,System.String[],System.Int32@)">
+            <summary>
+            Parse values from arguments array
+            </summary>
+            <param name="parser">the parser that is currently parsing this argument</param>
+            <param name="key">the key that matched</param>
+            <param name="arguments">the full arguments array</param>
+            <param name="index">the current arguemnt index</param>
+            <returns>true if this argument should now become the current argument, otherwise false</returns>
+        </member>
+        <member name="M:Rug.Cmd.BaseArgument.SetValue(System.String)">
+            <summary>
+            Set the value of this argument
+            </summary>
+            <param name="value">string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="T:Rug.Cmd.IArgumentValue">
+            <summary>
+            Base interface for all ArgumentParser Arguemnts
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.IArgumentValue.ArgumentString">
+            <summary>
+            Get short string for the command line usage readout
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IArgumentValue.ShortHelp">
+            <summary>
+            Gets the short help string 
+            This is the string that is seen when the user is show a overview of all the arguments
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IArgumentValue.Help">
+            <summary>
+            Gets the long help string 
+            This is the string that is seen when the user is show the spacific usage for this argument
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IArgumentValue.Defined">
+            <summary>
+            Gets or sets a value indicating whether this argument was defiend in the parsed command line
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.IArgumentValue.SetValue(System.String)">
+            <summary>
+            Set the value of this argument
+            </summary>
+            <param name="value">string value</param>
+            <returns>true if the value was parsed</returns>
+        </member>
+        <member name="P:Rug.Cmd.IArgumentValue.ObjectValue">
+            <summary>
+            Get the object value of this argument 
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.IArgumentValue.Parse(Rug.Cmd.ArgumentParser,System.String,System.String[],System.Int32@)">
+            <summary>
+            Parse values from arguments array
+            </summary>
+            <param name="parser">the parser that is currently parsing this arguemnt</param>
+            <param name="key">the key that matched</param>
+            <param name="arguments">the full arguments array</param>
+            <param name="index">the current arguemnt index</param>
+            <returns>true if this argument should now become the current argument, otherwise false</returns>
+        </member>
+        <member name="M:Rug.Cmd.IArgumentValue.Reset">
+            <summary>
+            Undefines the argument and resets it to its default value
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.MaxLengthPadded(System.String,System.Int32,System.Char,System.String)">
+            <summary>
+            Trim or pad a string to a max length
+            </summary>
+            <param name="str">the string to trim / pad</param>
+            <param name="totalWidth">the total length of the string</param>
+            <param name="paddingChar">the char to be used as a padding char</param>
+            <param name="appendIfCut">the string to append if the string was cut</param>
+            <returns>a trimmed or padded string</returns>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.MaxLengthLeftPadded(System.String,System.Int32,System.Char,System.String)">
+            <summary>
+            Trim or pad a string to a max length and making the string left alligned
+            </summary>
+            <param name="str">the string to trim / pad</param>
+            <param name="totalWidth">the total length of the string</param>
+            <param name="paddingChar">the char to be used as a padding char</param>
+            <param name="appendIfCut">the string to append if the string was cut</param>
+            <returns>a trimmed or padded string</returns>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.GetMemStringFromBytes(System.Int64,System.Int32)">
+            <summary>
+            Format bytes as string e.g 256KB
+            </summary>
+            <param name="bytes">number of bytes</param>
+            <param name="maxLength">max string length</param>
+            <returns>bytes formatted as a string</returns>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.GetMemStringFromBytes(System.Int64,System.Int32,System.Boolean)">
+            <summary>
+            Format bytes as string e.g 256 KB
+            </summary>
+            <param name="bytes">number of bytes</param>
+            <param name="maxLength">max string length</param>
+            <param name="space">include a space char inbetween the number and the scale</param>
+            <returns>bytes formatted as a string</returns>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.GetMemStringFromBytes(System.Int64,System.Boolean)">
+            <summary>
+            Format bytes as string e.g 256 KB
+            </summary>
+            <param name="bytes">number of bytes</param>
+            <param name="space">include a space char inbetween the number and the scale</param>
+            <returns>bytes formatted as a string</returns>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.WriteInfoToConsole(Rug.Cmd.ConsoleVerbosity,System.String,System.String,Rug.Cmd.ConsoleColorExt)">
+            <summary>
+            Write a simple Label : Value string to the console. The value is trimmed / padded to 22 chars 
+            </summary>
+            <param name="verbose">the verbosity level</param>
+            <param name="label">label string</param>
+            <param name="value">value string</param>
+            <param name="valueColor">the color for the value</param>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.WriteInfoToConsole(System.String,System.String,Rug.Cmd.ConsoleColorExt)">
+            <summary>
+            Write a simple Label : Value string to the console. The value is trimmed / padded to 22 chars 
+            </summary>
+            <param name="label">label string</param>
+            <param name="value">value string</param>
+            <param name="valueColor">the color for the value</param>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.WriteInfoToConsole(Rug.Cmd.ConsoleVerbosity,System.String,System.String,Rug.Cmd.ConsoleColorExt,System.Boolean)">
+            <summary>
+            Write a simple Label : Value string to the console
+            </summary>
+            <param name="verbose">the verbosity level</param>
+            <param name="label">label string</param>
+            <param name="value">value string</param>
+            <param name="valueColor">the color for the value</param>
+            <param name="extended">true if the value should not be padded</param>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.WriteInfoToConsole(System.String,System.String,Rug.Cmd.ConsoleColorExt,System.Boolean)">
+            <summary>
+            Write a simple Label : Value string to the console
+            </summary>
+            <param name="label">label string</param>
+            <param name="value">value string</param>
+            <param name="valueColor">the color for the value</param>
+            <param name="extended">true if the value should not be padded</param>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.WriteLogo(System.Int32,System.Int32,System.Int32,System.Int32,Rug.Cmd.ConsoleShade,Rug.Cmd.ConsoleShade,Rug.Cmd.ConsoleShade,System.Boolean,System.Boolean,System.String[])">
+            <summary>
+            Writes a simple scaleable ASCII logo to the console
+            </summary>
+            <param name="x">x position</param>
+            <param name="y">y position</param>
+            <param name="pixWidth">width of each 'pixel'</param>
+            <param name="pixHeight">height of each 'pixel'</param>
+            <param name="fillShade">the shade char to fill with</param>
+            <param name="endShade">the shade char to end with</param>
+            <param name="shadowShade">the shade char to fill shadow with</param>
+            <param name="makeSpace">write a blank space before writing the logo</param>
+            <param name="replaceCursor">replace the cursor to where it was when the write began</param>
+            <param name="lines">the logo lines</param>
+        </member>
+        <member name="M:Rug.Cmd.CmdHelper.WriteLogo(System.Int32,System.Int32,System.Int32,System.Int32,Rug.Cmd.ConsoleShade,Rug.Cmd.ConsoleShade,Rug.Cmd.ConsoleShade,System.String[])">
+            <summary>
+            Writes a simple scaleable ASCII logo to the console
+            </summary>
+            <param name="x">x position</param>
+            <param name="y">y position</param>
+            <param name="pixWidth">width of each 'pixel'</param>
+            <param name="pixHeight">height of each 'pixel'</param>
+            <param name="fillShade">the shade char to fill with</param>
+            <param name="endShade">the shade char to end with</param>
+            <param name="shadowShade">the shade char to fill shadow with</param>
+            <param name="lines">the logo lines</param>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleBuffer">
+            <summary>
+            Thread safe IConsole implementation that stores console output in a buffer
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Rug.Cmd.ConsoleBuffer.TopLine" -->
+        <member name="P:Rug.Cmd.ConsoleBuffer.BottomLine">
+            <summary>
+            The absolute index of the bottom most line
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleBuffer.SplitLines">
+            <summary>
+            If true (default) then lines written to the buffer will be split for the buffer width, else the buffer width is ignored
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleBuffer.Length">
+            <summary>
+            Length of the buffer in chars
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleBuffer.EchoToSystemConsole">
+            <summary>
+            Should console messages be echoed to the system console
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleBuffer.GetLines(System.Int64,System.Int32)">
+            <summary>
+            Get a range of lines from the buffer
+            </summary>
+            <param name="top">The absolute index of the top line to get</param>
+            <param name="count">The maximum line count to get</param>
+            <returns>the lines from the buffer</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleBuffer.GetLines(System.Int64,System.Int32,System.Boolean)">
+            <summary>
+            Get a range of lines from the buffer
+            </summary>
+            <param name="top">The absolute index of the top line to get</param>
+            <param name="count">The maximum line count to get</param>
+            <param name="throwsException">If true then this method throws exceptions</param>
+            <returns>the lines from the buffer</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleBuffer.GetLines(System.Int32,System.Int32)">
+            <summary>
+            Get a range of lines from the buffer
+            </summary>
+            <param name="start">The relitive index of the top line to get</param>
+            <param name="count">The maximum line count to get</param>
+            <returns>the lines from the buffer</returns>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleShade">
+            <summary>
+            Unicode shaded chars
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.Clear">
+            <summary>
+            Clear shade
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.Light">
+            <summary>
+            Lightly dithered shade
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.Dim">
+            <summary>
+            Dimly dithered shade 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.Dark">
+            <summary>
+            Darkly dithered shade 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.Opaque">
+            <summary>
+            Totaly opaque shade 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.HalfTop">
+            <summary>
+            Shade with the top half opaque and the bottom half clear
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.HalfBottom">
+            <summary>
+            Shade with the bottom half opaque and the top half clear
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.HalfLeft">
+            <summary>
+            Shade with the left half opaque and the right half clear
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleShade.HalfRight">
+            <summary>
+            Shade with the right half opaque and the left half clear
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleArrows">
+            <summary>
+            Unicode arrows
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleMathsChars">
+            <summary>
+            For easy lookup of extra unicode maths chars (TODO: add more!)
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleMathsChars.PlusMinus">
+            <summary>
+            ± (Plus-Minus) 
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleLineStyle">
+            <summary>
+            Unicode line styles
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleLineStyle.None">
+            <summary>
+            No lines 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleLineStyle.Single">
+            <summary>
+            Single lines
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleLineStyle.Double">
+            <summary>
+             Double lines 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleLineStyle.Block">
+            <summary>
+            Block Lines
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.LineChars">
+            <summary>
+            Unicode line char lookup 
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleDrawMode">
+            <summary>
+            Not implemented yet
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleChars.GetLineChar(Rug.Cmd.ConsoleLineStyle,Rug.Cmd.LineChars)">
+            <summary>
+            Get unicode line chars 
+            </summary>
+            <param name="style">line style</param>
+            <param name="edge">the edge to get</param>
+            <returns>the unicode char for the line style and egde</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleChars.GetMathsChar(Rug.Cmd.ConsoleMathsChars)">
+            <summary>
+            Gets special Maths unicode chars 
+            </summary>
+            <param name="char">the special char to get</param>
+            <returns>The unicode char.</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleChars.GetArrow(Rug.Cmd.ConsoleArrows)">
+            <summary>
+            Get unicode arrow chars
+            </summary>
+            <param name="arrow">arrow direction</param>
+            <returns>unicode char</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleChars.GetShade(Rug.Cmd.ConsoleShade)">
+            <summary>
+            Get unicode shade chars
+            </summary>
+            <param name="shade">shade</param>
+            <returns>unicode char</returns>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleColorExt">
+            <summary>
+            Specifies constants that define foreground and background colors for the console.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Black">
+            <summary>
+            The color black.
+            </summary>             
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.DarkBlue">
+            <summary>
+            The color dark blue.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.DarkGreen">
+            <summary>
+            The color dark green.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.DarkCyan">
+            <summary>
+            The color dark cyan (dark blue-green).
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.DarkRed">
+            <summary>
+            The color dark red.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.DarkMagenta">
+            <summary>
+            The color dark magenta (dark purplish-red).
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.DarkYellow">
+            <summary>
+            The color dark yellow (ochre).
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Gray">
+            <summary>
+            The color gray.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.DarkGray">
+            <summary>
+            The color dark gray.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Blue">
+            <summary>
+            The color blue.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Green">
+            <summary>
+            The color green.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Cyan">
+            <summary>
+            The color cyan (blue-green).
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Red">
+            <summary>
+            The color red.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Magenta">
+            <summary>
+            The color magenta (purplish-red).
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Yellow">
+            <summary>
+            The color yellow.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.White">
+            <summary>
+            The color white.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleColorExt.Inhreit">
+            <summary>
+            The extra colour, Inhreit allows the ConsoleControl to avoid changing the colours.
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleColorState">
+            <summary>
+            Stores forground and background ConsoleColorExt colours
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleColorState.Inverse">
+            <summary>
+            Gets a ConsoleColorState with the fore and back colours swapped 
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleVerbosity">
+            <summary>
+            The wordiness of the console output
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleVerbosity.Silent">
+            <summary>
+            Entirly silent. 
+            This is a special mode to help compatibility with processed that require there to be no output. 
+            The only exception begin errors and potential warning. 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleVerbosity.Minimal">
+            <summary>
+            Minimal output. 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleVerbosity.Quiet">
+            <summary>
+            Quite output. 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleVerbosity.Normal">
+            <summary>
+            Normal output. 
+            This is the default level.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleVerbosity.Verbose">
+            <summary>
+            Verbose output. 
+            At this level the application should describe almost every action it makes. 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleVerbosity.Debug">
+            <summary>
+            Debug level output. 
+            At this level actions are described in detail. 
+            Additionaly exception reports include stack traces and any inner exceptions. 
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleMessage">
+            <summary>
+            Console message type
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleMessage.Prompt">
+            <summary>
+            User prompt message
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleMessage.Error">
+            <summary>
+            Error message. 
+            When ConsoleExt.IsBuildMode is true error messages are formatted as MSVS errors. 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleMessage.Warning">
+            <summary>
+            Warning message. 
+            When ConsoleExt.IsBuildMode is true error messages are formatted as MSVS warnings/errors.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleMessage.Exception">
+            <summary>
+            Exception report. 
+            When ConsoleExt.IsBuildMode is true exceptions are formatted as MSVS errors.
+            When ConsoleExt.Verbosity is set to ConsoleVerbosity.Debug the report will include the stack trace and any inner exceptions.
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleExt">
+            <summary>
+            Extented Console
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.ApplicationBuildReportPrefix">
+            <summary>
+            Gets or sets the prefix for errors and warnings. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.Verbosity">
+            <summary>
+            Gets or sets the level of wordiness of the applications output
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.DefaultPromptAnswer">
+            <summary>
+            Gets or sets the level of wordiness of the applications output
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.UseDefaultPromptAnswer">
+            <summary>
+            Gets or sets the value indicating the the DefaultPromptAnswer will be used in the case of a confirm prompt
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.WarningsAsErrors">
+            <summary>
+            Gets or sets the value indicating that all warnings should be reported as MSVS build errors/warnings at all. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.ReportWarnings">
+            <summary>
+            Gets or sets the value indicating that all warnings should be reported as MSVS build errors/warnings at all. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.IsBuildMode">
+            <summary>
+            Gets or sets the value indicating whether the applications console output should be formatted to comply with MSVS project build.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.CanManipulateBuffer">
+            <summary>
+            True if the console buffer write position can be manualy moved or rolled back.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.BufferWidth">
+            <summary>
+            Gets or sets the width of the buffer area if its available. 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.BufferHeight">
+            <summary>
+            Gets or sets the height of the buffer area if its available.  
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.CursorLeft">
+            <summary>
+            Gets or sets the column position of the cursor within the buffer area.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.CursorTop">
+            <summary>
+            Gets or sets the row position of the cursor within the buffer area.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.CursorSize">
+            <summary>
+            Gets or sets the height of the cursor within a character cell.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.Title">
+            <summary>
+            Gets or sets the title to display in the console title bar.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.Theme">
+            <summary>
+            Colour Theme
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.ForegroundColor">
+            <summary>
+            Gets or sets the foreground color for the current write position.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.BackgroundColor">
+            <summary>
+            Gets or sets the background color for the current write position.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.ForegroundThemeColor">
+            <summary>
+            Sets the foreground colour for the current write position to the value of the the theme color.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.BackgroundThemeColor">
+            <summary>
+            Sets the background colour for the current write position to the value of the the theme color.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.ResetColor">
+            <summary>
+            Reset the colors
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleExt.ColorState">
+            <summary>
+            Gets or sets the current console colour state
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.SetCursorPosition(System.Int32,System.Int32)">
+            <summary>
+            Sets the position of the cursor.
+            </summary>
+            <param name="left">The column position of the cursor.</param>
+            <param name="top">The row position of the cursor.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Clear">
+            <summary>
+            Clears the console buffer and corresponding console window of display information.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Read">
+            <summary>
+            Reads the next character from the standard input stream.
+            </summary>
+            <returns>The next character from the input stream, or negative one (-1) if there are currently no more characters to be read.</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.ReadKey">
+            <summary>
+            Obtains the next character or function key pressed by the user. The pressed key is displayed in the console window.
+            </summary>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.ReadKey(System.Boolean)">
+            <summary>
+            Obtains the next character or function key pressed by the user. The pressed key is optionally displayed in the console window.
+            </summary>
+            <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.ReadLine">
+            <summary>
+            Reads the next line of characters from the standard input stream.
+            </summary>
+            <returns>The next line of characters from the input stream, or null if no more lines are available.</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.PromptForKey(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Prompt for key input 
+            </summary>
+            <param name="message">message to display</param>
+            <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
+            <param name="throwException">Should this method throw an exception if key input is not possible</param>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.PromptForLine(System.String,System.Boolean)">
+            <summary>
+            Prompt for line input 
+            </summary>
+            <param name="message">message to display</param>
+            <param name="throwException">Should this method throw an exception if key input is not possible</param>
+            <returns>The next line of characters from the input stream, or null if no more lines are available.</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.ShouldWrite(Rug.Cmd.ConsoleVerbosity)">
+            <summary>
+            Check if a massage would be written
+            </summary>
+            <param name="verbosity">level to check against</param>
+            <returns>true if the ConsoleVerbosity supplyed would result in a message in the current context</returns>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Write(System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Write(Rug.Cmd.ConsoleVerbosity,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Write(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Write(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Write(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.Write(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine(Rug.Cmd.ConsoleVerbosity)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine(System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine(Rug.Cmd.ConsoleVerbosity,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteLine(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteWrapped(Rug.Cmd.ConsoleThemeColor,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write text as wrapped text within a fixed width
+            </summary>
+            <param name="colour">color to write in</param>
+            <param name="message">the text to write</param>
+            <param name="paddingLeft">margin at the left</param>
+            <param name="paddingRight">margin at the right</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteWrapped(Rug.Cmd.ConsoleColorExt,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write text as wrapped text within a fixed width
+            </summary>
+            <param name="colour">color to write in</param>
+            <param name="message">the text to write</param>
+            <param name="paddingLeft">margin at the left</param>
+            <param name="paddingRight">margin at the right</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WritePrompt(System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WritePrompt(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>        
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WritePrompt(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>        
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteError(System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteError(System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="id">id for the error</param>
+            <param name="sourceFile">a path to the file where the error can be located</param>
+            <param name="line">the line in the file where the error occured</param>
+            <param name="character">the character offset from the start of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteError(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteError(Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteWarning(System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteWarning(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteWarning(Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteWarning(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>        
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the warning occured</param>
+            <param name="character">the character offset from the warning of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteWarning(Rug.Cmd.ConsoleColorExt,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>        
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the warning occured</param>
+            <param name="character">the character offset from the warning of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteException(System.Int32,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteException(System.Int32,System.String,System.Int32,System.Int32,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteException(System.Int32,System.String,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="title">title text for message</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteException(System.Int32,System.String,System.Int32,System.Int32,System.String,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="title">title text for message</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteStackTrace(System.String)">
+            <summary>
+            Write a stack trace string to the console
+            </summary>
+            <param name="trace">trace string</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteInterpreted(System.String)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="buffer">formated buffer</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteInterpreted(System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteInterpreted(Rug.Cmd.ConsoleThemeColor,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="colour">initial colour</param>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteInterpreted(Rug.Cmd.ConsoleColorExt,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="colour">initial colour</param>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.ConsoleExt.WriteInterpretedLine(System.String)">
+            <summary>
+            Write a interpreted line buffer
+            </summary>
+            <param name="buffer">formated buffer</param>
+        </member>
+        <member name="T:Rug.Cmd.Colors.ConsoleColorDefaultThemes">
+            <summary>
+            Built in color themes. 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.Colors.ConsoleColorDefaultThemes.None">
+            <summary>
+            No theme
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.Colors.ConsoleColorDefaultThemes.HighContrast">
+            <summary>
+            High contrast theme 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.Colors.ConsoleColorDefaultThemes.Simple">
+            <summary>
+            Simple muted theme
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.Colors.ConsoleColorDefaultThemes.Colorful">
+            <summary>
+            Colorful theme 
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorTheme.Load(System.ConsoleColor,System.String)">
+            <summary>
+            Load theme from a file path and for a given background color 
+            </summary>
+            <param name="backgroundColour">background color for the theme</param>
+            <param name="path">the path of the theme to load</param>
+            <returns>the console theme</returns>
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorTheme.Load(System.ConsoleColor,System.IO.Stream)">
+            <summary>
+            Load theme from a stream and for a given background color 
+            </summary>
+            <param name="backgroundColour">background color for the theme</param>
+            <param name="stream">the stream that contians the color theme</param>
+            <returns>the console theme</returns>	
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorTheme.Load(System.ConsoleColor,System.Type,System.String)">
+            <summary>
+            Load an embeded theme for a given background color 
+            </summary>
+            <param name="backgroundColour">background color for the theme</param>
+            <param name="type">a type in the same assembly and namespace as the theme to load</param>
+            <param name="path">the name of the embeded color theme</param>
+            <returns>the console theme</returns>	
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorTheme.Load(Rug.Cmd.Colors.ConsoleColorDefaultThemes)">
+            <summary>
+            Load a default theme using the current color context 
+            </summary>
+            <param name="theme">default theme from the default theme enumeration</param>
+            <returns>the console theme</returns>	
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorTheme.Load(System.ConsoleColor,System.ConsoleColor,Rug.Cmd.Colors.ConsoleColorDefaultThemes)">
+            <summary>
+            Load a default theme 
+            </summary>
+            <param name="foregroundColour">the foreground color</param>
+            <param name="backgroundColour">the background color</param>
+            <param name="theme">the default color theme to load</param>
+            <returns>the console theme</returns>
+        </member>
+        <member name="P:Rug.Cmd.Colors.ConsoleColorTheme.Item(Rug.Cmd.ConsoleThemeColor)">
+            <summary>
+            Gets or sets the ConsoleColor for a given ConsoleThemeColor within this theme 
+            </summary>
+            <param name="color">the console theme color</param>
+            <returns>a console color</returns>
+        </member>
+        <member name="T:Rug.Cmd.Colors.ConsoleColorThemeDirectory">
+            <summary>
+            Holds a dictionary of console color themes keyed by background color. 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Colors.ConsoleColorThemeDirectory.Item(System.ConsoleColor)">
+            <summary>
+            Get console color theme for a given background color
+            </summary>
+            <param name="background">the background color to use as the key to lookup the correct theme</param>
+            <returns>the console color them for the background color</returns>
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorThemeDirectory.Read(System.String)">
+            <summary>
+            Read a lookup from a file path
+            </summary>
+            <param name="path">the file path to read from</param>
+            <returns>a lookup of console color themes keyed by background color</returns>
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorThemeDirectory.Read(System.IO.Stream)">
+            <summary>
+            Read a lookup from a stream 
+            </summary>
+            <param name="stream">the stream containing the lookup</param>
+            <returns>a lookup of console color themes keyed by background color</returns>
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorThemeDirectory.Write(System.String)">
+            <summary>
+            Write the lookup to a file
+            </summary>
+            <param name="path">the path to write too</param>
+        </member>
+        <member name="M:Rug.Cmd.Colors.ConsoleColorThemeDirectory.Write(System.IO.Stream)">
+            <summary>
+            Write the lookup to a stream
+            </summary>
+            <param name="stream">a stream to write to</param>
+        </member>
+        <member name="P:Rug.Cmd.ConsoleLogger.EchoToInnerConsole">
+            <summary>
+            Should console messages be echoed to the system console
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.Gui.ConsoleProgressBar.Render">
+            <summary>
+            Render the bar
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.Gui.ConsoleProgressBar.WriteEndCap(System.Boolean,Rug.Cmd.Gui.ConsoleProgressBarCaps)">
+            <summary>
+            Write an end cap char
+            </summary>
+            <param name="leftSide">true if for the left side of the bar</param>
+            <param name="caps">the bar cap type</param>
+        </member>
+        <member name="T:Rug.Cmd.Helper">
+            <summary>
+            Version 1.2.0.0
+            </summary>
+            <summary>
+            Version 1.0.0.0
+            </summary>
+            <summary>
+            Version 1.0.0.0
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.ApplicationBuildReportPrefix">
+            <summary>
+            Gets or sets the prefix for errors and warnings. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.Verbosity">
+            <summary>
+            Gets or sets the level of wordiness of the applications output
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.DefaultPromptAnswer">
+            <summary>
+            Gets or sets the default prompt answer i.e the yes / no for any confirm prompt 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.UseDefaultPromptAnswer">
+            <summary>
+            Gets or sets the value indicating the the DefaultPromptAnswer will be used in the case of a confirm prompt
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.WarningsAsErrors">
+            <summary>
+            Gets or sets the value indicating that all warnings should be handled as errors. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.ReportWarnings">
+            <summary>
+            Gets or sets the value indicating that all warnings should be reported as MSVS build errors/warnings at all. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.IsBuildMode">
+            <summary>
+            Gets or sets the value indicating whether the applications console output should be formatted to comply with MSVS project build.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.CanManipulateBuffer">
+            <summary>
+            True if the console buffer write position can be manualy moved or rolled back.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.BufferWidth">
+            <summary>
+            Gets or sets the width of the buffer area if its available. 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.BufferHeight">
+            <summary>
+            Gets or sets the height of the buffer area if its available.  
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.CursorLeft">
+            <summary>
+            Gets or sets the column position of the cursor within the buffer area.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.CursorTop">
+            <summary>
+            Gets or sets the row position of the cursor within the buffer area.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.CursorSize">
+            <summary>
+            Gets or sets the height of the cursor within a character cell.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.Title">
+            <summary>
+            Gets or sets the title to display in the console title bar.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.Theme">
+            <summary>
+            Gets or sets the current ConsoleColorTheme
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.ForegroundColor">
+            <summary>
+            Gets or sets the foreground color for the current write position.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.BackgroundColor">
+            <summary>
+            Gets or sets the background color for the current write position.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.ForegroundThemeColor">
+            <summary>
+            Sets the foreground colour for the current write position to the value of the the theme color.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.BackgroundThemeColor">
+            <summary>
+            Sets the background colour for the current write position to the value of the the theme color.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.ColorState">
+            <summary>
+            Gets or sets the current console colour state
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.ResetColor">
+            <summary>
+            Reset the colors
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.SetCursorPosition(System.Int32,System.Int32)">
+            <summary>
+            Sets the position of the cursor.
+            </summary>
+            <param name="left">The column position of the cursor.</param>
+            <param name="top">The row position of the cursor.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Clear">
+            <summary>
+            Clears the console buffer and corresponding console window of display information.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.IConsole.KeyAvailable">
+            <summary>
+            Gets a value indicating whether a key press is available in the input stream.
+            returns true if a key press is available; otherwise, false.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Read">
+            <summary>
+            Reads the next character from the standard input stream.
+            </summary>
+            <returns>The next character from the input stream, or negative one (-1) if there are currently no more characters to be read.</returns>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.ReadKey">
+            <summary>
+            Obtains the next character or function key pressed by the user. The pressed key is displayed in the console window.
+            </summary>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.ReadKey(System.Boolean)">
+            <summary>
+            Obtains the next character or function key pressed by the user. The pressed key is optionally displayed in the console window.
+            </summary>
+            <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.ReadLine">
+            <summary>
+            Reads the next line of characters from the standard input stream.
+            </summary>
+            <returns>The next line of characters from the input stream, or null if no more lines are available.</returns>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.PromptForKey(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Prompt for key input 
+            </summary>
+            <param name="message">message to display</param>
+            <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
+            <param name="throwException">Should this method throw an exception if key input is not possible</param>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.PromptForLine(System.String,System.Boolean)">
+            <summary>
+            Prompt for line input 
+            </summary>
+            <param name="message">message to display</param>
+            <param name="throwException">Should this method throw an exception if key input is not possible</param>
+            <returns>The next line of characters from the input stream, or null if no more lines are available.</returns>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.ShouldWrite(Rug.Cmd.ConsoleVerbosity)">
+            <summary>
+            Check if a massage would be written
+            </summary>
+            <param name="verbosity">level to check against</param>
+            <returns>true if the ConsoleVerbosity supplyed would result in a message in the current context</returns>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Write(System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Write(Rug.Cmd.ConsoleVerbosity,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Write(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Write(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Write(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.Write(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine(Rug.Cmd.ConsoleVerbosity)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="level">The verbosity level.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine(System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine(Rug.Cmd.ConsoleVerbosity,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteLine(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteWrapped(Rug.Cmd.ConsoleColorExt,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write text as wrapped text within a fixed width
+            </summary>
+            <param name="colour">color to write in</param>
+            <param name="message">the text to write</param>
+            <param name="paddingLeft">margin at the left</param>
+            <param name="paddingRight">margin at the right</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteWrapped(Rug.Cmd.ConsoleThemeColor,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write text as wrapped text within a fixed width
+            </summary>
+            <param name="colour">theme color to write in</param>
+            <param name="message">the text to write</param>
+            <param name="paddingLeft">margin at the left</param>
+            <param name="paddingRight">margin at the right</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WritePrompt(System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WritePrompt(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>        
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WritePrompt(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>        
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteError(System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteError(System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="id">id for the error</param>
+            <param name="sourceFile">a path to the file where the error can be located</param>
+            <param name="line">the line in the file where the error occured</param>
+            <param name="character">the character offset from the start of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteError(Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteError(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteWarning(System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteWarning(Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteWarning(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteWarning(Rug.Cmd.ConsoleColorExt,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>        
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the warning occured</param>
+            <param name="character">the character offset from the warning of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteWarning(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>        
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the warning occured</param>
+            <param name="character">the character offset from the warning of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteException(System.Int32,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteException(System.Int32,System.String,System.Int32,System.Int32,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteException(System.Int32,System.String,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="title">title text for message</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteException(System.Int32,System.String,System.Int32,System.Int32,System.String,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="title">title text for message</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteStackTrace(System.String)">
+            <summary>
+            Write a stack trace string to the console
+            </summary>
+            <param name="trace">trace string</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteInterpreted(System.String)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="buffer">formated buffer</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteInterpreted(System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteInterpreted(Rug.Cmd.ConsoleColorExt,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="colour">initial colour</param>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteInterpreted(Rug.Cmd.ConsoleThemeColor,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="colour">initial colour</param>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.IConsole.WriteInterpretedLine(System.String)">
+            <summary>
+            Write a interpreted line buffer
+            </summary>
+            <param name="buffer">formated buffer</param>
+        </member>
+        <member name="T:Rug.Cmd.ConsoleThemeColor">
+            <summary>
+            Specifies constants that define foreground and background colors for console theme elements.
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.AppBackground">
+            <summary>
+            Application Background
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.TitleText">
+            <summary>
+            Default title text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.TitleText1">
+            <summary>
+            Alt 1 title text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.TitleText2">
+            <summary>
+            Alt 2 title text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.TitleText3">
+            <summary>
+            Alt 2 title text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.Text">
+            <summary>
+            Default text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.Text1">
+            <summary>
+            Alt 1 text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.Text2">
+            <summary>
+            Alt 2 text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.Text3">
+            <summary>
+            Alt 2 text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.SubText">
+            <summary>
+            Default sub text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.SubText1">
+            <summary>
+            Alt 1 sub text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.SubText2">
+            <summary>
+            Alt 2 sub text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.SubText3">
+            <summary>
+            Alt 2 sub text colour
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.ErrorColor1">
+            <summary>
+            Error text 1 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.ErrorColor2">
+            <summary>
+            Error text 2 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.WarningColor1">
+            <summary>
+            Warning text 1 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.WarningColor2">
+            <summary>
+            Warning text 2 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.PromptColor1">
+            <summary>
+            Prompt text 1 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.PromptColor2">
+            <summary>
+            Prompt text 2
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.TextGood">
+            <summary>
+            Colour for things that are 'Good' 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.SubTextGood">
+            <summary>
+            Sub text colour for things that are 'Good' 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.TextNutral">
+            <summary>
+            Colour for things that are 'Nutral' 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.SubTextNutral">
+            <summary>
+            Sub text colour for things that are 'Nutral' 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.TextBad">
+            <summary>
+            Colour for things that are 'Bad' 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.SubTextBad">
+            <summary>
+            Sub text colour for things that are 'Bad' 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.PanelBackground">
+            <summary>
+            Panel Background
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.PanelEdges">
+            <summary>
+            Panel Edges 
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.PanelTitleText">
+            <summary>
+            Panel Title Text
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.PanelText">
+            <summary>
+            Panel Text
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.PanelSubText">
+            <summary>
+            Panel Sub Text
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.ControlBackground">
+            <summary>
+            Control Background
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.ConsoleThemeColor.ControlText">
+            <summary>
+            Control Text
+            </summary>
+        </member>
+        <member name="T:Rug.Cmd.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_AboutScreen_Title">
+            <summary>
+              Looks up a localized string similar to Show application usage and about screen.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_AboutScreen_Usage">
+            <summary>
+              Looks up a localized string similar to Usage.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_Add_AllreadyContainsKey">
+            <summary>
+              Looks up a localized string similar to Argument parser already contains a argument with the name &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_Add_CannotMatchSymbolForKey">
+            <summary>
+              Looks up a localized string similar to Cannot match symbol for argument key &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_Add_SymbolInUse">
+            <summary>
+              Looks up a localized string similar to The symbol &apos;{0}&apos; is already in use.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_Documentation_NameForPath">
+            <summary>
+              Looks up a localized string similar to path.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_DocumentationWrittenToPath">
+            <summary>
+              Looks up a localized string similar to Documentation written to path &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_DocumentGenerator_Title">
+            <summary>
+              Looks up a localized string similar to Write this applications documentation to a text file.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_InvalidArgument">
+            <summary>
+              Looks up a localized string similar to Invalid argument &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ArgumentParser_InvalidSwitch">
+            <summary>
+              Looks up a localized string similar to Invalid switch {0}.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.Commads_CommandNotFound">
+            <summary>
+              Looks up a localized string similar to Command not found.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleControl_CtrlOutOfBounds">
+            <summary>
+              Looks up a localized string similar to Console control out of bounds.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleExt_BufferHeight_Error">
+            <summary>
+              Looks up a localized string similar to It is not possible to set the console buffer height in either Build mode or when ManipulateBuffer is false..
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleExt_BufferWidth_Error">
+            <summary>
+              Looks up a localized string similar to It is not possible to set the console buffer width in either Build mode or when ManipulateBuffer is false..
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleExt_CannotAcceptInput">
+            <summary>
+              Looks up a localized string similar to Cannot accept key input during build mode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleExt_CursorManipulate_GetSetError">
+            <summary>
+              Looks up a localized string similar to It is not possible to get or set the console cursor position in either Build mode or when ManipulateBuffer is false..
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleInterpreter_ParseColour_Error">
+            <summary>
+              Looks up a localized string similar to Invalid color tag &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleInterpreter_UnexpectedEndTag">
+            <summary>
+              Looks up a localized string similar to Unexpected end tag at index {0}.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.ConsoleProgressBar_ValueOfMax">
+            <summary>
+              Looks up a localized string similar to {0} of {1}.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.EnumSwitch_Posible">
+            <summary>
+              Looks up a localized string similar to Possible values are.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.EnumSwitch_Unknown">
+            <summary>
+              Looks up a localized string similar to Unknown enumeration key &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.Error_0010">
+            <summary>
+              Looks up a localized string similar to Error while writing documentation to the path &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.Package_FileCouldNotBeAdded">
+            <summary>
+              Looks up a localized string similar to File could not be added to package.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.Strings.Package_ResolveError">
+            <summary>
+              Looks up a localized string similar to Could not resolve path &apos;{0}&apos;. Embedded packages must be explicitly loaded..
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.RugConsole.Sys">
+            <summary>
+            Static refrence to a instance of IConsole that is the system console
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.RugConsole.App">
+            <summary>
+            Static refrence to a instance of IConsole that is the application console
+            </summary>
+        </member>
+        <member name="F:Rug.Cmd.RugConsole.IsSystemConsoleLoaded">
+            <summary>
+            True if System.Console is present (not available in Win8 RT)
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.ApplicationBuildReportPrefix">
+            <summary>
+            Gets or sets the prefix for errors and warnings. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.Verbosity">
+            <summary>
+            Gets or sets the level of wordiness of the applications output
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.DefaultPromptAnswer">
+            <summary>
+            Gets or sets the default prompt answer i.e the yes / no for any confirm prompt 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.UseDefaultPromptAnswer">
+            <summary>
+            Gets or sets the value indicating the the DefaultPromptAnswer will be used in the case of a confirm prompt
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.WarningsAsErrors">
+            <summary>
+            Gets or sets the value indicating that all warnings should be handled as errors. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.ReportWarnings">
+            <summary>
+            Gets or sets the value indicating that all warnings should be reported as MSVS build errors/warnings at all. 
+            To be used in conjunction with ConsoleExt.IsBuildMode.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.IsBuildMode">
+            <summary>
+            Gets or sets the value indicating whether the applications console output should be formatted to comply with MSVS project build.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.CanManipulateBuffer">
+            <summary>
+            True if the console buffer write position can be manualy moved or rolled back.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.BufferWidth">
+            <summary>
+            Gets or sets the width of the buffer area if its available. 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.BufferHeight">
+            <summary>
+            Gets or sets the height of the buffer area if its available.  
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.CursorLeft">
+            <summary>
+            Gets or sets the column position of the cursor within the buffer area.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.CursorTop">
+            <summary>
+            Gets or sets the row position of the cursor within the buffer area.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.CursorSize">
+            <summary>
+            Gets or sets the height of the cursor within a character cell.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.Theme">
+            <summary>
+            Gets or sets the current colour theme 
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.ForegroundColor">
+            <summary>
+            Gets or sets the foreground color for the current write position.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.BackgroundColor">
+            <summary>
+            Gets or sets the background color for the current write position.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.ForegroundThemeColor">
+            <summary>
+            Sets the foreground colour for the current write position to the value of the the theme color.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.BackgroundThemeColor">
+            <summary>
+            Sets the background colour for the current write position to the value of the the theme color.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.ColorState">
+            <summary>
+            Gets or sets the current console colour state
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.ResetColor">
+            <summary>
+            Reset the colors
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.SetCursorPosition(System.Int32,System.Int32)">
+            <summary>
+            Sets the position of the cursor.
+            </summary>
+            <param name="left">The column position of the cursor.</param>
+            <param name="top">The row position of the cursor.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Clear">
+            <summary>
+            Clears the console buffer and corresponding console window of display information.
+            </summary>
+        </member>
+        <member name="P:Rug.Cmd.RugConsole.KeyAvailable">
+            <summary>
+            Gets a value indicating whether a key press is available in the input stream.
+            returns true if a key press is available; otherwise, false.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Read">
+            <summary>
+            Reads the next character from the standard input stream.
+            </summary>
+            <returns>The next character from the input stream, or negative one (-1) if there are currently no more characters to be read.</returns>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.ReadKey">
+            <summary>
+            Obtains the next character or function key pressed by the user. The pressed key is displayed in the console window.
+            </summary>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.ReadKey(System.Boolean)">
+            <summary>
+            Obtains the next character or function key pressed by the user. The pressed key is optionally displayed in the console window.
+            </summary>
+            <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.ReadLine">
+            <summary>
+            Reads the next line of characters from the standard input stream.
+            </summary>
+            <returns>The next line of characters from the input stream, or null if no more lines are available.</returns>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.PromptForKey(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Prompt for key input 
+            </summary>
+            <param name="message">message to display</param>
+            <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
+            <param name="throwException">Should this method throw an exception if key input is not possible</param>
+            <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more SHIFT, ALT, or CTRL modifier keys was pressed simultaneously with the console key.</returns>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.PromptForLine(System.String,System.Boolean)">
+            <summary>
+            Prompt for line input 
+            </summary>
+            <param name="message">message to display</param>
+            <param name="throwException">Should this method throw an exception if key input is not possible</param>
+            <returns>The next line of characters from the input stream, or null if no more lines are available.</returns>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.ShouldWrite(Rug.Cmd.ConsoleVerbosity)">
+            <summary>
+            Check if a massage would be written
+            </summary>
+            <param name="verbosity">level to check against</param>
+            <returns>true if the ConsoleVerbosity supplyed would result in a message in the current context</returns>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Write(System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Write(Rug.Cmd.ConsoleVerbosity,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Write(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Write(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Write(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.Write(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine(Rug.Cmd.ConsoleVerbosity)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="level">The verbosity level.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine(System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level.
+            </summary>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine(Rug.Cmd.ConsoleVerbosity,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine(Rug.Cmd.ConsoleVerbosity,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the verbosity level specified and in the specified colour.
+            </summary>
+            <param name="level">The verbosity level.</param>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteLine(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Writes the specified string value, followed by the current line terminator, to the standard output stream at the ConsoleVerbosity.Normal level and in the specified colour.
+            </summary>
+            <param name="colour">The theme colour that the string should be written in.</param>        
+            <param name="str">The value to write.</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteWrapped(Rug.Cmd.ConsoleColorExt,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write text as wrapped text within a fixed width
+            </summary>
+            <param name="colour">color to write in</param>
+            <param name="message">the text to write</param>
+            <param name="paddingLeft">margin at the left</param>
+            <param name="paddingRight">margin at the right</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteWrapped(Rug.Cmd.ConsoleThemeColor,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write text as wrapped text within a fixed width
+            </summary>
+            <param name="colour">theme color to write in</param>
+            <param name="message">the text to write</param>
+            <param name="paddingLeft">margin at the left</param>
+            <param name="paddingRight">margin at the right</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WritePrompt(System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WritePrompt(Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>        
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WritePrompt(Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Write a prompt message.
+            If this application is set to build mode then the prompt will be a error.
+            The reading of any keys is the responsibility of the calling program.
+            </summary>        
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteError(System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteError(System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="id">id for the error</param>
+            <param name="sourceFile">a path to the file where the error can be located</param>
+            <param name="line">the line in the file where the error occured</param>
+            <param name="character">the character offset from the start of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteError(Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteError(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a error to the console.
+            If this application is set to build mode the error will be formatted for Visual Studio 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the error</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteWarning(System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteWarning(Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteWarning(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteWarning(Rug.Cmd.ConsoleColorExt,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>        
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the warning occured</param>
+            <param name="character">the character offset from the warning of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteWarning(Rug.Cmd.ConsoleThemeColor,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a error to the console. 
+            If this application is set to build mode the warning will be formatted for Visual Studio.            
+            If the WarningsAsErrors flag has been set to true the warning will be treated as an error. 
+            </summary>
+            <param name="colour">colour</param>
+            <param name="id">id for the warning</param>        
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the warning occured</param>
+            <param name="character">the character offset from the warning of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteException(System.Int32,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteException(System.Int32,System.String,System.Int32,System.Int32,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteException(System.Int32,System.String,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="title">title text for message</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteException(System.Int32,System.String,System.Int32,System.Int32,System.String,System.Exception)">
+            <summary>
+            Write a exception to the console. 
+            </summary>
+            <param name="id">id of the error</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="title">title text for message</param>
+            <param name="ex">exception object</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteStackTrace(System.String)">
+            <summary>
+            Write a stack trace string to the console
+            </summary>
+            <param name="trace">trace string</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleColorExt,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteMessage(Rug.Cmd.ConsoleMessage,Rug.Cmd.ConsoleThemeColor,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Write a message to the console
+            </summary>
+            <param name="type">message type</param>
+            <param name="colour">colour</param>
+            <param name="errorId">id for the error, warning or exception</param>
+            <param name="sourceFile">a path to the file where the warning can be located</param>
+            <param name="line">the line in the file where the exception occured</param>
+            <param name="character">the character offset from the exception causing of the line</param>
+            <param name="str">message</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteInterpreted(System.String)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="buffer">formated buffer</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteInterpreted(System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteInterpreted(Rug.Cmd.ConsoleThemeColor,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="colour">initial colour</param>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteInterpreted(Rug.Cmd.ConsoleColorExt,System.String,System.Int32,System.Int32)">
+            <summary>
+            Write a interpreted buffer int the console
+            </summary>
+            <param name="colour">initial colour</param>
+            <param name="buffer">formated buffer</param>
+            <param name="paddingLeft">margin on the left</param>
+            <param name="paddingRight">margin on the right</param>
+        </member>
+        <member name="M:Rug.Cmd.RugConsole.WriteInterpretedLine(System.String)">
+            <summary>
+            Write a interpreted line buffer
+            </summary>
+            <param name="buffer">formated buffer</param>
+        </member>
+    </members>
+</doc>

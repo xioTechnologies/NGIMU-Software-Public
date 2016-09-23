@@ -1,0 +1,2836 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>ds30Loader</name>
+  </assembly>
+  <members>
+    <member name="T:ds30Loader.clsds30Loader">
+      <summary>
+            This class contain the main funtionality of the ds30 Loader engine.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Loader.BootLoaderProperties">
+      <summary>
+            This structure represents the boot loader properties.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Loader.Response">
+      <summary>
+            Contains the supported responses from the boot loader firmware.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Loader.HelloCharacter">
+      <summary>
+            The hello character
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.Abort">
+      <summary>
+            Aborts the current operation if any.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.CheckInitialized">
+      <summary>
+            Throws an exception if ds30 Loader is not initialized.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.GetExpandedResetCommand(System.UInt32,System.UInt32,System.Boolean,System.String,System.Boolean@)">
+      <summary>
+            Gets the expanded reset command, $PICID $GUIID are expanded to their values.
+            </summary>
+      <param name="piRemoteId">The remote id.</param>
+      <param name="piLocalId">The local id.</param>
+      <param name="pbExtended">If set to <c>true</c> extended frames are assumed.</param>
+      <param name="pstrResetCmd">The reset command.</param>
+      <param name="pbResult">Returns true on success.</param>
+      <returns>The expanded reset command string.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.FindLoader(ds30Loader.clsds30Device,ds30Loader.clsds30Settings,ds30Loader.clsds30Loader.BootLoaderProperties@,System.Int32,System.Boolean@)">
+      <summary>
+            Establishes communication with the boot loader and reads firmware version and device id.
+            </summary>
+      <param name="pobjDevice">The device.</param>
+      <param name="pobjds30Settings">The settings.</param>
+      <param name="pobjBootLoaderInfo">Returns the boot loader info.</param>
+      <param name="iTabLevel">The tab level of the output text.</param>
+      <param name="pbResult">Returns <c>true</c> on success.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.Initialize(System.String,System.Int32,System.Boolean@)">
+      <summary>
+            Initializes the ds30 Loader engine.
+            </summary>
+      <param name="pstrBasePath">Unused, should be set to string.Empty.</param>
+      <param name="piTabLevel">The tab level of the outputted text.</param>
+      <param name="result">Returns <c>true</c> if the initialization was successful.</param>
+      <remarks>During initialization the port plugins are read and the device database is initialized.</remarks>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.InitializePorts(System.String,System.Int32,System.Boolean@)">
+      <summary>
+            Initializes the port plugins.
+            </summary>
+      <param name="pstrBasePath">Unused, should be set to string.Empty.</param>
+      <param name="piTabLevel">The tab level of the outputted text.</param>
+      <param name="result">Returns <c>true</c> if the initialization was successful.</param>
+      <remarks>This function is only called to refresh the port list.</remarks>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.ReadDevice(System.Object[])">
+      <summary>
+            Reads flash and eeprom contents.
+            </summary>
+      <param name="pObjects">The objects.</param>
+      <remarks>Thus function is available to support threaded operation in VB.NET. 
+            A thread entry can't have more than one argument. 
+            The variables passed in the object array must match the <see cref="M:ds30Loader.clsds30Loader.ReadDevice(ds30Loader.clsds30Device,ds30Loader.clsds30Hex,ds30Loader.clsds30Settings,System.Int32,System.Boolean@,System.Boolean@)" /> function argument list.</remarks>
+      <example>
+        <code lang="vbnet">
+                Dim param_obj(5) As Object
+                param_obj(0) = objDevice
+                param_obj(1) = objHex
+                param_obj(2) = objds30Settings
+                param_obj(3) = iTabLevel
+                param_obj(4) = bFlashResult
+                param_obj(5) = bFlashResult
+                Dim worker_thread As New Thread(AddressOf ReadDevice)
+                worker_thread.Start(param_obj)
+            </code>
+      </example>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.ReadDevice(ds30Loader.clsds30Device,ds30Loader.clsds30Hex,ds30Loader.clsds30Settings,System.Int32,System.Boolean@,System.Boolean@)">
+      <summary>
+            Reads flash and eeprom contents.
+            </summary>
+      <param name="pobjDevice">The device to read.</param>
+      <param name="pobjHex">The hex object to store read data in.</param>
+      <param name="pobjds30Settings">The read settings.</param>
+      <param name="iTabLevel">The tab level of text output.</param>
+      <param name="pbFlashResult">Returns <c>true</c> if flash was read succesfully.</param>
+      <param name="pbEeResult">Returns <c>true</c> if eeprom was read succesfully.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.WriteDevice(System.Object[])">
+      <summary>
+            Writes a <see cref="T:ds30Loader.clsds30Hex" /> to a <see cref="T:ds30Loader.clsds30Device" /> using a <see cref="T:ds30Loader.clsds30Settings" />.
+            </summary>
+      <param name="pObjects">The objects.</param>
+      <remarks>Thus function is available to support threaded operation in VB.NET. 
+            A thread entry can't have more than one argument. 
+            The variables passed in the object array must match the <see cref="M:ds30Loader.clsds30Loader.WriteDevice(ds30Loader.clsds30Device,ds30Loader.clsds30Hex,ds30Loader.clsds30Settings,System.Int32,System.Boolean@)" /> function argument list.</remarks>
+      <example>
+        <code lang="vbnet">
+                Dim param_obj(4) As Object
+                param_obj(0) = objDevice
+                param_obj(1) = objHex
+                param_obj(2) = objds30Settings
+                param_obj(3) = iTabLevel
+                param_obj(4) = result
+                Dim worker_thread As New Thread(AddressOf WriteDevice)
+                worker_thread.Start(param_obj)
+            </code>
+      </example>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.WriteDevice(ds30Loader.clsds30Device,ds30Loader.clsds30Hex,ds30Loader.clsds30Settings,System.Int32,System.Boolean@)">
+      <summary>
+            Writes a <see cref="T:ds30Loader.clsds30Hex" /> to a <see cref="T:ds30Loader.clsds30Device" /> using a <see cref="T:ds30Loader.clsds30Settings" />.
+            </summary>
+      <param name="pobjDevice">The device to write to.</param>
+      <param name="pobjHex">The hex file object to write.</param>
+      <param name="pobjds30Settings">The write settings.</param>
+      <param name="iTabLevel">The tab level of the information output.</param>
+      <param name="pbResult">Returns <c>true</c> if the write succeds; otherwise <c>false</c>.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Loader.GetParseSettings(ds30Loader.clsds30Device,System.Int32,System.Int32,ds30Loader.clsds30Settings)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30ParseSettings" /> class.
+            </summary>
+      <param name="piBlSizeP">The boot loader size in pages.</param>
+      <param name="pobjDevice">The device.</param>
+      <param name="piBlPlacementP">The boot loader placement in pages from the end.</param>
+      <param name="pobjSettings">The ds30 settings object to copy parse settings from.</param>*/
+            <returns>An instance of the <see cref="T:ds30Loader.clsds30ParseSettings" /> class</returns></member>
+    <member name="M:ds30Loader.clsds30Loader.GetParseSettings(ds30Loader.clsds30Device,ds30Loader.clsds30Loader.BootLoaderProperties,System.Int32,System.Int32,ds30Loader.clsds30Settings)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30ParseSettings" /> class.
+            </summary>
+      <param name="piBlSizeP">The boot loader size in pages.</param>
+      <param name="pobjDevice">The device.</param>
+      <param name="bootLoaderProperties">The boot loader properties.</param>
+      <param name="piBlPlacementP">The boot loader placement in pages from the end.</param>
+      <param name="pobjSettings">The ds30 settings object to copy parse settings from.</param>*/
+            <returns>An instance of the <see cref="T:ds30Loader.clsds30ParseSettings" /> class</returns></member>
+    <member name="P:ds30Loader.clsds30Loader.version">
+      <summary>
+            Gets the version.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Loader.separateThread">
+      <summary>
+            Gets or sets a value indicating whether ds30 Loader is executed in a separate thread.
+            </summary>
+      <value>
+        <c>true</c> if ds30 Loader is executed in a separate thread; otherwise, <c>false</c>.
+            </value>
+      <remarks>
+            Settings this to true does not mean that ds30 Loader will automatically be run in a separate thread. When set to false Application.DoEvent() is called in loops.
+            </remarks>
+    </member>
+    <member name="T:ds30Loader.NamespaceDoc">
+      <summary>
+            The <see cref="N:ds30Loader" /> namespace contains classes and types that are used to interact with the ds30 Loader and the ds30 Secure boot loaders.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Settings">
+      <summary>
+            This class contains the settings used during read and write operations.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultPortName">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.portName" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultBaudRate">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.baudRate" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultWriteFlash">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.writeFlash" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultWriteEeprom">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.writeEeprom" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultReadFlash">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.readFlash" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultReadEeprom">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.readEeprom" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultFlowControl">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.flowControl" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultStopBits">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.stopBits" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultParity">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.parity" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultRemoteId">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.remoteId" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultLocalId">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.localId" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultCanExtended">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.canExtended" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultCanDlc">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.canDlc" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultAddress">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.address" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultWriteConfigs">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.writeConfigs" />"/&gt; property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultAllowBlOverwrite">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.allowBlOverwrite" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultNoGotoUserApp">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.noGotoUserApp" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultCustomBl">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.customBl" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultCustomBlPlacementP">
+      <summary>
+            Default value for the <see cref="F:ds30Loader.clsds30Settings.defaultCustomBlPlacementP" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultCustomBlSizeP">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.customBlSizeP" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultAutoBaudrate">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.autoBaudrate" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultEchoVerification">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.echoVerification" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultAddChecksum">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.addChecksum" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultDontWriteEmptyPages">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.dontWriteEmptyPages" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultNoGotoBl">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.noGotoBl" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultHelloTimeout">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.helloTimeout" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultPolltime">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.polltime" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultTimeout">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.timeout" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultPortOpenDelay">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.portOpenDelay" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetCommand">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetCommand" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetCommandSequence">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetCommandSequence" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetBaudRate">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetBaudRate" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetDtr">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetDtr" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetRts">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetRts" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetTime">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetTime" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetId">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetId" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetCanDlc">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetCanDlc" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultResetCanExtended">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.resetCanExtended" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultActivateDtr">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.activateDtr" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultActivateRts">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.activateRts" /> property.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Settings.defaultPassword">
+      <summary>
+            Default value for the <see cref="P:ds30Loader.clsds30Settings.password" /> property.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Settings.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30Settings" /> class. All settings default to a disabled/safe value.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Settings.ToString">
+      <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+      <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.portName">
+      <summary>
+            Gets or sets the name of the port to be used for communication with the device.
+            </summary>
+      <value>
+            The name of the port.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.baudRate">
+      <summary>
+            Gets or sets the baud rate.
+            </summary>
+      <value>
+            The baud rate.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.flowControl">
+      <summary>
+            Gets or sets the flow control mode.
+            </summary>
+      <value>
+            The flow control mode.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.stopBits">
+      <summary>
+            Gets or sets the stop bits mode.
+            </summary>
+      <value>
+            The stop bits mode.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.parity">
+      <summary>
+            Gets or sets the parity mode.
+            </summary>
+      <value>
+            The parity mode.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.remoteId">
+      <summary>
+            Gets or sets the id of the device to read from/write to in the CAN or I2C bus.
+            </summary>
+      <value>
+            The remote id.
+            </value>
+      <remarks>This property is only valid for CAN ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.localId">
+      <summary>
+            Gets or sets the CAN id of ds30 Loader application.
+            </summary>
+      <value>
+            The local id.
+            </value>
+      <remarks>This property is only valid for CAN ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.canExtended">
+      <summary>
+            Gets or sets a value indicating whether CAN extended frames should be send/received or not.
+            </summary>
+      <value>
+        <c>true</c> if this instance can extended; otherwise, <c>false</c>.
+            </value>
+      <remarks>This property is only valid for CAN ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.canDlc">
+      <summary>
+            Gets or sets the CAN data lengt code.
+            </summary>
+      <value>
+            The dlc.
+            </value>
+      <remarks>This property is only valid for CAN ports. Not all boot loader firmwares support dlc greater than one.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.address">
+      <summary>
+            Gets or sets the address.
+            </summary>
+      <value>
+            The address. This property is only valid for TCP/IP port.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.writeFlash">
+      <summary>
+            Gets or sets a value indicating whether flash contents from the hex file should be written.
+            </summary>
+      <value>
+        <c>true</c> if the flash memory is written; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.writeEeprom">
+      <summary>
+            Gets or sets a value indicating whether eeprom contents from the hex file should be written.
+            </summary>
+      <value>
+        <c>true</c> if the eeprom memory is written; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.readFlash">
+      <summary>
+            Gets or sets a value indicating whether flash contents should be read.
+            </summary>
+      <value>
+        <c>true</c> if the flash memory is read; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.readEeprom">
+      <summary>
+            Gets or sets a value indicating whether eeprom should be read.
+            </summary>
+      <value>
+        <c>true</c> if the eeprom memory is rad; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.writeConfigs">
+      <summary>
+            Gets or sets a value indicating whether configuration bits should be written or not.
+            </summary>
+      <value>
+        <c>true</c> if configuration words are written; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.allowBlOverwrite">
+      <summary>
+            Gets or sets a value indicating whether overwriting the boot loader is permitted or not. The boot loader protection in firmware is not bypassed.
+            </summary>
+      <value>
+        <c>true</c> if overwrite of the boot loader is allowed; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.noGotoUserApp">
+      <summary>
+            Gets or sets a value indicating whether the goto to the user application should be ignored or not.
+            </summary>
+      <value>
+        <c>true</c> if the goto to the user application is not written; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.customBl">
+      <summary>
+            Gets or sets a value indicating whether custom boot loader properties should be used.
+            </summary>
+      <value>
+        <c>true</c> if custom boot loader properties are used; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.customBlPlacementP">
+      <summary>
+            Gets or sets the custom boot loader placement in pages from the end of the flash.
+            </summary>
+      <value>
+            The custom boot loader placement in pages from the end of the flash.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.customBlSizeP">
+      <summary>
+            Gets or sets the custom boot loader size in pages.
+            </summary>
+      <value>
+            The custom boot loader size in pages.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.autoBaudrate">
+      <summary>
+            Gets or sets a value indicating whether the auto baud rate sequence should be performed. 
+            </summary>
+      <value>
+        <c>true</c> if auto baud rate is enabled; otherwise, <c>false</c>.
+            </value>
+      <remarks>Auto baud rate detection mus be enabled in the firmware. This property is only valid for serial ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.echoVerification">
+      <summary>
+            Gets or sets a value indicating whether echo verification should be used or not.
+            </summary>
+      <value>
+        <c>true</c> if echo verification is enabled; otherwise, <c>false</c>.
+            </value>
+      <remarks>This property is only valid for serial ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.addChecksum">
+      <summary>
+            Gets or sets a value indicating whether a checksum should be added in the flash.
+            </summary>
+      <value>
+        <c>true</c> if a checksum checksum should be added; otherwise, <c>false</c>.
+            </value>
+      <remarks>The checksum is added just before the goto to the boot loader.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.dontWriteEmptyPages">
+      <summary>
+            Gets or sets a value indicating whether empty pages should be written or not.
+            </summary>
+      <value>
+        <c>true</c> if empty pages should not be written; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.noGotoBl">
+      <summary>
+            Gets or sets a value indicating whether the goto to the boot loader at 0x0 should be set or not.
+            </summary>
+      <value>
+        <c>true</c> if the goto to the boot loader should not be set; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.helloTimeout">
+      <summary>
+            Gets or sets the hello timeout in milliseconds.
+            </summary>
+      <value>
+            The hello timeout in milliseconds.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.polltime">
+      <summary>
+            Gets or sets the polltime in milliseconds.
+            </summary>
+      <value>
+            The polltime in milliseconds.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.timeout">
+      <summary>
+            Gets or sets the timeout in milliseconds.
+            </summary>
+      <value>
+            The timeout in milliseconds.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.portOpenDelay">
+      <summary>
+            Gets or sets the delay that is issued after the port is opened.
+            </summary>
+      <value>
+            The delay in milliseconds.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetCommand">
+      <summary>
+            Gets or sets a value indicating whether a reset command should be used.
+            </summary>
+      <value>
+        <c>true</c> if reset command is sent prior to read and write operations; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetCommandSequence">
+      <summary>
+            Gets or sets the reset command sequence.
+            </summary>
+      <value>
+            The reset command sequence.
+            </value>
+      <remarks>For CAN ports the $PICID and $GUIID macro may be used. They will be expanded to a two or four byte big endian value.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetBaudRate">
+      <summary>
+            Gets or sets the reset baud rate.
+            </summary>
+      <value>
+            The reset baud rate.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetDtr">
+      <summary>
+            Gets or sets a value indicating whether the device should be reset by enabling the DTR pin.
+            </summary>
+      <value>
+        <c>true</c> if reset by DTR should be enabled; otherwise, <c>false</c>.
+            </value>
+      <remarks>This property is only valid for serial ports. The DTR pin is held high by <see cref="P:ds30Loader.clsds30Settings.resetTime" /></remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetRts">
+      <summary>
+            Gets or sets a value indicating whether the device should be reset by enabling the RTS pin briefly.
+            </summary>
+      <value>
+        <c>true</c> if reset by RTS shoud be enabled; otherwise, <c>false</c>.
+            </value>
+      <remarks>This property is only valid for serial ports. The RTS pin is held high by <see cref="P:ds30Loader.clsds30Settings.resetTime" /></remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetTime">
+      <summary>
+            Gets or sets the reset time.
+            </summary>
+      <value>
+            The reset time.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetId">
+      <summary>
+            Gets or sets the id of the device to send the reset command to.
+            </summary>
+      <value>
+            The remote id.
+            </value>
+      <remarks>This property is only valid for CAN ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetCanDlc">
+      <summary>
+            Gets or sets the CAN DLC to use when sending the reset command. O=use canDlc parameter.
+            </summary>
+      <value>
+            The CAN reset command DLC.
+            </value>
+      <remarks>This property is only valid for CAN ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.resetCanExtended">
+      <summary>
+            Gets or sets a value indicating whether CAN extended frames should be send/received or not for the reset command.
+            </summary>
+      <value>
+            CAN extended frames.
+            </value>
+      <remarks>This property is only valid for CAN ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.activateDtr">
+      <summary>
+            Gets or sets a value indicating whether the DTR pin should be enabled prior to read or write operation.
+            </summary>
+      <value>
+        <c>true</c> if [activate DTR]; otherwise, <c>false</c>.
+            </value>
+      <remarks>This property is only valid for serial ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.activateRts">
+      <summary>
+            Gets or sets a value indicating whether the RTS pin should be enabled prior to read or write operation.
+            </summary>
+      <value>
+        <c>true</c> if [activate RTS]; otherwise, <c>false</c>.
+            </value>
+      <remarks>This property is only valid for serial ports.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Settings.password">
+      <summary>
+            Gets or sets the password to send before any write or read operation is performed.
+            </summary>
+      <value>
+            The password.
+            </value>
+      <remarks>This property is only valid for ds30 Secure Loader when used together with a ds30 Secure Loader firmware.</remarks>
+    </member>
+    <member name="T:ds30Loader.Properties.Resources">
+      <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Properties.Resources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Properties.Resources.Culture">
+      <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Base">
+      <summary>
+            This class contains some basic stuff for the ds30 Loader engine.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Base.debugMode">
+      <summary>
+            Gets or sets a value indicating whether debug mode is activated.
+            </summary>
+      <value>
+        <c>true</c> if debug mode; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="T:ds30Loader.clsds30EventArgs">
+      <summary>
+            This class contains information about a ds30 Loader engine event.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30EventArgs.StatusType">
+      <summary>
+            Describes the status of a ds30 Loader event.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30EventArgs.OperationType">
+      <summary>
+            The type of operation a ds30 Loader event reports about.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30EventArgs.#ctor(ds30Loader.clsds30EventArgs.OperationType,ds30Loader.clsds30EventArgs.StatusType,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30EventArgs" /> class.
+            </summary>
+      <param name="pOperation">The operation.</param>
+      <param name="pStatus">The status.</param>
+      <param name="pstrMessage">The message.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30EventArgs.#ctor(ds30Loader.clsds30EventArgs.OperationType,ds30Loader.clsds30EventArgs.StatusType,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30EventArgs" /> class.
+            </summary>
+      <param name="pOperation">The operation.</param>
+      <param name="pStatus">The status.</param>
+      <param name="piData1">Integer data.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30EventArgs.#ctor(ds30Loader.clsds30EventArgs.OperationType,ds30Loader.clsds30EventArgs.StatusType,System.String,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30EventArgs" /> class.
+            </summary>
+      <param name="pOperation">The operation.</param>
+      <param name="pStatus">The status.</param>
+      <param name="pstrMessage">The message.</param>
+      <param name="piTabLevel">The tab level of the message.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30EventArgs.#ctor(ds30Loader.clsds30EventArgs.OperationType,ds30Loader.clsds30EventArgs.StatusType,System.String,System.Object,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30EventArgs" /> class.
+            </summary>
+      <param name="pOperation">The operation.</param>
+      <param name="pStatus">The status.</param>
+      <param name="pstrMessage">The message.</param>
+      <param name="pData1">data1.</param>
+      <param name="piTabLevel">The message tab level.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30EventArgs.#ctor(ds30Loader.clsds30EventArgs.OperationType,ds30Loader.clsds30EventArgs.StatusType,System.String,System.Object,System.Object,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30EventArgs" /> class.
+            </summary>
+      <param name="pOperation">The operation.</param>
+      <param name="pStatus">The status.</param>
+      <param name="pstrMessage">The message.</param>
+      <param name="pData1">data1.</param>
+      <param name="pData2">data2.</param>
+      <param name="piTabLevel">The message tab level.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30EventArgs.#ctor(ds30Loader.clsds30EventArgs.OperationType,ds30Loader.clsds30EventArgs.StatusType,System.String,System.Object,System.Object,System.Object,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30EventArgs" /> class.
+            </summary>
+      <param name="pOperation">The operation.</param>
+      <param name="pStatus">The status.</param>
+      <param name="pstrMessage">The message.</param>
+      <param name="pData1">data1.</param>
+      <param name="pData2">data2.</param>
+      <param name="pData3">data3.</param>
+      <param name="piTabLevel">The message tab level.</param>
+    </member>
+    <member name="P:ds30Loader.clsds30EventArgs.operation">
+      <summary>
+            Gets the type of operation.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30EventArgs.status">
+      <summary>
+            Gets the status.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30EventArgs.message">
+      <summary>
+            Gets the message.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30EventArgs.data1">
+      <summary>
+            Gets data1. Has different meaning for different statues, see <see cref="T:ds30Loader.clsds30EventArgs.StatusType" />.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30EventArgs.data2">
+      <summary>
+            Gets data2. Has different meaning for different statues, see <see cref="T:ds30Loader.clsds30EventArgs.StatusType" />.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30EventArgs.data3">
+      <summary>
+            Gets data3. Has different meaning for different statues, see <see cref="T:ds30Loader.clsds30EventArgs.StatusType" />.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30EventArgs.tabLevel">
+      <summary>
+            Gets the tab level.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Events">
+      <summary>
+            This class handles ds30 Loader events
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Events.ds30EventDelegate">
+      <summary>
+            ds30 Loader event delegate.
+            </summary>
+      <param name="sender">The sender.</param>
+      <param name="e">The <see cref="T:ds30Loader.clsds30EventArgs" /> instance containing the event data.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Events.FireEvent(ds30Loader.clsds30EventArgs)">
+      <summary>
+            Raises the <see cref="E:ds30Loader.clsds30Events.ds30Event" /> event.
+            </summary>
+      <param name="e">The <see cref="T:ds30Loader.clsds30EventArgs" /> instance containing the event data.</param>
+    </member>
+    <member name="E:ds30Loader.clsds30Events.ds30Event">
+      <summary>
+            This event is triggered during various operations such as initialization, read, and write.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Helpers">
+      <summary>
+            This class contains various helper functions.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Helpers.GetHomeDir">
+      <summary>
+            Gets the user home directory.
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Helpers.SetSettingsDir(System.String)">
+      <summary>
+            Sets the settings directory.
+            </summary>
+      <param name="newSettingsDir">The new settings dir.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Helpers.GetSettingsDir(System.Boolean@)">
+      <summary>
+            Gets the settings directory.
+            </summary>
+      <param name="pbResult">returns the true on success.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Helpers.IsHostWindows">
+      <summary>
+            Determines whether the host is a Windows OS or not.
+            </summary>
+      <returns>true if the host is a Windows OS.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Helpers.Split8bitHexStringToBytes(System.String,System.Boolean@)">
+      <summary>
+            Splits a semicolon separated string of 8-bit hex values, characters, and strings. Ex: a5;'R';"eset"
+            </summary>
+      <param name="pstrString">The string to parse.</param>
+      <param name="pbResult">Returns false if the parse failed.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Helpers.StringToByteArray(System.String,System.Boolean)">
+      <summary>
+            Converts a strings to a byte array.
+            </summary>
+      <param name="pstrString">The string to convert to a byte array.</param>
+      <param name="pbNullTerminate">if set to <c>true</c> a null character is appended at the end of the byte array.</param>
+      <returns>The byte array representation of the string.</returns>
+    </member>
+    <member name="T:ds30Loader.AssemblyInfo">
+      <summary>
+            This class contains information about the assembly.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.AssemblyInfo.assemblyCompany">
+      <summary>
+            Company name.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.AssemblyInfo.assemblyProductName">
+      <summary>
+            Product name.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.AssemblyInfo.assemblyCopyright">
+      <summary>
+            Copyright.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.AssemblyInfo.assemblyVersion">
+      <summary>
+            Assembly version.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.AssemblyInfo.assemblyFileVersion">
+      <summary>
+            Assembly file version.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Device">
+      <summary>
+            This class represents a Microchip microcontroller device.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Device.ConfigsLocation">
+      <summary>
+      </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Device.flashes">
+      <summary>
+            An array containing the available flash areas.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Device.mainFlash">
+      <summary>
+            The main flash object.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Device.bootFlash">
+      <summary>
+            The aux/boot flash object.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Device.#ctor(ds30Loader.clsds30DeviceFamily,System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30Device" /> class.
+            </summary>
+      <param name="pobjParentDeviceFamily">The parent device family.</param>
+      <param name="piID">The ID.</param>
+      <param name="pstrName">Name of the device.</param>
+      <param name="piFlashSizePcu">The flash size in program counter units.</param>
+      <param name="piEepromSizeB">The eeprom size in bytes.</param>
+      <param name="piConfigCount">The number of configuration words.</param>
+      <param name="pbConfigsInFlash">Set to <c>true</c> if the configuration bits are located in the main flash.</param>
+      <param name="pbHasCanModule">Set to <c>true</c> if the device has a CAN module.</param>
+      <param name="piPageSizeR">The flash page size in rows.</param>
+      <param name="piRowSizeW">The flash row size in words.</param>
+      <param name="piAuxFlashSizePcu">The aux/boot flash size in program counter units.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Device.LockClass">
+      <summary>
+            Locks this class.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Device.ToString">
+      <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+      <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.id">
+      <summary>
+            Gets the device id.
+            </summary>
+      <remarks>This id is ds30 Loader specifici, it is not to be confused with Microchips chip id.</remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.nameWithoutFamily">
+      <summary>
+            Gets the name without the family prefix.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.flashCount">
+      <summary>
+            Gets the number of flash areas.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.eepromSizeB">
+      <summary>
+            Gets the eeprom size in bytes.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.eepromSizeW">
+      <summary>
+            Gets the eeprom size in words.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.configCount">
+      <summary>
+            Gets the number of configuration words this device has.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.configsLocation">
+      <summary>
+            Gets the configs location.
+            </summary>
+      <value>
+            The configs location.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.configsInFlash">
+      <summary>
+            Gets a value indicating whether the configuration bits are located in the main flash.
+            </summary>
+      <value>
+        <c>true</c> if the configuration bits are located in the main flash; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.hasCanModule">
+      <summary>
+            Gets a value indicating whether this device has a CAN module.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.configsStartAddress">
+      <summary>
+            Gets the configs start address.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.configsEndAddress">
+      <summary>
+            Gets the configs end address.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.eepromStartAddress">
+      <summary>
+            Gets the eeprom start address.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.eepromEndAddress">
+      <summary>
+            Gets the eeprom end address.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.family">
+      <summary>
+            Gets the name of the device family to which this device belong.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.isPic16Baseline">
+      <summary>
+            Gets a value indicating whether this instance is a PIC16 baseline device.
+            </summary>
+      <value>
+        <c>true</c> if this instance is a PIC16 baseline device; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.name">
+      <summary>
+            Gets the name with the family prefix.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.userIdStartAddress">
+      <summary>
+            Gets the user ID start address.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Device.userIdEndAddress">
+      <summary>
+            Gets the user ID end address.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30DeviceFamily">
+      <summary>
+            This class represents a Microchip device family.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30DeviceFamily" /> class.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.LockClass">
+      <summary>
+            Locks this class.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.DeviceAdd(ds30Loader.clsds30Device,System.Boolean@)">
+      <summary>
+            Adds a device to this device family instance.
+            </summary>
+      <param name="pobjDevice">The device to add.</param>
+      <param name="pbResult">Is set to <c>true</c> if the device was successfully added.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.DeviceGet(System.String)">
+      <summary>
+            Gets a device object from a device name.
+            </summary>
+      <param name="pstrDeviceName">Name of the device.</param>
+      <returns>A <see cref="T:ds30Loader.clsds30Device" /> object or null.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.DeviceGet(System.Int32)">
+      <summary>
+            Gets a device object from a device id.
+            </summary>
+      <param name="piID">The device ID.</param>
+      <returns>A <see cref="T:ds30Loader.clsds30Device" /> object or null.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.DevicesGet">
+      <summary>
+            Returns a hashtable with all devices belonging to this device family.
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.GetEepromStartAddress(ds30Loader.clsds30Device)">
+      <summary>
+            Gets the eeprom start address.
+            </summary>
+      <param name="pobjDevice">The device.</param>
+      <returns>The device EEPROM start address.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.Lock">
+      <summary>
+            Locks this instance.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30DeviceFamily.ToString">
+      <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+      <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.name">
+      <summary>
+            Gets the name.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.defaultBlPlacementP">
+      <summary>
+            Gets the default boot loader placement in pages from the end.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.defaultBlSizeP">
+      <summary>
+            Gets the default boot loader size in pages.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.configsStartAddress">
+      <summary>
+            Gets the start address of the configuration words.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.configsEndAddress">
+      <summary>
+            Gets the end address of the configuration words.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.configWordSizeB">
+      <summary>
+            Gets the configuration word size in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.configWordSizeBInHex">
+      <summary>
+            Gets the config word size in the hex file in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.configPcuPerWord">
+      <summary>
+            Gets the number of program counter units for a configuration word.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.configWriteSizeB">
+      <summary>
+            Gets the amount of bytes to write at a time for a configuration word.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.configCanWrite">
+      <summary>
+            Gets a value indicating whether configurations words can be written.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.eepromStartAddress">
+      <summary>
+            Gets the EEPROM start address.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.eepromEndAddress">
+      <summary>
+            Gets the EEPROM end address.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.eepromWordSizeB">
+      <summary>
+            Gets the EEPROM word size in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.eepromWordSizeBInHex">
+      <summary>
+            Gets the EEPROM word size in the hex file in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.flashStartAddress">
+      <summary>
+            Gets the flash start address.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.flashWordSizeB">
+      <summary>
+            Gets the flash word size in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.flashWordSizeBInHex">
+      <summary>
+            Gets the flash word size in the hex file in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.flashWordSizeBits">
+      <summary>
+            Gets the flash word size in bits.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.flashHasPages">
+      <summary>
+            Gets a value indicating whether the flash is divided in pages.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.flashPcuPerWord">
+      <summary>
+            Gets the number of program counter units for a flash word.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.nopOpcode">
+      <summary>
+            Gets the opcode value of a no operation instruction.
+            </summary>
+      <value>
+            The nop opcode.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.gotoUserSizeW">
+      <summary>
+            Gets the number of words used to goto to the user application.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.userIdStartAddress">
+      <summary>
+            Gets the EEPROM start address.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.userIdEndAddress">
+      <summary>
+            Gets the user Id end address.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.userIdWordSizeB">
+      <summary>
+            Gets the user Id word size in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.userIdWordSizeBInHex">
+      <summary>
+            Gets the user Id word size in the hex file in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.userIdSizeB">
+      <summary>
+            Gets the user Id word size in the hex file in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.userIdSizeW">
+      <summary>
+            Gets the user Id word size in the hex file in words.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.auxFlashStartAddress">
+      <summary>
+            Gets the aux/boot flash start address.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.auxFlashEndAddress">
+      <summary>
+            Gets the aux/boot flash end address.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.auxFlashName">
+      <summary>
+            Gets the name of aux/boot flash.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30DeviceFamily.devices">
+      <summary>
+            Gets a list of all devices belonging to this device family.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Flash">
+      <summary>
+            This class represents a Microchip microcontroller device flash area.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.#ctor(System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30Flash" /> class.
+            </summary>
+      <param name="piIndex">Index of the flash.</param>
+      <param name="pstrName">Name of the flash.</param>
+      <param name="piSizePcu">The size in pcu.</param>
+      <param name="piPcuPerWord">Pcu per word.</param>
+      <param name="piRowSizeW">The row size in words.</param>
+      <param name="piPageSizeR">The page size in rows.</param>
+      <param name="piStartAddress">The start address.</param>
+      <param name="piWordSizeBits">The word size in bits.</param>
+      <param name="piWordSizeB">The word size in bytes.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.GetPageSizeR(System.Int32)">
+      <summary>
+            Gets the page size in rows.
+            </summary>
+      <param name="piPage">The page index.</param>
+      <returns>The page size in rows.</returns>
+      <remarks>Some devices (256k E devices) have a smaller last page.</remarks>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.GetSizeRModified(ds30Loader.clsds30Device)">
+      <summary>
+            Gets the flash size in modified rows.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.GetRowFromAddr(System.Int32)">
+      <summary>
+            Gets the row number for the specified address.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.GetModifiedRowFromAddr(System.Int32,ds30Loader.clsds30Device)">
+      <summary>
+            Gets the modified row number for the specified address.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.GetPageFromAddr(System.Int32)">
+      <summary>
+            Gets the page number for the specified address.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.GetModifiedRowSizeW(ds30Loader.clsds30Device)">
+      <summary>
+            Gets the modified row size in words.
+            </summary>
+      <param name="pobjDevice">The device which this flash object belongs to.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Flash.GetModifiedRowSizeB(ds30Loader.clsds30Device)">
+      <summary>
+            Gets the modified row size in bytes.
+            </summary>
+      <param name="pobjDevice">The device which this flash object belongs to.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.index">
+      <summary>
+            Gets the flahs index.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.name">
+      <summary>
+            Gets the name.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.pageSizeR">
+      <summary>
+            Gets the page size in rows.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.pcuPerWord">
+      <summary>
+            Gets the number of program counter units per word.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.rowSizeW">
+      <summary>
+            Gets the row size in words.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.sizePcu">
+      <summary>
+            Gets the size in program counter units.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.startAddress">
+      <summary>
+            Gets the start address.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.wordSizeBits">
+      <summary>
+            Gets the word size in bits.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.wordSizeB">
+      <summary>
+            Gets the word size in bytes.
+            </summary>
+      <value>
+      </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.endAddress">
+      <summary>
+            Gets the end address.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.pageSizeW">
+      <summary>
+            Gets the page size in words.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.pageSizePcu">
+      <summary>
+            Gets the page size in program counter units.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.pageSizeB">
+      <summary>
+            Gets the pages size in bytes.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.rowSizeB">
+      <summary>
+            Gets the row size in bytes.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.sizeB">
+      <summary>
+            Gets the  size in bytes.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.sizeP">
+      <summary>
+            Gets the flash size in pages.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.sizeR">
+      <summary>
+            Gets the flash size in rows.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Flash.unevenPagePcu">
+      <summary>
+            Gets the uneven page pcu.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30Hex">
+      <summary>
+            This class represents an Intel hex file.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.iMacSizeB">
+      <summary>
+            Size of the message authentication codes.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.objParsedSettings">
+      <summary>
+            Contains the parse settings of the last parse.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bFlashPagesUsed">
+      <summary>
+            True for pages that are used.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bFlashRowsUsed">
+      <summary>
+            True for rows that are used.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bFlashMem">
+      <summary>
+            The hex file flash memory contents.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bMacValues">
+      <summary>
+            The hex file flash memory message authentication codes.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bEepromMem">
+      <summary>
+            The hex file EEPROM memory content.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bEepromWordsUsed">
+      <summary>
+            True for EEPROM words that are used.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bConfigMem">
+      <summary>
+            The hex file configuration memory content.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bConfigWordsUsed">
+      <summary>
+            True for configuration words that are used.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bUserIdMem">
+      <summary>
+            The hex file user id memory content.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30Hex.bContainsUserId">
+      <summary>
+            True if the hex file contains a user id.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30Hex" /> class.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30Hex" /> class.
+            </summary>
+      <param name="pstrFilename">The filename of the hex file this instance will represent.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.ExportHexFile(System.String,ds30Loader.clsExportSettings,System.Int32,System.Boolean@)">
+      <summary>
+            Exports the hex file.
+            </summary>
+      <param name="pstrFileName">Name of the exported file.</param>
+      <param name="exportSettings">The export settings.</param>
+      <param name="tabLevel">The debug output tab level.</param>
+      <param name="pbResult">Is set to <c>true</c> if the export was successful.</param>
+      <remarks>The <see cref="M:ds30Loader.clsds30Hex.SetDevice(ds30Loader.clsds30Device)" /> function must be called first.</remarks>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.GetBootloaderEndRow(ds30Loader.clsds30ParseSettings)">
+      <summary>
+            Gets the boot loader end row.
+            </summary>
+      <param name="pobjParseSettings">The hex file parse settings.</param>
+      <returns>The boot loader end row.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.GetBootloaderEndAddress(ds30Loader.clsds30ParseSettings)">
+      <summary>
+            Gets the boot loader end address.
+            </summary>
+      <param name="pobjParseSettings">The pobj parse settings.</param>
+      <returns>The boot loader end address.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.GetBootloaderStartAddress(ds30Loader.clsds30ParseSettings)">
+      <summary>
+            Gets the boot loader start address.
+            </summary>
+      <param name="pobjParseSettings">The pobj parse settings.</param>
+      <returns>The boot loader start address.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.GetAppVectorAddress(ds30Loader.clsds30ParseSettings)">
+      <summary>
+            Gets the application vector address.
+            </summary>
+      <param name="pobjParseSettings">The pobj parse settings.</param>
+      <returns>The application vector address.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.GetBootloaderStartRow(ds30Loader.clsds30ParseSettings)">
+      <summary>
+            Gets the boot loader start row.
+            </summary>
+      <param name="pobjParseSettings">The hex file parse settings.</param>
+      <returns>The boot loader start row.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.ParseHexFile(ds30Loader.clsds30ParseSettings,System.Boolean,System.Int32,System.Boolean@)">
+      <summary>
+            Parses the hex file.
+            </summary>
+      <param name="pobjSettings">The parse settings.</param>
+      <param name="pbForce">If set to <c>true</c> the hex file is reparsed even it is not necessary.</param>
+      <param name="iTabLevel">The tab level of the output.</param>
+      <param name="pbResult">Is set to <c>true</c> if the parsing succeds; otherwise<c>false</c>.</param>
+      <remarks>
+            The following operations take place during the parsing of a hex file:
+            <br />• The hex file is validated; line checksums, file format and file completeness is checked. If an error is detected the parsing is aborted.        
+            <br />• All data found in the hex-file that fits in the selected devices memory areas are stored in the <see cref="F:ds30Loader.clsds30Hex.bFlashMem" />, <see cref="F:ds30Loader.clsds30Hex.bEepromMem" />, and <see cref="F:ds30Loader.clsds30Hex.bConfigMem" /> buffers. The <see cref="F:ds30Loader.clsds30Hex.bFlashPagesUsed" />, <see cref="F:ds30Loader.clsds30Hex.bFlashRowsUsed" />, <see cref="F:ds30Loader.clsds30Hex.bEepromWordsUsed" />, and <see cref="F:ds30Loader.clsds30Hex.bConfigWordsUsed" /> arrays indicates which data was found.        
+            <br />• If the hex file is not encrypted the goto to the application at the reset vector(0x0) is looked for. If it is found and the hex file does not contain signed data, the goto is moved to the first few words just before the boot loader start address. If  the goto is not found the <see cref="P:ds30Loader.clsds30Hex.hasValidFlash" /> property is cleared.        
+            <br />• A GOTO to the boot loader is inserted in the first words at 0x00 if the following conditions are true: it's not a 32-bit device, page 0 is used, data is not encrypted, and data is not signed.		
+            <br />•  If <see cref="P:ds30Loader.clsds30ParseSettings.addChecksum" /> is set to true a checksum of the flash memory is calculated and inserted just before the goto to the user application.		
+            <br />•  If <see cref="P:ds30Loader.clsds30ParseSettings.dontWriteEmptyPages" /> is set all empty pages are marked as unused.
+            <br />• The flash, eeprom, and configuration word data is counted, the results are stored in the <see cref="P:ds30Loader.clsds30Hex.flashPagesUsed" />, <see cref="P:ds30Loader.clsds30Hex.flashRowsUsed" />, <see cref="P:ds30Loader.clsds30Hex.flashWordsUsed" />, <see cref="P:ds30Loader.clsds30Hex.eepromWordsUsed" />, <see cref="P:ds30Loader.clsds30Hex.configWordsUsed" /> properties.		
+            <br />• Check of boot loader collision. If data found in the hex-file belong to the same memory space as the boot loader the <see cref="P:ds30Loader.clsds30Hex.hasValidFlash" /> property is cleared.
+            </remarks>
+    </member>
+    <member name="M:ds30Loader.clsds30Hex.SetDevice(ds30Loader.clsds30Device)">
+      <summary>
+            Sets the device.
+            </summary>
+      <param name="pobjDevice">The device object to set.</param>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.configWordsUsed">
+      <summary>
+            Gets the number of configuration words.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.eepromWordsUsed">
+      <summary>
+            Gets the number of EEPROM words.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.filename">
+      <summary>
+            Gets or sets the filename.
+            </summary>
+      <value>
+            The filename.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.hasValidFlash">
+      <summary>
+            Gets a value indicating whether this instance has valid flash content.
+            </summary>
+      <value>
+        <c>true</c> if this instance has valid flash content; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.hasValidEeprom">
+      <summary>
+            Gets a value indicating whether this instance has valid EEPROM content.
+            </summary>
+      <value>
+        <c>true</c> if this instance hasvalid EEPROM content; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.hasValidConfigs">
+      <summary>
+            Gets a value indicating whether this instance has valid configuration content.
+            </summary>
+      <value>
+        <c>true</c> if this instance has valid configuraiton content; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.ivCounter">
+      <summary>
+            Gets or sets the iv counter.
+            </summary>
+      <value>
+            The iv counter.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.blPlacement">
+      <summary>
+            Gets or sets the boot loader placement.
+            </summary>
+      <value>
+            The boot loader placement in pages from the end.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.blSize">
+      <summary>
+            Gets or sets the boot loader placement.
+            </summary>
+      <value>
+            The boot loader placement in pages from the end.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.isEncrypted">
+      <summary>
+            Gets or sets a value indicating whether this instance is encrypted.
+            </summary>
+      <value>
+        <c>true</c> if this instance is encrypted; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.isParsed">
+      <summary>
+            Gets a value indicating whether this instance is parsed.
+            </summary>
+      <value>
+        <c>true</c> if this instance is parsed; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.isSigned">
+      <summary>
+            Gets a value indicating whether this instance is signed.
+            </summary>
+      <value>
+        <c>true</c> if this instance is signed; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.flashPagesUsed">
+      <summary>
+            Gets the number of used flash pages.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.flashRowsUsed">
+      <summary>
+            Gets the number of used flash rows.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.flashWordsUsed">
+      <summary>
+            Gets the number of used flash words.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.hasConfigs">
+      <summary>
+            Gets a value indicating whether the hex file contains configuration bits.
+            </summary>
+      <value>
+        <c>true</c> if the hex file contains configuration bits; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30Hex.userApplAddress">
+      <summary>
+            Gets the user application start address.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30ParseSettings">
+      <summary>
+            This class contains settings used to parse a hex file.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30ParseSettings.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30ParseSettings" /> class.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30ParseSettings.#ctor(ds30Loader.clsds30Device,System.Boolean,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsds30ParseSettings" /> class.
+            </summary>
+      <param name="pobjDevice">The device.</param>
+      <param name="pbGuessedBlProperties">Wether the boot loader properties are guessed or confirmed.</param>
+      <param name="piBlSizeP">The boot loader size in pages.</param>
+      <param name="piBlPlacementP">The boot loader placement in pages from the end.</param>
+      <param name="pbBlInAuxBootFlash">if set to <c>true</c> the boot loader is located in the aux or boot flash.</param>
+      <param name="pbIgnoreOverwrite">if set to <c>true</c> overwrite of the boot loader is ignored.</param>
+      <param name="pbNoGotoUserApp">if set to <c>true</c> the goto to the user application is not set.</param>
+      <param name="pbAddChecksum">if set to <c>true</c> a checksum is added just before the goto to the user application.</param>
+      <param name="pbWriteConfigs">if set to <c>true</c> write of the last page of PIC18FJf and PIC24FJ devices is enabled.</param>
+      <param name="pbDontWriteEmptyPages">if set to <c>true</c> empty pages are disabled.</param>
+      <param name="pbNoGotoBl">if set to <c>true</c> the goto to the boot loader at 0x0 is not set.</param>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.guessedBlProperties">
+      <summary>
+            Gets or sets wether the boot loader properties are guessed or confirmed. 
+            </summary>
+      <value>
+            The boot loader placement in pages from the end of the flash.
+            </value>
+      <remarks>
+            This should always be set to false when parsing a hex file prior to writing it to a device. Setting it to true causes boot loader overwriting check to be disabled.
+            </remarks>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.blPlacementP">
+      <summary>
+            Gets or sets the boot loader placement in pages from the end of the flash.
+            </summary>
+      <value>
+            The boot loader placement in pages from the end of the flash.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.blSizeP">
+      <summary>
+            Gets or sets the size of the boot loader in pages.
+            </summary>
+      <value>
+            The boot loader size in pages.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.blInAuxBootFlash">
+      <summary>
+            Gets or sets wether the bl is located in the aux or boot boot flash.
+            </summary>
+      <value>
+            The bl in aux boot flash.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.device">
+      <summary>
+            Gets or sets the device.
+            </summary>
+      <value>
+            The device.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.fileTimestamp">
+      <summary>
+            Gets or sets the file timestamp.
+            </summary>
+      <value>
+            The file timestamp.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.customAppVectorAddress">
+      <summary>
+            Gets or sets the custom application vector address.
+            </summary>
+      <value>
+            The custom application vector address.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.allowBlOverwrite">
+      <summary>
+            See <see cref="T:ds30Loader.clsds30Settings.allowBlOverwrite" /></summary>
+      <value>
+            See <see cref="T:ds30Loader.clsds30Settings.allowBlOverwrite" /></value>
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.noGotoUserApp">
+      <summary>
+            See <see cref="T:ds30Loader.clsds30Settings.noGotoUserApp" /></summary>
+      <value>
+            See <see cref="T:ds30Loader.clsds30Settings.noGotoUserApp" /></value>
+      <seealso cref="T:ds30Loader.clsds30Settings.noGotoUserApp" />
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.noGotoBl">
+      <summary>
+            See <see cref="T:ds30Loader.clsds30Settings.noGotoBl" /></summary>
+      <value>
+            See <see cref="T:ds30Loader.clsds30Settings.noGotoBl" /></value>
+      <seealso cref="T:ds30Loader.clsds30Settings.noGotoBl" />
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.addChecksum">
+      <summary>
+            See <see cref="T:ds30Loader.clsds30Settings.addChecksum" /></summary>
+      <value>
+            See <see cref="T:ds30Loader.clsds30Settings.addChecksum" /></value>
+      <seealso cref="T:ds30Loader.clsds30Settings.addChecksum" />
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.writeConfigs">
+      <summary>
+            See <see cref="T:ds30Loader.clsds30Settings.writeConfigs" /></summary>
+      <value>
+            See <see cref="T:ds30Loader.clsds30Settings.writeConfigs" /></value>
+      <seealso cref="T:ds30Loader.clsds30Settings.writeConfigs" />
+    </member>
+    <member name="P:ds30Loader.clsds30ParseSettings.dontWriteEmptyPages">
+      <summary>
+            See <see cref="T:ds30Loader.clsds30Settings.dontWriteEmptyPages" /></summary>
+      <value>
+            See <see cref="T:ds30Loader.clsds30Settings.dontWriteEmptyPages" /></value>
+      <seealso cref="T:ds30Loader.clsds30Settings.dontWriteEmptyPages" />
+    </member>
+    <member name="T:ds30Loader.ExportSelectionFlashPages">
+      <summary>
+            Flash pagese xport selection.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionFlashPages.None">
+      <summary>
+            No flash pages are exported.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionFlashPages.Used">
+      <summary>
+            Used flash pages are eported.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionFlashPages.All">
+      <summary>
+            All flash pages are exported, even unused ones.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.ExportSelectionEepromWords">
+      <summary>
+            EEPROM words export selection.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionEepromWords.None">
+      <summary>
+            No EEPROM words are expored.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionEepromWords.Used">
+      <summary>
+            Used EEPROM words are exported.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionEepromWords.All">
+      <summary>
+            All EEPROM words are exported, even unused ones.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.ExportSelectionConfigWords">
+      <summary>
+            Config words export selection.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionConfigWords.None">
+      <summary>
+            No configs words are exported.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ExportSelectionConfigWords.Used">
+      <summary>
+            Used configs words are exported.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsExportSettings">
+      <summary>
+            This class contains setting that determine what part of a hex file are exported.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsExportSettings.flashPages">
+      <summary>
+            Flash pages export selection
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsExportSettings.auxFlashPages">
+      <summary>
+            Aux flash pages export selection
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsExportSettings.eepromWord">
+      <summary>
+            EEPROM words export selection.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsExportSettings.configWords">
+      <summary>
+            Configuration words export selection.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsExportSettings.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsExportSettings" /> class.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsExportSettings.#ctor(ds30Loader.ExportSelectionFlashPages,ds30Loader.ExportSelectionEepromWords,ds30Loader.ExportSelectionConfigWords)">
+      <summary>
+            Initializes a new instance of the <see cref="T:ds30Loader.clsExportSettings" /> class.
+            </summary>
+      <param name="newFlashPages">Flash pages export selection.</param>
+      <param name="newEepromWord">EEPROM words export selection.</param>
+      <param name="newConfigWords">Configuration words export selection.</param>
+    </member>
+    <member name="T:ds30Loader.clsds30CanFrame">
+      <summary>
+            This class represents a CAN frame.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30CanFrame.data">
+      <summary>
+            Gets or sets the data.
+            </summary>
+      <value>
+            The data.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30CanFrame.dataLen">
+      <summary>
+            Gets or sets the data legthn.
+            </summary>
+      <value>
+            The data length.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30CanFrame.extended">
+      <summary>
+            Gets or sets a value indicating whether this <see cref="T:ds30Loader.clsds30CanFrame" /> is extended.
+            </summary>
+      <value>
+        <c>true</c> if extended; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30CanFrame.id">
+      <summary>
+            Gets or sets the id.
+            </summary>
+      <value>
+            The id.
+            </value>
+    </member>
+    <member name="T:ds30Loader.clsds30PortBase">
+      <summary>
+            This class is the base of all ds30 Loader ports.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30PortBase.DataReceivedDelegate">
+      <summary>
+            Data received delegate.
+            </summary>
+      <param name="sender">The sender.</param>
+      <param name="e">The <see cref="T:System.EventArgs" /> instance containing the event data.</param>
+    </member>
+    <member name="F:ds30Loader.clsds30PortBase.iBytesSent">
+      <summary>
+            The number of bytes that has been sent.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30PortBase.iBytesReceived">
+      <summary>
+            The number of bytes that has been received.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30PortBase.bIsOpen">
+      <summary>
+            Set to true when the port is open and ready to send and receive data.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.OnDataReceived">
+      <summary>
+            Called when [data received].
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.GetBaudRates">
+      <summary>
+            Gets a list of the supported baud rates.
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.ReadByte(System.Int32@,System.Boolean@)">
+      <summary>
+            Reads the byte.
+            </summary>
+      <param name="readByte">The i byte.</param>
+      <param name="result">if set to <c>true</c> the read operation was successful.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.ReadBytes(System.Byte[]@,System.Int32,System.Int32,System.Boolean@)">
+      <summary>
+            Reads bytes.
+            </summary>
+      <param name="data">The data buffer in which to store the read bytes.</param>
+      <param name="offset">The offset at which to start writing in the data argument.</param>
+      <param name="dataLen">Number of bytes to read.</param>
+      <param name="result">if set to <c>true</c> [b result].</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.ResetCounters">
+      <summary>
+            Resets the rx and tx counters.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.SendByte(System.Byte,System.Boolean@)">
+      <summary>
+            Sends a single byte.
+            </summary>
+      <param name="byteToSend">The byte to send.</param>
+      <param name="result">if set to <c>true</c> the send operation was successful.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.SendBytes(System.Byte[]@,System.Int32,System.Int32,System.Boolean@)">
+      <summary>
+            Sends the bytes.
+            </summary>
+      <param name="data">The data.</param>
+      <param name="offset">The offset at which to start reading in the data argument.</param>
+      <param name="dataLen">Number of bytes to send.</param>
+      <param name="result">if set to <c>true</c> the send operation was successful.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBase.SendString(System.String,System.Boolean@)">
+      <summary>
+            Sends the string.
+            </summary>
+      <param name="text">The text.</param>
+      <param name="besult">if set to <c>true</c> the send operation was successful.</param>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.allowsCustomBaudRate">
+      <summary>
+            Gets a value indicating whether custom baud rates are allowed.
+            </summary>
+      <value>
+        <c>true</c> if custom baud rates are allowed; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.baudRate">
+      <summary>
+            Gets or sets the baud rate.
+            </summary>
+      <value>
+            The baud rate.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.bytesSent">
+      <summary>
+            Gets the number of bytes sent.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.bytesSentStr">
+      <summary>
+            Gets the number of bytes sent string.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.bytesReceived">
+      <summary>
+            Gets the number of bytes received.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.bytesReceivedStr">
+      <summary>
+            Gets the number of bytes received string.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.isOpen">
+      <summary>
+            Gets a value indicating whether this instance is open.
+            </summary>
+      <value>
+        <c>true</c> if this instance is open; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.portName">
+      <summary>
+            Gets or sets the name of the port.
+            </summary>
+      <value>
+            The name of the port.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBase.readTimeout">
+      <summary>
+            Gets or sets the read timeout.
+            </summary>
+      <value>
+            The read timeout.
+            </value>
+    </member>
+    <member name="E:ds30Loader.clsds30PortBase.DataReceived">
+      <summary>
+            Occurs when data is received.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30PortBaseCan">
+      <summary>
+            This class contains base functionality shared by all CAN ports.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30PortBaseCan.strPortName">
+      <summary>
+            The port name.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30PortBaseCan.bValidPortName">
+      <summary>
+        <c>true</c> if the portName is valid.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30PortBaseCan.queRx">
+      <summary>
+            The rx data queue.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.clsds30PortBaseCan.iOutBufferCount">
+      <summary>
+            The out buffer count.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.Configure(System.String)">
+      <summary>
+            Configures the specified new port name.
+            </summary>
+      <param name="newPortName">New name of the port.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.EmptyBuffers(System.Boolean,System.Boolean)">
+      <summary>
+            Empties the buffers.
+            </summary>
+      <param name="clearRxBuf">if set to <c>true</c> rx buffer is cleared.</param>
+      <param name="clearTxBuf">if set to <c>true</c> tx buffer is cleared.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.IsValidPortName(System.String)">
+      <summary>
+            Determines whether the specified port name is valid.
+            </summary>
+      <param name="portNameToValidate">The port name to validate.</param>
+      <returns>
+        <c>true</c> if the specified port name is valid; otherwise, <c>false</c>.
+            </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.Init">
+      <summary>
+            Inits this instance.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.LoadSettings">
+      <summary>
+            Loads the settings.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.InitDriver">
+      <summary>
+            Inits the driver.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.ReadBytes(System.Byte[]@,System.Int32,System.Int32,System.Boolean@)">
+      <summary>
+            Reads bytes.
+            </summary>
+      <param name="data">The data buffer in which to store the read bytes.</param>
+      <param name="offset">The offset at which to start writing in the data argument.</param>
+      <param name="dataLen">Number of bytes to read.</param>
+      <param name="result">if set to <c>true</c> [b result].</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.Close">
+      <summary>
+            Closes the port.
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.CloseDriver">
+      <summary>
+            Closes the driver.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.ReadText(System.Boolean@)">
+      <summary>
+            Reads all available data as text.
+            </summary>
+      <param name="pbResult">if set to <c>true</c> the read operation was successful.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.SendCanFrame(ds30Loader.clsds30CanFrame,System.Boolean@)">
+      <summary>
+            Sends the can frame.
+            </summary>
+      <param name="canFrame">The can frane.</param>
+      <param name="result">if set to <c>true</c> the send operation was successful.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.WaitForReadyToSend">
+      <summary>
+            Waits until the port is ready to send at least one more frame.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30PortBaseCan.SendBytes(System.Byte[]@,System.Int32,System.Int32,System.Boolean@)">
+      <summary>
+            Sends the bytes.
+            </summary>
+      <param name="data">The data.</param>
+      <param name="offset">The offset at which to start reading in the data argument.</param>
+      <param name="dataLen">The data len.</param>
+      <param name="result">if set to <c>true</c> the send operation was successful.</param>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.extendedMode">
+      <summary>
+            Gets or sets a value indicating whether [extended mode].
+            </summary>
+      <value>
+        <c>true</c> if [extended mode]; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.inBufferCount">
+      <summary>
+            Gets the in buffer count.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.localId">
+      <summary>
+            Gets or sets the local id.
+            </summary>
+      <value>
+            The local id.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.outBufferCount">
+      <summary>
+            Gets the out buffer count.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.portName">
+      <summary>
+            Gets or sets the name of the port.
+            </summary>
+      <value>
+            The name of the port.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.portType">
+      <summary>
+            Gets the type of the port.
+            </summary>
+      <value>
+            The type of the port.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.portType2">
+      <summary>
+            Gets the port type.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.remoteId">
+      <summary>
+            Gets or sets the remote id.
+            </summary>
+      <value>
+            The remote id.
+            </value>
+    </member>
+    <member name="P:ds30Loader.clsds30PortBaseCan.txDlc">
+      <summary>
+            Gets or sets the tx DLC.
+            </summary>
+      <value>
+            The tx DLC.
+            </value>
+    </member>
+    <member name="T:ds30Loader.clsds30Ports">
+      <summary>
+            This class contains functionality for port plugins.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30Ports.GetPortList(System.Boolean)">
+      <summary>
+            Gets the port list.
+            </summary>
+      <param name="pbCanPorts">if set to <c>false</c> CAN ports a excluded.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Ports.GetPortObjectFromName(System.String)">
+      <summary>
+            Gets the port object from a port name.
+            </summary>
+      <param name="pstrPortName">Name of the port.</param>
+      <returns>Returns the port object with the specified name. If it's not found and the serial port plugin is available a serial port with the specified name is returned.</returns>
+    </member>
+    <member name="M:ds30Loader.clsds30Ports.Initialize(System.String,System.Int32,System.Boolean@)">
+      <summary>
+            Initializes ds30 Loader port plugins.
+            </summary>
+      <param name="pstrPath">The path in which to look for port plugins.</param>
+      <param name="piTabLevel">The output tab level.</param>
+      <param name="pbResult">returns <c>true</c> if the operation was successful.</param>
+    </member>
+    <member name="P:ds30Loader.clsds30Ports.ports">
+      <summary>
+            Gets a string list of available port names.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.clsds30WinPorts">
+      <summary>
+            This class contains help functions to get human readable port names in Windows.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.clsds30WinPorts.GetPortsNonHuman(System.Collections.ArrayList@,System.String)">
+      <summary>
+            Gets a list of available COM ports with non human readable names.
+            </summary>
+      <param name="ports">The ports list to fill with human readlable port names.</param>
+      <param name="suffix">An optional suffic to append to the port name.</param>
+    </member>
+    <member name="M:ds30Loader.clsds30WinPorts.GetPortsHuman(System.Collections.ArrayList@,System.String)">
+      <summary>
+            Gets a list of available COM ports with human readable names.
+            </summary>
+      <param name="ports">The ports list to fill with human readlable port names.</param>
+      <param name="suffix">An optional suffic to append to the port name.</param>
+    </member>
+    <member name="T:ds30Loader.ds30PortType">
+      <summary>
+            Desribes what kind of communication a port supports.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ds30PortType.Serial">
+      <summary>
+            The port supports serial communication.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ds30PortType.CAN">
+      <summary>
+            The port supports CAN communication.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ds30PortType.I2C">
+      <summary>
+            The port supports I2C communication.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ds30PortType.SPI">
+      <summary>
+            The port supports SPI communication.
+            </summary>
+    </member>
+    <member name="F:ds30Loader.ds30PortType.TCPSOCKET">
+      <summary>
+            The port supports I2C communication.
+            </summary>
+    </member>
+    <member name="T:ds30Loader.Ids30Port">
+      <summary>
+            The port interface, all ds30 Loader ports must implement this interface.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.Close">
+      <summary>
+            Closes the port.
+            </summary>
+      <returns>
+        <c>True</c> if the port was closed successfully; otherwise <c>false</c>.</returns>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.EmptyBuffers(System.Boolean,System.Boolean)">
+      <summary>
+            Empties the rx and tx buffers.
+            </summary>
+      <param name="clearRxBuf">if set to <c>true</c> rx buffer is emptied.</param>
+      <param name="clearTxBuf">if set to <c>true</c> tx buffer is emptied.</param>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.GetBaudRates">
+      <summary>
+            Gets a list of the supported baud rates.
+            </summary>
+      <returns>An array with <c>int</c> values.</returns>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.Open">
+      <summary>
+            Opens the port.
+            </summary>
+      <returns>
+        <c>True</c> if the port was opened successfully; otherwise <c>false</c>.</returns>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.OpenWindow(System.Windows.Forms.Form)">
+      <summary>
+            Opens the info/configuration window.
+            </summary>
+      <param name="wndOwner">The window owner.</param>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.ReadByte(System.Int32@,System.Boolean@)">
+      <summary>
+            Reads a byte from the rx buffer.
+            </summary>
+      <param name="readByte">The byte.</param>
+      <param name="result">Set to <c>true</c> the read was successful; otherwise <c>false</c>.</param>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.ReadBytes(System.Byte[]@,System.Int32,System.Int32,System.Boolean@)">
+      <summary>
+            Reads bytes from the rx buffer.
+            </summary>
+      <param name="readData">The buffer to hold the read bytes.</param>
+      <param name="offset">The offset in the buffer to store the read bytes.</param>
+      <param name="dataLen">The number of bytes to be read.</param>
+      <param name="result">Set to <c>true</c> if the read was successful; otherwise <c>false</c>.</param>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.ReadText(System.Boolean@)">
+      <summary>
+            Returns a string representation of all bytes in the rx buffer.
+            </summary>
+      <param name="pbResult">If set to <c>true</c> the read was successful.</param>
+      <returns>The read string.</returns>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.ResetCounters">
+      <summary>
+            Resets the rx and tx counters.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.SendByte(System.Byte,System.Boolean@)">
+      <summary>
+            Sends a byte.
+            </summary>
+      <param name="byteToSend">The byte to send.</param>
+      <param name="result">If set to <c>true</c> if the transmission was successful.</param>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.SendBytes(System.Byte[]@,System.Int32,System.Int32,System.Boolean@)">
+      <summary>
+            Sends 1 or more bytes.
+            </summary>
+      <param name="data">The bytes to send.</param>
+      <param name="offset">The offset in the buffer to start sending from.</param>
+      <param name="dataLen">The number of bytes to send.</param>
+      <param name="result">If set to <c>true</c> if the transmission was successful.</param>
+    </member>
+    <member name="M:ds30Loader.Ids30Port.SendString(System.String,System.Boolean@)">
+      <summary>
+            Sends a string.
+            </summary>
+      <param name="text">The string to send.</param>
+      <param name="result">If set to <c>true</c> if the transmission was successful</param>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.allowsCustomBaudRate">
+      <summary>
+            Gets a value indicating whether custom baud rates are allowd.
+            </summary>
+      <value>
+        <c>true</c> if custom baud rates are allowed; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.baudRate">
+      <summary>
+            Gets or sets the baud rate.
+            </summary>
+      <value>
+            The baud rate.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.bytesSent">
+      <summary>
+            Gets the number of bytes sent.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.bytesSentStr">
+      <summary>
+            Gets a human readable string with the number of bytes transmitted.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.bytesReceived">
+      <summary>
+            Gets the number of bytes received.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.bytesReceivedStr">
+      <summary>
+            Gets a human readable string with the number of bytes received.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.inBufferCount">
+      <summary>
+            Gets the in buffer count.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.isOpen">
+      <summary>
+            Gets a value indicating whether this instance is open.
+            </summary>
+      <value>
+        <c>true</c> if this instance is open; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.outBufferCount">
+      <summary>
+            Gets the out buffer count.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.portName">
+      <summary>
+            Gets or sets the name of the port.
+            </summary>
+      <value>
+            The name of the port.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.portType">
+      <summary>
+            Gets the type of the port.
+            </summary>
+      <value>
+            The type of the port.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.readTimeout">
+      <summary>
+            Gets or sets the read timeout.
+            </summary>
+      <value>
+            The read timeout.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30Port.version">
+      <summary>
+            Gets the version.
+            </summary>
+    </member>
+    <member name="E:ds30Loader.Ids30Port.DataReceived">
+      <summary>
+            Occurs when data is receved.
+            </summary>,
+        </member>
+    <member name="T:ds30Loader.Ids30PortCan">
+      <summary>
+            The CAN port interface, all CAN ports must implement this interface.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30PortCan.extendedMode">
+      <summary>
+            Gets or sets a value indicating whether extended framesa are sent and received.
+            </summary>
+      <value>
+        <c>true</c> if extended mode is used; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortCan.localId">
+      <summary>
+            Gets or sets the ID of the GUI.
+            </summary>
+      <value>
+            The local id.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortCan.remoteId">
+      <summary>
+            Gets or sets the ID of the PIC.
+            </summary>
+      <value>
+            The remote id.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortCan.txDlc">
+      <summary>
+            Gets or sets the tx DLC.
+            </summary>
+      <value>
+            The tx DLC.
+            </value>
+    </member>
+    <member name="T:ds30Loader.Ids30PortEchoVerification">
+      <summary>
+            Interface to implement for echo verification.
+            </summary>
+    </member>
+    <member name="M:ds30Loader.Ids30PortEchoVerification.EchoClearQueue">
+      <summary>
+            Clears the echo queue.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30PortEchoVerification.echoVerification">
+      <summary>
+            Gets or sets a value indicating whether echo verification is enabled.
+            </summary>
+      <value>
+        <c>true</c> if echo verification is enabled; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="T:ds30Loader.Ids30PortI2C">
+      <summary>
+            The I2C port interface, all I2C ports must implement this interface.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30PortI2C.extendedAddressing">
+      <summary>
+            Gets or sets a value indicating whether to use extended(10-bit) addressing.
+            </summary>
+      <value>
+        <c>true</c> if extended(10-bit) addressing is enabled; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortI2C.remoteID">
+      <summary>
+            Gets or sets the remote ID.
+            </summary>
+      <value>
+            The remote ID.
+            </value>
+    </member>
+    <member name="T:ds30Loader.Ids30PortSerial">
+      <summary>
+            The serial port interface, all serial ports must implement this interface.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30PortSerial.dtrEnable">
+      <summary>
+            Gets or sets a value indicating whether [DTR is enabled].
+            </summary>
+      <value>
+        <c>true</c> if [DTR is enabled]; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortSerial.rtsEnable">
+      <summary>
+            Gets or sets a value indicating whether [RTS is enabled].
+            </summary>
+      <value>
+        <c>true</c> if [RTS is enabled]; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortSerial.flowControl">
+      <summary>
+            Gets or sets the flow control mode.
+            </summary>
+      <value>
+            The flow control mode.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortSerial.stopBits">
+      <summary>
+            Gets or sets the stop bits mode.
+            </summary>
+      <value>
+            The stop bits mode.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortSerial.parity">
+      <summary>
+            Gets or sets the parity mode.
+            </summary>
+      <value>
+            The parity mode.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortSerial.dsr">
+      <summary>
+            Gets the state of the DSR signal.
+            </summary>
+      <value>
+        <c>true</c> if DSR is enabled; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:ds30Loader.Ids30PortSerial.cts">
+      <summary>
+            Gets the state of the CTS signal.
+            </summary>
+      <value>
+        <c>true</c> if CTS is enabled; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="T:ds30Loader.Ids30PortTcpSocket">
+      <summary>
+            The TCP/IP port interface, all TCP/IP ports must implement this interface.
+            </summary>
+    </member>
+    <member name="P:ds30Loader.Ids30PortTcpSocket.addressAndPort">
+      <summary>
+            Gets or sets the address and port string.
+            </summary>
+      <value>
+            The address and port.
+            </value>
+    </member>
+  </members>
+</doc>
