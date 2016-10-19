@@ -809,7 +809,7 @@ namespace NgimuGui
             m_Form3DView.RotationMatrix = m_Connection.RotationMatrix.RotationMatrix;
 
             EulerAngles eulerAngles = Quaternion.ToEulerAngles(Quaternion.FromRotationMatrix(m_Connection.RotationMatrix.RotationMatrix));
-            AddGraphData("Euler Angles", m_Connection.RotationMatrix.Timestamp.ToDataTime(), m_Connection.EulerAngles.EulerAngles.Roll, m_Connection.EulerAngles.EulerAngles.Pitch, m_Connection.EulerAngles.EulerAngles.Yaw);
+            AddGraphData("Euler Angles", m_Connection.RotationMatrix.Timestamp.ToDataTime(), eulerAngles.Roll, eulerAngles.Pitch, eulerAngles.Yaw);
         }
 
         void EulerAngles_Updated(object sender, EventArgs e)

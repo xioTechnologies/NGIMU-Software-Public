@@ -32,6 +32,7 @@ namespace NgimuApi.SearchForConnections
         private readonly AhoyQueryAllSerialPorts serialPortQuery = new AhoyQueryAllSerialPorts();
 
         private DateTime startTime;
+        private bool neverSearchNetworkAdapters;
 
         public int Count { get { return autoConnectionInfoList.Count; } }
 
@@ -287,17 +288,31 @@ namespace NgimuApi.SearchForConnections
 
         private NetworkInterface GetInterfaceFor(IPAddress networkAdapterIPAddress)
         {
-            foreach (NetworkInterface @interface in NetworkInterface.GetAllNetworkInterfaces())
+            if (neverSearchNetworkAdapters == true)
             {
-                var ipProps = @interface.GetIPProperties();
+                return null;
+            }
 
-                foreach (var ip in ipProps.UnicastAddresses)
+            try
+            {
+                foreach (NetworkInterface @interface in NetworkInterface.GetAllNetworkInterfaces())
                 {
-                    if (ip.Address.Equals(networkAdapterIPAddress) == true)
+                    var ipProps = @interface.GetIPProperties();
+
+                    foreach (var ip in ipProps.UnicastAddresses)
                     {
-                        return @interface;
+                        if (ip.Address.Equals(networkAdapterIPAddress) == true)
+                        {
+                            return @interface;
+                        }
                     }
                 }
+
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                // if this is caught then it means we are on android or such like 
+                neverSearchNetworkAdapters = true;
             }
 
             return null;

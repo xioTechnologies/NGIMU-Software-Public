@@ -113,6 +113,9 @@ namespace NgimuApi.Logging
                     file.Dispose();
                 }
 
+                // stash the path before the move (if one is to take place). 
+                string writtenToBasePath = Directory; 
+
                 string resolvedSessionDescriptor = Helper.CleanFileName(Connection.Settings.DeviceName.Value + " - " + Connection.Settings.SerialNumber.Value);
 
                 string resolvedDirectory = Path.Combine(rootDirectory, resolvedSessionDescriptor);
@@ -124,6 +127,9 @@ namespace NgimuApi.Logging
                     ConnectionDescriptor = resolvedSessionDescriptor;
                 }
 
+                // Use the last available setting for the meta data. 
+                Metadata.DeviceInformation.SetValues(Connection.Settings.DeviceInformation);
+
                 Metadata.TimeStamps.FirstTimeTag = firstTimestamp;
                 Metadata.TimeStamps.LastTimeTag = lastTimestamp;
                 Metadata.ConnectionInformation.ConnectionInfo = Connection.ConnectionInfo;
@@ -133,7 +139,8 @@ namespace NgimuApi.Logging
 
                 foreach (CsvFileWriter file in csvFileWriters.Values)
                 {
-                    Metadata.FilesCreated.Add(file.FilePath.Substring(basePath.Length + 1), file.MessageCount);
+                    // use the stashed path for substring-ing as the directory might have changed since the CSV file was created. 
+                    Metadata.FilesCreated.Add(file.FilePath.Substring(writtenToBasePath.Length + 1), file.MessageCount);
                 }
 
                 Metadata.Statistics.SetValues(Connection.CommunicationStatistics);

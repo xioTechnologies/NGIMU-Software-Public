@@ -1631,6 +1631,15 @@
             <param name="messageBufferSize">the number of messages that should be cached before messages get dropped</param>
             <param name="maxPacketSize">the maximum packet size of any message</param>
         </member>
+        <member name="M:Rug.Osc.OscSender.#ctor(System.Net.IPAddress,System.Int32,System.Net.IPAddress,System.Int32)">
+            <summary>
+            Create a new Osc UDP sender. Note the underlying socket will not be connected until Connect is called
+            </summary>
+            <param name="local">the ip address to send from</param>
+            <param name="localPort">the local port to bind, use 0 for dynamically assigned</param>
+            <param name="remote">the ip address to send to</param>
+            <param name="remotePort">the port to send to</param>
+        </member>
         <member name="M:Rug.Osc.OscSender.#ctor(System.Net.IPAddress,System.Int32,System.Net.IPAddress,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             Create a new Osc UDP sender. Note the underlying socket will not be connected until Connect is called

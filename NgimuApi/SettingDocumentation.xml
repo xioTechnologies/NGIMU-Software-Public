@@ -135,14 +135,10 @@
   </Setting>
   <Setting Address="/auxserial/passthrough">
   </Setting>
-  <Setting Address="/auxserial/string">
-  </Setting>
-  <Setting Address="/auxserial/buffer">
-  </Setting>
-  <Setting Address="/auxserial/timeout">
-  </Setting>
-  <Setting Address="/auxserial/framing">
-  </Setting>
+  <Setting Address="/auxserial/string">This setting has no effect if OSC passthrough mode is enabled.</Setting>
+  <Setting Address="/auxserial/buffer">This setting has no effect if OSC passthrough mode is enabled.</Setting>
+  <Setting Address="/auxserial/timeout">This setting has no effect if OSC passthrough mode is enabled.</Setting>
+  <Setting Address="/auxserial/framing">This setting has no effect if OSC passthrough mode is enabled.</Setting>
   <Setting Address="/idle">If CPU idle mode is enabled then the CPU will continuously cycle between idle mode and active mode to reduce power consumption and extend battery life.  Users wishing to achieve best possible throughput and latency can disable CPU idle mode for a marginal increase in performance.\par
       It is recommended that CPU idle mode is set to {\i Enabled for battery only} so that power consumption is automatically reduced while the device is powered from a battery, and best possible performance is achieved while USB or external power is connected.</Setting>
   <Setting Address="/leds">Disabling the LEDs will only provide a marginal reduction in power consumption.  This setting is intended to benefit situations where light from the LEDs is undesirable.\par
@@ -154,7 +150,8 @@
       {  }• Button press\line
       {  }• Reception of any message\line
       {  }• Motion detection (if {\i motion trigger wakeup} enabled)</Setting>
-  <Setting Address="/motiontrigger">If motion trigger wakeup is enabled then the device will wakeup from sleep mode when motion is detected.</Setting>
+  <Setting Address="/wakeuptimer">Number of seconds the device will remain in sleep mode before automatically switching on.  A value of 0 seconds will disable the wakeup timer.  The wake up timer will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>
+  <Setting Address="/motiontrigger">If motion trigger wakeup is enabled then the device will switch on when motion is detected.  The motion trigger wake up will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>
   <Setting Address="/muted">Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi {\i low power mode} is enabled.  The device can be unmuted at any time by sending the {\i unmute} command.</Setting>
   <Setting Address="/battery/voltage">The minimum operating battery voltage in Volts.  This value is used to calculate the battery percentage and time to empty.\par
         Changes to this setting will only take effect after the device has been disconnected from all power sources and the battery disconnected.</Setting>

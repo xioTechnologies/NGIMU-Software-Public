@@ -481,6 +481,11 @@ namespace NgimuApi
 		public ISettingValue<uint> SleepTimer { get; private set; }
 		
 		/// <summary>
+		/// Gets Wakeup Timer setting.
+		/// </summary>
+		public ISettingValue<uint> WakeupTimer { get; private set; }
+		
+		/// <summary>
 		/// Gets Motion Trigger Wakeup setting.
 		/// </summary>
 		public ISettingValue<bool> MotionTriggerWakeup { get; private set; }
@@ -602,6 +607,7 @@ namespace NgimuApi
 			LedsEnabled = new SettingValue_Bool(PowerManagement, "LEDs Enabled", "LEDs Enabled", LookupDocumentation("/leds"), "/leds", false, false);
 			UsbExternalCurrentLimit = new SettingValue_Bool(PowerManagement, "USB/External Current Limit", "USB/External Current Limit", LookupDocumentation("/currentlimit"), "/currentlimit", false, false);
 			SleepTimer = new SettingValue_UInt32(PowerManagement, "Sleep Timer (s)", "Sleep Timer", LookupDocumentation("/sleeptimer"), "/sleeptimer", false, false);
+			WakeupTimer = new SettingValue_UInt32(PowerManagement, "Wakeup Timer (s)", "Wakeup Timer", LookupDocumentation("/wakeuptimer"), "/wakeuptimer", false, false);
 			MotionTriggerWakeup = new SettingValue_Bool(PowerManagement, "Motion Trigger Wakeup", "Motion Trigger Wakeup", LookupDocumentation("/motiontrigger"), "/motiontrigger", false, false);
 			MutedOnStartup = new SettingValue_Bool(PowerManagement, "Muted On Startup", "Muted On Startup", LookupDocumentation("/muted"), "/muted", false, false);
 			BatteryMinimumVoltage = new SettingValue_Float(PowerManagement.Battery, "Minimum Voltage (V)", "Battery Minimum Voltage", LookupDocumentation("/battery/voltage"), "/battery/voltage", false, false);
@@ -2161,6 +2167,11 @@ namespace NgimuApi
 			public ISettingValue<uint> SleepTimer { get; private set; }
 			
 			/// <summary>
+			/// Gets Wakeup Timer setting.
+			/// </summary>
+			public ISettingValue<uint> WakeupTimer { get; private set; }
+			
+			/// <summary>
 			/// Gets Motion Trigger Wakeup setting.
 			/// </summary>
 			public ISettingValue<bool> MotionTriggerWakeup { get; private set; }
@@ -2187,6 +2198,7 @@ namespace NgimuApi
 				LedsEnabled = settings.LedsEnabled;
 				UsbExternalCurrentLimit = settings.UsbExternalCurrentLimit;
 				SleepTimer = settings.SleepTimer;
+				WakeupTimer = settings.WakeupTimer;
 				MotionTriggerWakeup = settings.MotionTriggerWakeup;
 				MutedOnStartup = settings.MutedOnStartup;
 				Battery.AttachSettings(settings);
@@ -2195,6 +2207,7 @@ namespace NgimuApi
 				Add(settings.LedsEnabled);
 				Add(settings.UsbExternalCurrentLimit);
 				Add(settings.SleepTimer);
+				Add(settings.WakeupTimer);
 				Add(settings.MotionTriggerWakeup);
 				Add(settings.MutedOnStartup);
 				Add(Battery);
@@ -2211,6 +2224,7 @@ namespace NgimuApi
 				if (LedsEnabled.IsValueUndefined == false) { other.LedsEnabled.Value = LedsEnabled.Value; }
 				if (UsbExternalCurrentLimit.IsValueUndefined == false) { other.UsbExternalCurrentLimit.Value = UsbExternalCurrentLimit.Value; }
 				if (SleepTimer.IsValueUndefined == false) { other.SleepTimer.Value = SleepTimer.Value; }
+				if (WakeupTimer.IsValueUndefined == false) { other.WakeupTimer.Value = WakeupTimer.Value; }
 				if (MotionTriggerWakeup.IsValueUndefined == false) { other.MotionTriggerWakeup.Value = MotionTriggerWakeup.Value; }
 				if (MutedOnStartup.IsValueUndefined == false) { other.MutedOnStartup.Value = MutedOnStartup.Value; }
 				Battery.CopyTo(other.Battery);

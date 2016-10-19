@@ -128,7 +128,7 @@
     <Setting MemberName="SerialInvertDataLines" UIText="Invert Data Lines" DocumentationTitle="Serial Invert Data Lines" Type="Bool" OscAddress="/serial/invert">
     </Setting>
   </Category>
-  
+
   <Category MemberName="SDCard" UIText="SD Card">
     <Setting MemberName="sdCardFileNamePrefix" UIText="File Name Prefix" DocumentationTitle="SD Card File Name Prefix" Type="String" OscAddress="/sd/prefix">
     </Setting>
@@ -138,7 +138,7 @@
     </Setting>
     <Setting MemberName="sdCardMaxFilePeriod" UIText="Maximum File Period (s)" DocumentationTitle="SD Card Maximum File Period" Type="UInt32" OscAddress="/sd/period">
     </Setting>
-  </Category>  
+  </Category>
 
   <Category MemberName="Ahrs" UIText="AHRS">
     <Setting MemberName="AhrsGain" UIText="Gain" DocumentationTitle="AHRS Gain" Type="Float" OscAddress="/ahrs/gain">
@@ -205,13 +205,17 @@
     <Setting MemberName="AuxSerialOscPassthrough" UIText="OSC Passthrough" DocumentationTitle="Auxiliary Serial OSC Passthrough" Type="Bool" OscAddress="/auxserial/passthrough">
     </Setting>
     <Setting MemberName="AuxSerialSendAsString" UIText="Send As String" DocumentationTitle="Auxiliary Serial Send As String" Type="Bool" OscAddress="/auxserial/string">
+      This setting has no effect if OSC passthrough mode is enabled.
     </Setting>
     <Category MemberName="SendCondition" UIText="Send Condition">
       <Setting MemberName="AuxSerialBufferSize" UIText="Buffer Size" Type="UInt32" DocumentationTitle="Auxiliary Serial Send Buffer Size" OscAddress="/auxserial/buffer">
+        This setting has no effect if OSC passthrough mode is enabled.
       </Setting>
       <Setting MemberName="AuxSerialTimeout" UIText="Timeout (ms)" Type="UInt32" DocumentationTitle="Auxiliary Serial Send Timeout" OscAddress="/auxserial/timeout">
+        This setting has no effect if OSC passthrough mode is enabled.
       </Setting>
       <Setting MemberName="AuxSerialFramingCharacter" UIText="Framing Character" DocumentationTitle="Auxiliary Serial Send Framing Character" Type="Int32" OscAddress="/auxserial/framing">
+        This setting has no effect if OSC passthrough mode is enabled.
       </Setting>
     </Category>
   </Category>
@@ -236,8 +240,11 @@
       {  }• Reception of any message\line
       {  }• Motion detection (if {\i motion trigger wakeup} enabled)
     </Setting>
+    <Setting MemberName="WakeupTimer" UIText="Wakeup Timer (s)" DocumentationTitle="Wakeup Timer" Type="UInt32" OscAddress="/wakeuptimer">
+      Number of seconds the device will remain in sleep mode before automatically switching on.  A value of 0 seconds will disable the wakeup timer.  The wake up timer will not switch the device on if the device entered sleep mode after detecting a low battery voltage.
+    </Setting>
     <Setting MemberName="MotionTriggerWakeup" UIText="Motion Trigger Wakeup" Type="Bool" OscAddress="/motiontrigger">
-      If motion trigger wakeup is enabled then the device will wakeup from sleep mode when motion is detected.
+      If motion trigger wakeup is enabled then the device will switch on when motion is detected.  The motion trigger wake up will not switch the device on if the device entered sleep mode after detecting a low battery voltage.
     </Setting>
     <Setting MemberName="MutedOnStartup" UIText="Muted On Startup" Type="Bool" OscAddress="/muted">
       Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi {\i low power mode} is enabled.  The device can be unmuted at any time by sending the {\i unmute} command.
