@@ -74,26 +74,36 @@
     </Setting>
     <Category MemberName="AP" UIText="AP">
       <Setting MemberName="WifiAPBand" UIText="Band" DocumentationTitle="Wi-Fi AP Band" Type="WifiBand" OscAddress="/wifi/ap/band">
+        This setting has no effect if Wi-Fi is not in AP mode.
       </Setting>
       <Setting MemberName="WifiAP2GHzChannel" UIText="2.4 GHz Channel" DocumentationTitle="Wi-Fi AP 2.4 GHz Channel" Type="Wifi2GHzChannel" OscAddress="/wifi/ap/2ghzchannel">
+        This setting has no effect if Wi-Fi is not in AP mode.
       </Setting>
       <Setting MemberName="WifiAP5GHzChannel" UIText="5 GHz Channel" DocumentationTitle="Wi-Fi AP 5 GHz Channel" Type="Wifi5GHzChannel" OscAddress="/wifi/ap/5ghzchannel">
+        This setting has no effect if Wi-Fi is not in AP mode.
       </Setting>
     </Category>
     <Category MemberName="Client" UIText="Client">
       <Setting MemberName="WifiClientSSID" UIText="SSID" DocumentationTitle="Wi-Fi Client SSID" Type="String" OscAddress="/wifi/client/ssid">
+        This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
       <Setting MemberName="WifiClientKey" UIText="Key" DocumentationTitle="Wi-Fi Client Key" Type="String" OscAddress="/wifi/client/key">
+        This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
       <Setting MemberName="WifiClientDhcpEnabled" UIText="DHCP Enabled" DocumentationTitle="Wi-Fi Client DHCP Enabled" Type="Bool" OscAddress="/wifi/client/dhcp">
+        This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
       <Setting MemberName="WifiClientIPAddress" UIText="IP Address" DocumentationTitle="Wi-Fi Client IP Address" Type="IPAddress" OscAddress="/wifi/client/ip">
+        This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
       <Setting MemberName="WifiClientSubnet" UIText="Subnet" DocumentationTitle="Wi-Fi Client Subnet" Type="IPAddress" OscAddress="/wifi/client/subnet">
+        This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
       <Setting MemberName="WifiClientGateway" UIText="Gateway" DocumentationTitle="Wi-Fi Client Gateway" Type="IPAddress" OscAddress="/wifi/client/gateway">
+        This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
       <Setting MemberName="WifiClientLowPower" UIText="Low Power Mode" DocumentationTitle="Wi-Fi Client SSIDLow Power Mode" Type="Bool" OscAddress="/wifi/client/lowpower">
+        This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
     </Category>
     <Category MemberName="Udp" UIText="UDP">

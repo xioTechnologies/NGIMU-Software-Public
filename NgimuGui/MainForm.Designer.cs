@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui
 {
     partial class MainForm
-	{
-		/// <summary>
-		/// Required designer command.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer command.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region m_Windows Form Designer generated code
+        #region m_Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.m_FastTimer = new System.Windows.Forms.Timer(this.components);
             this.m_SlowTimer = new System.Windows.Forms.Timer(this.components);
@@ -754,73 +754,73 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.MenuStrip m_MenuStrip;
-		private System.Windows.Forms.StatusStrip m_StatusStrip;
-		private System.Windows.Forms.ToolStripStatusLabel m_TotalReceived;
-		private System.Windows.Forms.ToolStripStatusLabel m_TotalSent;
-		private System.Windows.Forms.ToolStripStatusLabel m_SendRate;
-		private System.Windows.Forms.TabControl m_TabControl;
-		private System.Windows.Forms.TabPage m_TerminalTab;
-		private Panels.Terminal m_TerminalPanel;
-		private System.Windows.Forms.ToolStripMenuItem m_ConnectionMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_ConnectUdpMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_ConnectSerialMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_SearchForConnectionsItem;
-		private System.Windows.Forms.Timer m_FastTimer;
-		private System.Windows.Forms.ToolStripMenuItem m_DisconnectMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_OpenUdpConnectionDialogMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_SettingsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_ReadFromDeviceMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_WriteToDeviceMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_SendCommandMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_GraphsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_Form3DViewMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_GyroscopeMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_AccelerometerMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_MagnetometerMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_BarometerMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_ToolsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_LogDataMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_ConvertSDCardFile;
-		private System.Windows.Forms.ToolStripMenuItem m_GyroscopeAndAccelerometerCalibrationMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_UploadFirmwareMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_SaveCalibrationToFileMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_LoadCalibrationValuesFromFileMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_MagneticCalibrationMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_HelpMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_AboutMenuItem;
-		private System.Windows.Forms.TabPage m_SettingsTab;
-		private Panels.SettingsPanel m_SettingsPanel;
-		private System.Windows.Forms.ToolStripStatusLabel m_StatusSeparator1;
-		private System.Windows.Forms.ToolStripStatusLabel m_StatusSeparator2;
-		private System.Windows.Forms.ToolStripStatusLabel m_BatteryStatusLabel;
+        private System.Windows.Forms.MenuStrip m_MenuStrip;
+        private System.Windows.Forms.StatusStrip m_StatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel m_TotalReceived;
+        private System.Windows.Forms.ToolStripStatusLabel m_TotalSent;
+        private System.Windows.Forms.ToolStripStatusLabel m_SendRate;
+        private System.Windows.Forms.TabControl m_TabControl;
+        private System.Windows.Forms.TabPage m_TerminalTab;
+        private Panels.Terminal m_TerminalPanel;
+        private System.Windows.Forms.ToolStripMenuItem m_ConnectionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_ConnectUdpMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_ConnectSerialMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_SearchForConnectionsItem;
+        private System.Windows.Forms.Timer m_FastTimer;
+        private System.Windows.Forms.ToolStripMenuItem m_DisconnectMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_OpenUdpConnectionDialogMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_SettingsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_ReadFromDeviceMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_WriteToDeviceMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_SendCommandMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_GraphsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_Form3DViewMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_GyroscopeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_AccelerometerMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_MagnetometerMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_BarometerMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_ToolsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_LogDataMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_ConvertSDCardFile;
+        private System.Windows.Forms.ToolStripMenuItem m_GyroscopeAndAccelerometerCalibrationMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_UploadFirmwareMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_SaveCalibrationToFileMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_LoadCalibrationValuesFromFileMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_MagneticCalibrationMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_HelpMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_AboutMenuItem;
+        private System.Windows.Forms.TabPage m_SettingsTab;
+        private Panels.SettingsPanel m_SettingsPanel;
+        private System.Windows.Forms.ToolStripStatusLabel m_StatusSeparator1;
+        private System.Windows.Forms.ToolStripStatusLabel m_StatusSeparator2;
+        private System.Windows.Forms.ToolStripStatusLabel m_BatteryStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem m_BatteryMenuItem;
-		private System.Windows.Forms.Timer m_SlowTimer;
-		private System.Windows.Forms.ToolStripStatusLabel m_BatteryChargerStatusLabel;
-		private System.Windows.Forms.ToolStripMenuItem m_OpenSerialConnectionDialog;
-		private System.Windows.Forms.ToolStripSeparator m_SerialSeparator;
-		private System.Windows.Forms.ToolStripMenuItem m_AltimeterMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_EarthAccelerationMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_TemperatureMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_AnalogueInputsMenuItem;
-		private System.Windows.Forms.TabPage m_MessagesTab;
+        private System.Windows.Forms.Timer m_SlowTimer;
+        private System.Windows.Forms.ToolStripStatusLabel m_BatteryChargerStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem m_OpenSerialConnectionDialog;
+        private System.Windows.Forms.ToolStripSeparator m_SerialSeparator;
+        private System.Windows.Forms.ToolStripMenuItem m_AltimeterMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_EarthAccelerationMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_TemperatureMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_AnalogueInputsMenuItem;
+        private System.Windows.Forms.TabPage m_MessagesTab;
         private Panels.FilterPanel filterPanel1;
-		private System.Windows.Forms.ToolStripMenuItem m_LinearAccelerationMenuItem;
-		private System.Windows.Forms.ToolStripStatusLabel m_ReceiveRate;
-		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-		private System.Windows.Forms.ToolStripMenuItem m_MessagePerSecondMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem m_LoadDefaultsMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem reconnectToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem m_AuxSerialTerminalMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_LinearAccelerationMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel m_ReceiveRate;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem m_MessagePerSecondMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem m_LoadDefaultsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reconnectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_AuxSerialTerminalMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;

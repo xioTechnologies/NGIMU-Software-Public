@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace NgimuGui.DialogsAndWindows
         private SessionLogger m_Logger;
 
         private Connection m_ActiveConnection;
+        private string lastSessionDirectory;
 
         public Connection ActiveConnection
         {
@@ -37,7 +39,7 @@ namespace NgimuGui.DialogsAndWindows
             Options.Windows[ID].IsOpen = true;
 
             m_StopButton.Enabled = false;
-
+            openDirectory.Enabled = false;
             pathSelector.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         }
 
@@ -60,14 +62,14 @@ namespace NgimuGui.DialogsAndWindows
             if (string.IsNullOrEmpty(m_SessionNameBox.Text) == true ||
                 Helper.IsInvalidFileName(m_SessionNameBox.Text) == true)
             {
-                MessageBox.Show(this, "Invalid session name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.ShowError("Invalid session name.");
                 return;
             }
 
             // check the filename is good
             if (CheckFileName(pathSelector.SelectedPath) == false)
             {
-                MessageBox.Show(this, "The file name \"" + pathSelector.SelectedPath + "\" is not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.ShowError("The file name \"" + pathSelector.SelectedPath + "\" is not valid.");
                 return;
             }
 
@@ -76,7 +78,7 @@ namespace NgimuGui.DialogsAndWindows
             // check the filename is good
             if (CheckFileName(fullpath) == false)
             {
-                MessageBox.Show(this, "The session path \"" + fullpath + "\" is not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.ShowError("The session path \"" + fullpath + "\" is not valid.");
                 return;
             }
 
@@ -87,8 +89,7 @@ namespace NgimuGui.DialogsAndWindows
             {
                 if (uint.TryParse(m_LoggingPeriodBox.Text, out loggingPeriod) == false)
                 {
-                    MessageBox.Show(this, "Period must be a unsigned integer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    this.ShowError("Period must be a unsigned integer.");
                     return;
                 }
             }
@@ -132,14 +133,14 @@ namespace NgimuGui.DialogsAndWindows
         {
             if (m_ActiveConnection == null)
             {
-                MessageBox.Show(this, "No connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.ShowError("No connection.");
 
                 return false;
             }
 
             if (m_Logger != null)
             {
-                MessageBox.Show(this, "Already logging.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.ShowError("Already logging.");
 
                 return false;
             }
@@ -150,6 +151,7 @@ namespace NgimuGui.DialogsAndWindows
             m_StartButton.Enabled = false;
             m_LoggingPeriodBox.Enabled = false;
             m_StopButton.Enabled = true;
+            openDirectory.Enabled = false;
 
             try
             {
@@ -200,8 +202,7 @@ namespace NgimuGui.DialogsAndWindows
 
         void DisplayException_Inner(string label, string detail)
         {
-            MessageBox.Show(this, label, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            this.ShowError(label);
             /* 
             using (ExceptionDialog dialog = new ExceptionDialog())
             {
@@ -248,7 +249,11 @@ namespace NgimuGui.DialogsAndWindows
 
             m_Logger.Stop();
 
+            lastSessionDirectory = m_Logger.SessionDirectory;
+
             m_Logger = null;
+
+            openDirectory.Enabled = true;
 
             return true;
         }
@@ -321,6 +326,17 @@ namespace NgimuGui.DialogsAndWindows
             {
                 m_SessionNameBox.ForeColor = Color.Red;
             }
+        }
+
+        private void openDirectory_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(lastSessionDirectory) == false)
+            {
+                this.ShowError("Directory does not exist. \"" + lastSessionDirectory + "\"");
+                return;
+            }
+
+            Process.Start(lastSessionDirectory);
         }
     }
 }

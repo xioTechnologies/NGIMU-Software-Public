@@ -43,17 +43,17 @@ namespace SettingsObjectModelCodeGenerator
                 switch (SettingValueType)
                 {
                     case SettingValueType.RotationMatrix:
-                        return "RotationMatrix"; 
+                        return "RotationMatrix";
                     case SettingValueType.Vector3:
-                        return "Vector3"; 
+                        return "Vector3";
                     case SettingValueType.String:
-                        return "string"; 
+                        return "string";
                     case SettingValueType.Bool:
-                        return "bool"; 
+                        return "bool";
                     case SettingValueType.MacAddress:
                         return "PhysicalAddress";
                     case SettingValueType.IPAddress:
-                        return "IPAddress"; 
+                        return "IPAddress";
                     case SettingValueType.WifiMode:
                         return "WifiMode";
                     case SettingValueType.WifiAntenna:
@@ -61,23 +61,23 @@ namespace SettingsObjectModelCodeGenerator
                     case SettingValueType.WifiRegion:
                         return "WifiRegion";
                     case SettingValueType.WifiBand:
-                        return "WifiBand"; 
+                        return "WifiBand";
                     case SettingValueType.Wifi2GHzChannel:
-                        return "Wifi2GHzChannel"; 
+                        return "Wifi2GHzChannel";
                     case SettingValueType.Wifi5GHzChannel:
                         return "Wifi5GHzChannel";
                     case SettingValueType.CpuIdleMode:
                         return "CpuIdleMode";
                     case SettingValueType.UdpPort:
-                        return "ushort"; 
+                        return "ushort";
                     case SettingValueType.UInt32:
-                        return "uint"; 
+                        return "uint";
                     case SettingValueType.Float:
-                        return "float"; 
+                        return "float";
                     case SettingValueType.Int32:
-                        return "int"; 
+                        return "int";
                     default:
-                        throw new Exception("Unknown setting value type."); 
+                        throw new Exception("Unknown setting value type.");
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace SettingsObjectModelCodeGenerator
         /// <summary>
         /// Gets the IMU value type. 
         /// </summary>
-        public SettingValueType SettingValueType { get; set;  }
+        public SettingValueType SettingValueType { get; set; }
 
         /// <summary>
         /// Is this variable readonly. 

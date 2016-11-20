@@ -56,7 +56,7 @@ namespace NgimuApi
         /// </summary>
         public int Timeout { get; set; }
 
-        public string CommandOscAddress { get { return commandCallback.OscAddress; } } 
+        public string CommandOscAddress { get { return commandCallback.OscAddress; } }
 
         #endregion Public Members
 

@@ -13,19 +13,19 @@ namespace NgimuApi.Data
         public override string OscAddress { get { return "/temperature"; } }
 
         /// <summary>
-        /// Gets the processor temperature in degrees Celsius.
+        /// Gets the temperature of the processor in degrees Celsius.
         /// </summary>
-        public float ProcessorTemperature { get; private set; }
+        public float Processor { get; private set; }
 
         /// <summary>
-        /// Gets the accelerometer temperature in degrees Celsius.
+        /// Gets the temperature of the gyroscope and accelerometer in degrees Celsius.
         /// </summary>
-        public float SensorTemperature { get; private set; }
+        public float GyroscopeAndAccelerometer { get; private set; }
 
         /// <summary>
-        /// Gets the barometer temperature in degrees Celsius.
+        /// Gets the temperature of the environmental sensor in degrees Celsius.
         /// </summary>
-        public float BarometerTemperature { get; private set; }
+        public float EnvironmentalSensor { get; private set; }
 
         /// <summary>
         /// Method called when an OSC message associated with this data object is received.
@@ -54,9 +54,9 @@ namespace NgimuApi.Data
                 return false;
             }
 
-            ProcessorTemperature = (float)message[0];
-            SensorTemperature = (float)message[1];
-            BarometerTemperature = (float)message[2];
+            Processor = (float)message[0];
+            GyroscopeAndAccelerometer = (float)message[1];
+            EnvironmentalSensor = (float)message[2];
 
             return true;
         }
@@ -67,9 +67,9 @@ namespace NgimuApi.Data
             {
                 return Helper.ToCsv(
                         "Time (s)",
-                        "Processor Temperature (degC)",
-                        "Sensor Temperature (degC)",
-                        "Barometer Temperature (degC)"
+                        "Processor (degC)",
+                        "Gyroscope And Accelerometer (degC)",
+                        "Environmental Sensor (degC)"
                         );
             }
         }
@@ -79,9 +79,9 @@ namespace NgimuApi.Data
             return Helper.ToCsv(
                     CreateTimestampString(firstTimestamp),
 
-                    ProcessorTemperature,
-                    SensorTemperature,
-                    BarometerTemperature
+                    Processor,
+                    GyroscopeAndAccelerometer,
+                    EnvironmentalSensor
                     );
         }
     }

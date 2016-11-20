@@ -60,7 +60,7 @@ namespace NgimuGui.DialogsAndWindows
 
         private void m_ResetToDefaults_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, "This will reset all options to default values.", "Are You Sure", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Cancel)
+            if (this.ShowWarning("This will reset all options to default values.", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.Cancel)
             {
                 return;
             }

@@ -11,7 +11,6 @@ using NgimuApi.SearchForConnections;
 using NgimuGui.DialogsAndWindows;
 using Rug.Cmd;
 using Rug.Cmd.Colors;
-using Rug.LiteGL.Controls;
 using Rug.Osc;
 
 namespace NgimuGui
@@ -54,162 +53,7 @@ namespace NgimuGui
 
             InitializeComponent();
 
-            float lowSpeedTimespan = 60;
-            float highSpeedTimespan = 10;
-
-            uint graphSampleBufferSize = Options.GraphSampleBufferSize * 1000;
-
-            m_GraphWindows.Add("Messages Per Second", new GraphWindow(
-                "Messages Per Second", "Messages per second",
-                new AxesRange(0, 0, lowSpeedTimespan, 1000),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Messages Per Second", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-
-            m_GraphWindows.Add("Gyroscope", new GraphWindow(
-                "Gyroscope", "Angular velocity (°/s)",
-                new AxesRange(0, -10, highSpeedTimespan, 10),
-                true,
-                new Graph.Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Blue, Name = "Z", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.White, Name = "Magnitude", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Accelerometer", new GraphWindow(
-                "Accelerometer", "Acceleration (g)",
-                new AxesRange(0, -10, highSpeedTimespan, 10),
-                true,
-                new Graph.Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Blue, Name = "Z", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.White, Name = "Magnitude", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Magnetometer", new GraphWindow(
-                "Magnetometer", "Intensity (uT)",
-                new AxesRange(0, -10, highSpeedTimespan, 10),
-                true,
-                new Graph.Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Blue, Name = "Z", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.White, Name = "Magnitude", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Barometer", new GraphWindow(
-                "Barometer", "Pressure (hPa)",
-                new AxesRange(0, -10, highSpeedTimespan, 10),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Barometer", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Euler Angles", new GraphWindow(
-                "Euler Angles", "Angle (°)",
-                new AxesRange(0, -10, highSpeedTimespan, 10),
-                true,
-                new Graph.Trace() { Color = Colors.Red, Name = "Roll", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Green, Name = "Pitch", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Blue, Name = "Yaw", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Linear Acceleration", new GraphWindow(
-                "Linear Acceleration", "Acceleration (g)",
-                new AxesRange(0, -10, highSpeedTimespan, 10),
-                true,
-                new Graph.Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Blue, Name = "Z", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Earth Acceleration", new GraphWindow(
-                "Earth Acceleration", "Acceleration (g)",
-                new AxesRange(0, -10, highSpeedTimespan, 10),
-                true,
-                new Graph.Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Blue, Name = "Z", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Altimeter", new GraphWindow(
-                "Altimeter", "Altitude (m)",
-                new AxesRange(0, -100, highSpeedTimespan, 100),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Altitude", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Thermometers", new GraphWindow(
-                "Thermometers", "Temperature (°C)",
-                new AxesRange(0, -10, lowSpeedTimespan, 10),
-                true,
-                new Graph.Trace() { Color = Colors.Cyan, Name = "Processor", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Sensor", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Magenta, Name = "Barometer", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Humidity", new GraphWindow(
-                "Humidity", "Humidity (%)",
-                new AxesRange(0, 0, lowSpeedTimespan, 100),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Humidity", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Battery Percentage", new GraphWindow(
-                "Battery Percentage", "Percentage (%)",
-                new AxesRange(0, 0, lowSpeedTimespan, 100),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Battery Percentage", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Battery Time To Empty", new GraphWindow(
-                "Battery Time To Empty", "Time (minutes)",
-                new AxesRange(0, 0, lowSpeedTimespan, 800),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Battery Time To Empty", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Battery Voltage", new GraphWindow(
-                "Battery Voltage", "Voltage (V)",
-                new AxesRange(0, 0, lowSpeedTimespan, 5),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Battery Voltage", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Battery Current", new GraphWindow(
-                "Battery Current", "Current (mA)",
-                new AxesRange(0, -1000, lowSpeedTimespan, 1000),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Battery Current", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("Analogue Inputs", new GraphWindow(
-                "Analogue Inputs", "Voltage (V)",
-                new AxesRange(0, 0, highSpeedTimespan, 3.2f),
-                true,
-                new Graph.Trace() { Color = Colors.Red, Name = "1", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Green, Name = "2", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Blue, Name = "3", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Cyan, Name = "4", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Yellow, Name = "5", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Magenta, Name = "6", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.Orange, Name = "7", MaxDataPoints = graphSampleBufferSize },
-                new Graph.Trace() { Color = Colors.White, Name = "8", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-            m_GraphWindows.Add("RSSI Power", new GraphWindow(
-                "RSSI Power", "Power (dBm)",
-                new AxesRange(0, -60, lowSpeedTimespan, 0),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Power", MaxDataPoints = graphSampleBufferSize }
-                ));
-
-
-            m_GraphWindows.Add("RSSI Percentage", new GraphWindow(
-                "RSSI Percentage", "Percentage (%)",
-                new AxesRange(0, 0, lowSpeedTimespan, 100),
-                false,
-                new Graph.Trace() { Color = Colors.Yellow, Name = "Percentage (%)", MaxDataPoints = graphSampleBufferSize }
-                ));
+            DefaultGraphSettings.UpdateGraphSampleBufferSize();
         }
 
         #endregion
@@ -218,16 +62,9 @@ namespace NgimuGui
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //using (Scope2D.GraphWindow testForm = new Scope2D.GraphWindow())
-            //{
-            //    testForm.ShowDialog(); 
-            //}
-
-            //Close();
-
-            //return; 
-
             m_BatteryChargerStatusLabel.Text = "";
+            m_AboutMenuItem.Click += m_AboutMenuItem_Click;
+            m_AboutMenuItem.Visible = true;
 
             if (Options.Bounds != Rectangle.Empty)
             {
@@ -300,8 +137,6 @@ namespace NgimuGui
 
             UdpConnectionInfo defaultConnection = new UdpConnectionInfo();
 
-            Size size;
-
             m_ConnectUdpMenuItem.DropDownItems.Insert(0, new ToolStripMenuItem(defaultConnection.ToString(), null, ConnectMenuItem_Click) { Tag = defaultConnection });
 
             m_ConnectUdpMenuItem.DropDownOpening += new EventHandler(ConnectUdpMenuItem_DropDownOpening);
@@ -326,10 +161,8 @@ namespace NgimuGui
                 item.Name = (string)item.Tag;
             }
 
-            foreach (string name in m_GraphWindows.Keys)
+            foreach (string name in DefaultGraphSettings.Keys)
             {
-                GraphWindow graph = m_GraphWindows[name];
-
                 ToolStripItem item = this.m_GraphsMenuItem.DropDownItems[name];
 
                 if (item == null)
@@ -340,11 +173,6 @@ namespace NgimuGui
                 ToolStripMenuItem toolStripMenuItem = item as ToolStripMenuItem;
 
                 toolStripMenuItem.Checked = Options.Windows[name].IsOpen;
-
-                graph.VisibleChanged += new EventHandler(delegate (object s, EventArgs a)
-                {
-                    toolStripMenuItem.Checked = graph.Visible;
-                });
             }
 
             m_Form3DView.VisibleChanged += Form3DView_FormClosed;
@@ -370,11 +198,12 @@ namespace NgimuGui
 
             foreach (GraphWindow graph in m_GraphWindows.Values)
             {
+                graph.SaveSettings();
+
                 graph.Dispose();
             }
 
             m_Form3DView.Dispose();
-
 
             if (m_LogDataDialog != null)
             {
@@ -453,8 +282,6 @@ namespace NgimuGui
             }
             catch
             {
-                //GuiTerminal.WriteException(ex);
-
                 ActiveConnection_Disconnected(m_Connection, EventArgs.Empty);
             }
         }
@@ -770,7 +597,7 @@ namespace NgimuGui
         void Temperature_Updated(object sender, EventArgs e)
         {
 
-            AddGraphData("Thermometers", m_Connection.Temperature.Timestamp.ToDataTime(), m_Connection.Temperature.ProcessorTemperature, m_Connection.Temperature.SensorTemperature, m_Connection.Temperature.BarometerTemperature);
+            AddGraphData("Thermometers", m_Connection.Temperature.Timestamp.ToDataTime(), m_Connection.Temperature.Processor, m_Connection.Temperature.GyroscopeAndAccelerometer, m_Connection.Temperature.EnvironmentalSensor);
         }
 
         void AuxiliarySerial_Updated(object sender, EventArgs e)
@@ -1329,8 +1156,6 @@ namespace NgimuGui
                 m_UploadFirmwareDialog.ActiveConnection = m_Connection;
                 m_UploadFirmwareDialog.FormClosed += new FormClosedEventHandler(m_UploadFirmwareDialog_FormClosed);
                 m_UploadFirmwareDialog.AutoConnectRequest += SearchForConnectionsItem_Click;
-                //m_UploadFirmwareDialog.StartPosition = FormStartPosition.CenterParent; 
-                //m_UploadFirmwareDialog.Show(this);
                 m_UploadFirmwareDialog.Show();
             }
             else
@@ -1407,10 +1232,7 @@ namespace NgimuGui
 
             if (process.Result != CommunicationProcessResult.Success)
             {
-                Invoke((MethodInvoker)(() =>
-                {
-                    MessageBox.Show(this, process.CommandOscAddress + " command could not be confirmed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }));
+                this.InvokeShowError(process.CommandOscAddress + " command could not be confirmed.");
             }
         }
 
@@ -1436,10 +1258,7 @@ namespace NgimuGui
 
             if (process.Result != CommunicationProcessResult.Success)
             {
-                Invoke((MethodInvoker)(() =>
-                {
-                    MessageBox.Show(this, process.CommandOscAddress + " command could not be confirmed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }));
+                this.InvokeShowError(process.CommandOscAddress + " command could not be confirmed.");
             }
         }
 
@@ -1469,12 +1288,38 @@ namespace NgimuGui
 
         private void ShowGraph(string name)
         {
-            if (m_GraphWindows.ContainsKey(name) == false)
+            if (m_GraphWindows.ContainsKey(name) == true)
             {
                 return;
             }
 
-            m_GraphWindows[name].Show();
+            GraphWindow graph = new GraphWindow(DefaultGraphSettings.GetSettings(name));
+
+            graph.FormClosed += Graph_FormClosed;
+
+            m_GraphWindows.Add(name, graph);
+
+            graph.Show();
+
+            uint graphSampleBufferSize = Options.GraphSampleBufferSize * 1000;
+
+            graph.SetSampleBufferSize(graphSampleBufferSize);
+        }
+
+        private void Graph_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            GraphWindow graph = sender as GraphWindow;
+
+            ToolStripMenuItem item = this.m_GraphsMenuItem.DropDownItems[graph.ID] as ToolStripMenuItem;
+
+            if (item == null)
+            {
+                return;
+            }
+
+            m_GraphWindows.Remove(graph.ID);
+
+            item.Checked = false;
         }
 
         private void HideGraph(string name)
@@ -1484,7 +1329,7 @@ namespace NgimuGui
                 return;
             }
 
-            m_GraphWindows[name].Hide();
+            m_GraphWindows[name].Close();
         }
 
         #endregion
@@ -1521,30 +1366,6 @@ namespace NgimuGui
                 DisconnectMenuItem_Click(sender, e);
             }
 
-            /* 
-            using (AutoConnectionWorker worker = new AutoConnectionWorker())
-            {
-                //dialog.Reporter.Connected += new EventHandler(ActiveConnection_Connected);
-                //dialog.Reporter.Disconnected += new EventHandler(ActiveConnection_Disconnected);
-                worker.Reporter.Error += new EventHandler<MessageEventArgs>(ActiveConnection_Error);
-                worker.Reporter.Exception += new EventHandler<ExceptionEventArgs>(ActiveConnection_Exception);
-                worker.Reporter.Info += new EventHandler<MessageEventArgs>(ActiveConnection_Info);
-                worker.Reporter.Message += new MessageEvent(ActiveConnection_Message);
-
-                if (worker.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-                {
-                    ConnectAuto(worker.Info); 
-                }
-
-                //dialog.Reporter.Connected -= new EventHandler(ActiveConnection_Connected);
-                //dialog.Reporter.Disconnected -= new EventHandler(ActiveConnection_Disconnected);
-                worker.Reporter.Error -= new EventHandler<MessageEventArgs>(ActiveConnection_Error);
-                worker.Reporter.Exception -= new EventHandler<ExceptionEventArgs>(ActiveConnection_Exception);
-                worker.Reporter.Info -= new EventHandler<MessageEventArgs>(ActiveConnection_Info);
-                worker.Reporter.Message -= new MessageEvent(ActiveConnection_Message);
-            }
-            */
-
             using (SearchingForConnectionsDialog dialog = new SearchingForConnectionsDialog())
             {
                 if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
@@ -1556,13 +1377,25 @@ namespace NgimuGui
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            uint graphBufferSize = Options.GraphSampleBufferSize;
+
             using (OptionsDialog prefs = new OptionsDialog())
             {
                 prefs.ShowDialog(this);
             }
-        }
 
-        //UploadFirmwareDialog m_UploadFirmwareDialog = new UploadFirmwareDialog(); 
+            if (graphBufferSize != Options.GraphSampleBufferSize)
+            {
+                DefaultGraphSettings.UpdateGraphSampleBufferSize();
+
+                uint graphSampleBufferSize = Options.GraphSampleBufferSize * 1000;
+
+                foreach (GraphWindow graphWindow in m_GraphWindows.Values)
+                {
+                    graphWindow.SetSampleBufferSize(graphSampleBufferSize);
+                }
+            }
+        }
 
         private void loadDefaultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1573,7 +1406,7 @@ namespace NgimuGui
 
             lock (m_CommandProcessLock)
             {
-                if (MessageBox.Show(this, "All settings will be returned to the default values. This may result in your current connection being lost.", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Cancel)
+                if (this.ShowWarning("All settings will be returned to the default values. This may result in your current connection being lost.", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.Cancel)
                 {
                     return;
                 }
@@ -1679,6 +1512,14 @@ namespace NgimuGui
             //if (m_TabControl.SelectedIndex == 1)
             {
                 filterPanel1.InvalidateAndAlign();
+            }
+        }
+
+        private void m_AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AboutDialog dialog = new AboutDialog())
+            {
+                dialog.ShowDialog(this);
             }
         }
     }

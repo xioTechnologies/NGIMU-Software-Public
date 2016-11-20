@@ -307,21 +307,27 @@ namespace NgimuApi
                     return;
                 }
 
+                if (Connection.IsConnected == false)
+                {
+                    Result = CommunicationProcessResult.ConnectionError;
+                    return;
+                }
+
                 // we got past the start
                 gotPastStart = true;
 
                 // while we should not exit and we have callbacks remaining
-                while (Connection.IsConnected == true && shouldExit == false && RemainingCallbacks.Count > 0)
+                while (shouldExit == false && RemainingCallbacks.Count > 0)
                 {
+                    if (Connection.IsConnected == false)
+                    {
+                        Result = CommunicationProcessResult.ConnectionError;
+                        return;
+                    }
+
                     // iterate over all remaining callbacks 
                     foreach (ISettingValue var in RemainingCallbacks)
                     {
-                        if (Connection.IsConnected == false)
-                        {
-                            Result = CommunicationProcessResult.ConnectionError;
-                            return;
-                        }
-
                         // if the callback has completed then continue to the next one
                         if (var.HasCallbackCompleted == true)
                         {

@@ -178,12 +178,6 @@
   <data name="Data_NotConnected" xml:space="preserve">
     <value>Not connected.</value>
   </data>
-  <data name="SettingsProcess_CouldNotMute" xml:space="preserve">
-    <value>Error could not mute OSC traffic.</value>
-  </data>
-  <data name="SettingsProcess_CouldNotUnmute" xml:space="preserve">
-    <value>Error could not unmute OSC traffic.</value>
-  </data>
   <data name="SettingsProcess_ProcessAlreadyRunning" xml:space="preserve">
     <value>Settings {0} process is already running.</value>
   </data>
@@ -219,7 +213,7 @@
     <comment>Replacement here is "Read process" etc </comment>
   </data>
   <data name="SettingsRead_CommunicationError" xml:space="preserve">
-    <value>A communication error occured while reading settings.</value>
+    <value>A communication error occurred while reading settings.</value>
   </data>
   <data name="SettingsRead_CouldNotDoAll" xml:space="preserve">
     <value>Could not read all settings.</value>
@@ -236,10 +230,10 @@
     <comment>Replacement here is "Read process" etc </comment>
   </data>
   <data name="SettingsWrite_CommunicationError" xml:space="preserve">
-    <value>A communication error occured while writing settings.</value>
+    <value>A communication error occurred while writing settings.</value>
   </data>
   <data name="SettingsWrite_CouldNotDoAll" xml:space="preserve">
-    <value>Could not write all settings.</value>
+    <value>Could not confirm write of all settings.</value>
   </data>
   <data name="SettingsWrite_Retrying" xml:space="preserve">
     <value>Retrying {0} of {1} settings.</value>
@@ -268,7 +262,7 @@
     <comment>Replacement here is "Read process" etc </comment>
   </data>
   <data name="CommandProcess_CommunicationError" xml:space="preserve">
-    <value>A communication error occured while executing commands.</value>
+    <value>A communication error occurred while executing commands.</value>
   </data>
   <data name="CommandProcess_CouldNotDoAll" xml:space="preserve">
     <value>Could not execute all commands.</value>

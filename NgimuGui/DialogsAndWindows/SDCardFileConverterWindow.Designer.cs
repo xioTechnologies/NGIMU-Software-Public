@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui.DialogsAndWindows
 {
     partial class SDCardFileConverterWindow
-	{
-		/// <summary>
-		/// Required designer command.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer command.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region m_Windows Form Designer generated code
+        #region m_Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.m_FileNameLabel = new System.Windows.Forms.Label();
             this.m_StartButton = new System.Windows.Forms.Button();
@@ -73,9 +73,9 @@
             // sdCardFilePathSelector
             // 
             this.sdCardFilePathSelector.AllowMultiplePaths = true;
-            this.sdCardFilePathSelector.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.sdCardFilePathSelector.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.sdCardFilePathSelector.DialogTitle = "Select File To Process";
+            this.sdCardFilePathSelector.DialogTitle = "Select File(s) To Process";
             this.sdCardFilePathSelector.Filter = "XIO files|*.xio|All files|*.*";
             this.sdCardFilePathSelector.HelpText = "Select SD card file(s)";
             this.sdCardFilePathSelector.HelpTextColor = System.Drawing.Color.Gray;
@@ -88,7 +88,7 @@
             // 
             // directorySelector
             // 
-            this.directorySelector.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.directorySelector.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.directorySelector.DialogTitle = "Please select a destination directory.";
             this.directorySelector.HelpText = "Select destination directory";
@@ -124,13 +124,13 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.Label m_FileNameLabel;
+        private System.Windows.Forms.Label m_FileNameLabel;
         private System.Windows.Forms.Button m_StartButton;
-		private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
         private Controls.PathSelector sdCardFilePathSelector;
         private Controls.PathSelector directorySelector;

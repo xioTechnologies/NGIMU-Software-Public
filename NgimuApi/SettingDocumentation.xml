@@ -42,26 +42,16 @@
   </Setting>
   <Setting Address="/wifi/region">
   </Setting>
-  <Setting Address="/wifi/ap/band">
-  </Setting>
-  <Setting Address="/wifi/ap/2ghzchannel">
-  </Setting>
-  <Setting Address="/wifi/ap/5ghzchannel">
-  </Setting>
-  <Setting Address="/wifi/client/ssid">
-  </Setting>
-  <Setting Address="/wifi/client/key">
-  </Setting>
-  <Setting Address="/wifi/client/dhcp">
-  </Setting>
-  <Setting Address="/wifi/client/ip">
-  </Setting>
-  <Setting Address="/wifi/client/subnet">
-  </Setting>
-  <Setting Address="/wifi/client/gateway">
-  </Setting>
-  <Setting Address="/wifi/client/lowpower">
-  </Setting>
+  <Setting Address="/wifi/ap/band">This setting has no effect if Wi-Fi is not in AP mode.</Setting>
+  <Setting Address="/wifi/ap/2ghzchannel">This setting has no effect if Wi-Fi is not in AP mode.</Setting>
+  <Setting Address="/wifi/ap/5ghzchannel">This setting has no effect if Wi-Fi is not in AP mode.</Setting>
+  <Setting Address="/wifi/client/ssid">This setting has no effect if Wi-Fi is not in Client mode.</Setting>
+  <Setting Address="/wifi/client/key">This setting has no effect if Wi-Fi is not in Client mode.</Setting>
+  <Setting Address="/wifi/client/dhcp">This setting has no effect if Wi-Fi is not in Client mode.</Setting>
+  <Setting Address="/wifi/client/ip">This setting has no effect if Wi-Fi is not in Client mode.</Setting>
+  <Setting Address="/wifi/client/subnet">This setting has no effect if Wi-Fi is not in Client mode.</Setting>
+  <Setting Address="/wifi/client/gateway">This setting has no effect if Wi-Fi is not in Client mode.</Setting>
+  <Setting Address="/wifi/client/lowpower">This setting has no effect if Wi-Fi is not in Client mode.</Setting>
   <Setting Address="/wifi/send/ip">
   </Setting>
   <Setting Address="/wifi/send/port">

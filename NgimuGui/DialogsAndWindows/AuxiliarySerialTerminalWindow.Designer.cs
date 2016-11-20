@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui.DialogsAndWindows
 {
     partial class AuxiliarySerialTerminalWindow
-	{
-		/// <summary>
-		/// Required designer command.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer command.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region m_Windows Form Designer generated code
+        #region m_Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.serialTerminal1 = new NgimuGui.Panels.SerialTerminal();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -209,11 +209,11 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private Panels.SerialTerminal serialTerminal1;
+        private Panels.SerialTerminal serialTerminal1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private Controls.HiLowStatusItem CtsHigh;
         private Controls.HiLowStatusItem CtsLow;
@@ -229,5 +229,5 @@
         private System.Windows.Forms.ToolStripStatusLabel m_TotalSent;
         private System.Windows.Forms.ToolStripStatusLabel m_SendRate;
         private System.Windows.Forms.Timer timer1;
-	}
+    }
 }

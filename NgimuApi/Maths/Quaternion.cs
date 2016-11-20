@@ -8,7 +8,7 @@ namespace NgimuApi.Maths
     /// Quaternion.
     /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Quaternion : IEquatable<Quaternion>
+    public struct Quaternion
     {
         /// <summary>
         /// Quaternion identity.  Represents an alignment in orientation.
@@ -123,20 +123,6 @@ namespace NgimuApi.Maths
             this.Z = array[i++];
         }
 
-        #region Operators (TODO: Finish tidying and add XML comments)
-
-        //public void Invert()
-        //{
-        //    this.W = -this.W;
-        //}
-
-        //public Quaternion Inverted()
-        //{
-        //    Quaternion quaternion = this;
-        //    quaternion.Invert();
-        //    return quaternion;
-        //}
-
         /// <summary>
         /// Returns the quaternion conjugate.
         /// </summary>
@@ -147,136 +133,6 @@ namespace NgimuApi.Maths
             this.Z = -this.Z;
         }
 
-        //public static Quaternion Add(Quaternion left, Quaternion right)
-        //{
-        //    return new Quaternion(left.W + right.W, left.X + right.X, left.Y + right.Y, left.Z + right.Z);
-        //}
-
-        //public static void Add(ref Quaternion left, ref Quaternion right, out Quaternion result)
-        //{
-        //    result = new Quaternion(left.W + right.W, left.X + right.X, left.Y + right.Y, left.Z + right.Z);
-        //}
-
-        //public static Quaternion Sub(Quaternion left, Quaternion right)
-        //{
-        //    return new Quaternion(left.W - right.W, left.X - right.X, left.Y - right.Y, left.Z - right.Z);
-        //}
-
-        //public static void Sub(ref Quaternion left, ref Quaternion right, out Quaternion result)
-        //{
-        //    result = new Quaternion(left.W - right.W, left.X - right.X, left.Y - right.Y, left.Z - right.Z);
-        //}
-
-        public static void Multiply(ref Quaternion quaternion, float scale, out Quaternion result)
-        {
-            result = new Quaternion(quaternion.W * scale, quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale);
-        }
-
-        public static Quaternion Multiply(Quaternion quaternion, float scale)
-        {
-            return new Quaternion(quaternion.W * scale, quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale);
-        }
-
-        public static Quaternion Conjugate(Quaternion q)
-        {
-            return new Quaternion(q.W, -q.X, -q.Y, -q.Z);
-        }
-
-        //public static void Conjugate(ref Quaternion q, out Quaternion result)
-        //{
-        //    result = new Quaternion(q.W, -q.X, -q.Y, -q.Z);
-        //}
-
-        //public static Quaternion operator +(Quaternion left, Quaternion right)
-        //{
-        //    left.X += right.X;
-        //    left.Y += right.Y;
-        //    left.Z += right.Z;
-        //    left.W += right.W;
-
-        //    return left;
-        //}
-
-        //public static Quaternion operator -(Quaternion left, Quaternion right)
-        //{
-        //    left.X -= right.X;
-        //    left.Y -= right.Y;
-        //    left.Z -= right.Z;
-        //    left.W -= right.W;
-
-        //    return left;
-        //}
-
-        public static Quaternion operator *(Quaternion quaternion, float scale)
-        {
-            Multiply(ref quaternion, scale, out quaternion);
-            return quaternion;
-        }
-
-        public static Quaternion operator *(Quaternion A, Quaternion B)
-        {
-            Quaternion result = new Quaternion(
-                A.W * B.W - A.X * B.X - A.Y * B.Y - A.Z * B.Z,
-                A.W * B.X + A.X * B.W + A.Y * B.Z - A.Z * B.Y,
-                A.W * B.Y - A.X * B.Z + A.Y * B.W + A.Z * B.X,
-                A.W * B.Z + A.X * B.Y - A.Y * B.X + A.Z * B.W
-            );
-
-            return result;
-        }
-
-        //public static Quaternion operator *(float scale, Quaternion quaternion)
-        //{
-        //    return new Quaternion(quaternion.W * scale, quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale);
-        //}
-
-        public static bool operator ==(Quaternion left, Quaternion right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(Quaternion left, Quaternion right)
-        {
-            return !left.Equals(right);
-        }
-
-        public override bool Equals(object other)
-        {
-            return ((other is Quaternion) && (this == ((Quaternion)other)));
-        }
-
-        //public override int GetHashCode()
-        //{
-        //    return (((this.X.GetHashCode() ^ this.Y.GetHashCode()) ^ this.Z.GetHashCode()) ^ this.W.GetHashCode());
-        //}
-
-        /// <summary>
-        /// Returns true if the numeric value of this instance is equal to the other quaternion.
-        /// </summary>
-        /// <param name="other">The other quaternion to be compared.</param>
-        /// <returns>True if the numeric value of this instance is equal to the other quaternion.</returns>
-        public bool Equals(Quaternion other)
-        {
-            return
-                (this.X == other.X) &&
-                (this.Y == other.Y) &&
-                (this.Z == other.Z) &&
-                (this.W == other.W);
-        }
-
-        //public static float VectorLength(Quaternion value)
-        //{
-        //	float vectorLength =
-        //		(float)Math.Sqrt(
-        //			(value.W * value.W) +
-        //			(value.X * value.X) +
-        //			(value.Y * value.Y) +
-        //			(value.Z * value.Z)
-        //		);
-
-        //	return vectorLength;
-        //}
-
         /// <summary>
         /// Normalises a quaternion.
         /// </summary>
@@ -284,20 +140,23 @@ namespace NgimuApi.Maths
         /// <returns>Normalised quaternion.</returns>
         public static Quaternion Normalise(Quaternion quaternion)
         {
-            float vectorNorm =
-                (float)Math.Sqrt(
+            float vectorNormReciprocal =
+                1f / (float)Math.Sqrt(
                     (quaternion.W * quaternion.W) +
                     (quaternion.X * quaternion.X) +
                     (quaternion.Y * quaternion.Y) +
                     (quaternion.Z * quaternion.Z)
                 );
 
-            return quaternion * (1f / vectorNorm);
+            quaternion.W *= vectorNormReciprocal;
+            quaternion.X *= vectorNormReciprocal;
+            quaternion.Y *= vectorNormReciprocal;
+            quaternion.Z *= vectorNormReciprocal;
+
+            return quaternion;
         }
 
-        #endregion
-
-        #region Rotaion matrix and Euler angle conversions
+        #region Rotation matrix and Euler angle conversions
 
         /// <summary>
         /// Converts a quaternion to a rotation matrix.
@@ -416,11 +275,11 @@ namespace NgimuApi.Maths
             float cosPhi = (float)Math.Cos(phi * 0.5f);
             float sinPhi = (float)Math.Sin(phi * 0.5f);
 
-            return Conjugate(new Quaternion(
+            return new Quaternion(
                 cosPsi * cosTheta * cosPhi + sinPsi * sinTheta * sinPhi,
-                cosPsi * cosTheta * sinPhi - sinPsi * sinTheta * cosPhi,
-                cosPsi * sinTheta * cosPhi + sinPsi * cosTheta * sinPhi,
-                sinPsi * cosTheta * cosPhi - cosPsi * sinTheta * sinPhi));
+                -(cosPsi * cosTheta * sinPhi - sinPsi * sinTheta * cosPhi),
+                -(cosPsi * sinTheta * cosPhi + sinPsi * cosTheta * sinPhi),
+                -(sinPsi * cosTheta * cosPhi - cosPsi * sinTheta * sinPhi));
         }
 
         #endregion

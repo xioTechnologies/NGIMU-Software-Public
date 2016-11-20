@@ -780,7 +780,7 @@ namespace NgimuApi
 
                 while (true)
                 {
-                    if (uniqueConnection.Settings.Write(settingsToBeWritten, null, timeout, 0) == CommunicationProcessResult.Success)
+                    if (uniqueConnection.Settings.Write(settingsToBeWritten, reporter, timeout, 0) == CommunicationProcessResult.Success)
                     {
                         break;
                     }

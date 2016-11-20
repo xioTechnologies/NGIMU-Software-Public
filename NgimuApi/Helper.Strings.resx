@@ -131,7 +131,7 @@
     <comment>Replacement here is "Read process" etc </comment>
   </data>
   <data name="ImuAsyncProcess_CommunicationError" xml:space="preserve">
-    <value>A communication error occured while {0}.</value>
+    <value>A communication error occurred while {0}.</value>
   </data>
   <data name="ImuAsyncProcess_CouldNot" xml:space="preserve">
     <value>Could not {0} {1}.</value>

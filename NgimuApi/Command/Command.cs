@@ -247,10 +247,10 @@ namespace NgimuApi
 
             if (index < 0)
             {
-                return null; 
+                return null;
             }
 
-            return commands[index]; 
+            return commands[index];
         }
 
         public static CommandMetaData GetCommandMetaData(Command command)

@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui.DialogsAndWindows
 {
     partial class SerialConnectionDialog
-	{
-		/// <summary>
-		/// Required designer command.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer command.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region m_Windows Form Designer generated code
+        #region m_Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.m_OKButton = new System.Windows.Forms.Button();
             this.m_Cancel = new System.Windows.Forms.Button();
             this.m_Port = new System.Windows.Forms.ComboBox();
@@ -62,7 +62,7 @@
             // 
             // m_Port
             // 
-            this.m_Port.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.m_Port.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.m_Port.FormattingEnabled = true;
             this.m_Port.Location = new System.Drawing.Point(82, 12);
@@ -82,7 +82,7 @@
             // 
             // m_BaudRate
             // 
-            this.m_BaudRate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.m_BaudRate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.m_BaudRate.FormattingEnabled = true;
             this.m_BaudRate.Items.AddRange(new object[] {
@@ -178,17 +178,17 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.Button m_OKButton;
-		private System.Windows.Forms.Button m_Cancel;
-		private System.Windows.Forms.ComboBox m_Port;
-		private System.Windows.Forms.ComboBox m_BaudRate;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox m_RtsCtsEnabled;
-	}
+        private System.Windows.Forms.Button m_OKButton;
+        private System.Windows.Forms.Button m_Cancel;
+        private System.Windows.Forms.ComboBox m_Port;
+        private System.Windows.Forms.ComboBox m_BaudRate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox m_RtsCtsEnabled;
+    }
 }

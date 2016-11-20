@@ -64,7 +64,7 @@ namespace NgimuGui.DialogsAndWindows
 
             if (File.Exists(filepath) == false)
             {
-                ShowErrorMessage("The selected file does not exist.", "Error");
+                this.ShowError("The selected file does not exist.");
                 return;
             }
 
@@ -75,7 +75,7 @@ namespace NgimuGui.DialogsAndWindows
             {
                 if (Options.AllowUploadWithoutSerialConnection == false)
                 {
-                    ShowErrorMessage("The device is not connected via serial.", "Error");
+                    this.ShowError("The device is not connected via serial.");
                     return;
                 }
             }
@@ -188,7 +188,7 @@ namespace NgimuGui.DialogsAndWindows
 
                     if (success == false)
                     {
-                        this.Invoke(new Action<string, string>(ShowErrorMessage), "Failed to upload firmware.", "Error");
+                        this.InvokeShowError("Failed to upload firmware.");
 
                         return;
                     }
@@ -197,7 +197,7 @@ namespace NgimuGui.DialogsAndWindows
                 }
                 catch (Exception ex)
                 {
-                    this.Invoke(new Action<string, string>(ShowErrorMessage), ex.ToString(), "Exception");
+                    this.InvokeShowError(ex.ToString());
                 }
 
                 if (m_Cancel == true) { return; }
@@ -214,7 +214,7 @@ namespace NgimuGui.DialogsAndWindows
             }
             catch (Exception ex)
             {
-                this.Invoke(new Action<string, string>(ShowErrorMessage), ex.ToString(), "Exception");
+                this.InvokeShowError(ex.ToString());
             }
             finally
             {
@@ -227,11 +227,6 @@ namespace NgimuGui.DialogsAndWindows
         void OnInfo(string message)
         {
             m_Progress.ProgressMessage = message;
-        }
-
-        private void ShowErrorMessage(string text, string caption)
-        {
-            MessageBox.Show(this, text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void Done()

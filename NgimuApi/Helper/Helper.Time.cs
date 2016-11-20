@@ -6,10 +6,10 @@ namespace NgimuApi
 {
     public enum TimeSpanStringFormat
     {
-        StopWatch, 
-        Longhand, 
-        Shorthand, 
-    } 
+        StopWatch,
+        Longhand,
+        Shorthand,
+    }
     public static partial class Helper
     {
         /// <summary>
@@ -28,7 +28,7 @@ namespace NgimuApi
                                      timeSpan.Milliseconds);
             }
 
-            bool @short = format == TimeSpanStringFormat.Shorthand; 
+            bool @short = format == TimeSpanStringFormat.Shorthand;
 
             string text = "";
 

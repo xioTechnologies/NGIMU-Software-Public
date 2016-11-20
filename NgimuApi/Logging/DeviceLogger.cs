@@ -114,7 +114,7 @@ namespace NgimuApi.Logging
                 }
 
                 // stash the path before the move (if one is to take place). 
-                string writtenToBasePath = Directory; 
+                string writtenToBasePath = Directory;
 
                 string resolvedSessionDescriptor = Helper.CleanFileName(Connection.Settings.DeviceName.Value + " - " + Connection.Settings.SerialNumber.Value);
 

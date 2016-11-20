@@ -87,6 +87,21 @@ namespace NgimuGui.Panels
                 bool allValuesSucceeded;
                 string messageString = GetCommunicationFailureString(20, out allValuesFailed, out allValuesSucceeded);
 
+                if (m_Settings.CheckFirmwareCompatibility() == FirmwareCompatibility.NotCompatible)
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.AppendLine("The detected firmware version may not be compatible with this version of the software.");
+                    sb.AppendLine("");
+                    sb.AppendLine("Please use the latest software and firmware versions available on-line.");
+                    sb.AppendLine("");
+                    sb.AppendLine("Detected firmware version: " + m_Settings.FirmwareVersion.Value);
+                    sb.AppendLine("Expected firmware version: " + Settings.ExpectedFirmwareVersion);
+                    sb.AppendLine("Software version: v" + typeof(MainForm).Assembly.GetName().Version.Major + "." + typeof(MainForm).Assembly.GetName().Version.Minor);
+
+                    ParentForm.InvokeShowWarning(sb.ToString().TrimEnd());
+                }
+
                 if (allValuesSucceeded == true)
                 {
                     return;
@@ -101,7 +116,7 @@ namespace NgimuGui.Panels
                     messageString = "Failed to read the following settings:" + messageString;
                 }
 
-                Invoke((MethodInvoker)(() => { MessageBox.Show(this, messageString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }));
+                ParentForm.InvokeShowError(messageString);
             };
 
             try
@@ -137,7 +152,7 @@ namespace NgimuGui.Panels
                     messageString = "Failed to confirm write of following settings:" + messageString;
                 }
 
-                Invoke((MethodInvoker)(() => { MessageBox.Show(this, messageString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }));
+                ParentForm.InvokeShowError(messageString);
             };
 
             try

@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui.DialogsAndWindows
 {
     partial class UdpConnectionDialog
-	{
-		/// <summary>
-		/// Required designer command.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer command.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region m_Windows Form Designer generated code
+        #region m_Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.m_SendIPAddress = new NgimuGui.Controls.TextBoxWithHelpText();
             this.m_Cancel = new System.Windows.Forms.Button();
             this.m_OKButton = new System.Windows.Forms.Button();
@@ -80,7 +80,7 @@
             // 
             // m_AdapterIPAddress
             // 
-            this.m_AdapterIPAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.m_AdapterIPAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.m_AdapterIPAddress.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.m_AdapterIPAddress.FormattingEnabled = true;
@@ -191,19 +191,19 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
         private NgimuGui.Controls.TextBoxWithHelpText m_SendIPAddress;
-		private System.Windows.Forms.Button m_Cancel;
-		private System.Windows.Forms.Button m_OKButton;
-		private System.Windows.Forms.ComboBox m_AdapterIPAddress;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button m_Cancel;
+        private System.Windows.Forms.Button m_OKButton;
+        private System.Windows.Forms.ComboBox m_AdapterIPAddress;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
         private NgimuGui.Controls.TextBoxWithHelpText m_SendPort;
         private NgimuGui.Controls.TextBoxWithHelpText m_ReceivePort;
-		private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox m_Broadcast;
     }
 }

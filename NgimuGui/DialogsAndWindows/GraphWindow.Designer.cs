@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.graph = new Rug.LiteGL.Controls.TimestampGraph();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.horizontalRollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +82,7 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resetViewToolStripMenuItem,
+            this.clearToolStripMenuItem,
             this.toolStripSeparator2,
             this.horizontalRollToolStripMenuItem,
             this.centerTraceToolStripMenuItem,
@@ -95,13 +97,20 @@
             this.verticalZoomOutMenuItem,
             this.verticalZoomInMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(256, 248);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(256, 270);
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
+            this.clearToolStripMenuItem.Text = "Clear";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // resetViewToolStripMenuItem
             // 
             this.resetViewToolStripMenuItem.Name = "resetViewToolStripMenuItem";
             this.resetViewToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.resetViewToolStripMenuItem.Text = "Reset View";
+            this.resetViewToolStripMenuItem.Text = "Restore Defaults";
             this.resetViewToolStripMenuItem.Click += new System.EventHandler(this.resetViewToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
@@ -301,5 +310,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem horizontalAutoscaleMenuItem;
         private System.Windows.Forms.ToolStripMenuItem allToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
     }
 }

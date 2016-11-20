@@ -108,7 +108,7 @@ namespace NgimuApi
             });
 
             thread.Priority = ThreadPriority.Highest;
-            thread.Name = "Synchronisation Master"; 
+            thread.Name = "Synchronisation Master";
 
             thread.Start();
         }

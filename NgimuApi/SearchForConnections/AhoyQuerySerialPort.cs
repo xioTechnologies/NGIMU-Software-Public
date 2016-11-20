@@ -18,9 +18,9 @@ namespace NgimuApi.SearchForConnections
 
         public int Count { get { return ahoyServiceInfoList.Count; } }
 
-        public string Namespace { get; private set; } 
+        public string Namespace { get; private set; }
 
-        public AhoyServiceInfo this[int index] { get { return ahoyServiceInfoList[index]; } }  
+        public AhoyServiceInfo this[int index] { get { return ahoyServiceInfoList[index]; } }
 
         public event OscMessageEvent AnyReceived;
 

@@ -117,6 +117,7 @@
     <Compile Include="Data\DataBase.cs" />
     <Compile Include="Data\SensorsData.cs" />
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\Settings.FirmwareVersion.cs" />
     <Compile Include="Settings\Settings.ReadWrite.cs" />
     <Compile Include="Settings\ISettingValue.cs" />
     <Compile Include="Settings\SettingProcess.cs" />

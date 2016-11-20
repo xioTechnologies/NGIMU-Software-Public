@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NgimuApi
-{
-
-
+namespace NgimuApi {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -133,7 +133,7 @@ namespace NgimuApi
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A communication error occured while executing commands..
+        ///   Looks up a localized string similar to A communication error occurred while executing commands..
         /// </summary>
         internal static string CommandProcess_CommunicationError {
             get {
@@ -385,24 +385,6 @@ namespace NgimuApi
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error could not mute OSC traffic..
-        /// </summary>
-        internal static string SettingsProcess_CouldNotMute {
-            get {
-                return ResourceManager.GetString("SettingsProcess_CouldNotMute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error could not unmute OSC traffic..
-        /// </summary>
-        internal static string SettingsProcess_CouldNotUnmute {
-            get {
-                return ResourceManager.GetString("SettingsProcess_CouldNotUnmute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Settings {0} process is already running..
         /// </summary>
         internal static string SettingsProcess_ProcessAlreadyRunning {
@@ -421,7 +403,7 @@ namespace NgimuApi
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A communication error occured while reading settings..
+        ///   Looks up a localized string similar to A communication error occurred while reading settings..
         /// </summary>
         internal static string SettingsRead_CommunicationError {
             get {
@@ -484,7 +466,7 @@ namespace NgimuApi
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A communication error occured while writing settings..
+        ///   Looks up a localized string similar to A communication error occurred while writing settings..
         /// </summary>
         internal static string SettingsWrite_CommunicationError {
             get {
@@ -493,7 +475,7 @@ namespace NgimuApi
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not write all settings..
+        ///   Looks up a localized string similar to Could not confirm write of all settings..
         /// </summary>
         internal static string SettingsWrite_CouldNotDoAll {
             get {

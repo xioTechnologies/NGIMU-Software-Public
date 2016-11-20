@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NgimuApi
-{
-
-
+namespace NgimuApi {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -97,7 +97,7 @@ namespace NgimuApi
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A communication error occured while {0}..
+        ///   Looks up a localized string similar to A communication error occurred while {0}..
         /// </summary>
         internal static string ImuAsyncProcess_CommunicationError {
             get {

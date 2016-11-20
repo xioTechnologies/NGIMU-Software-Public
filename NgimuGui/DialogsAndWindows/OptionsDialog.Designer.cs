@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui.DialogsAndWindows
 {
     partial class OptionsDialog
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.rememberWindowLayout = new System.Windows.Forms.CheckBox();
             this.searchForConnections = new System.Windows.Forms.GroupBox();
             this.configureUniqueUdpConnection = new System.Windows.Forms.CheckBox();
@@ -51,9 +51,8 @@
             this.connectDisconnectBehaviour = new System.Windows.Forms.GroupBox();
             this.commandAndSettingsConfirmation = new System.Windows.Forms.GroupBox();
             this.misc = new System.Windows.Forms.GroupBox();
-            this.graphSampleBufferSize = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.graphSampleBufferSize = new System.Windows.Forms.NumericUpDown();
             this.searchForConnections.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maximumNumberOfRetries)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeout)).BeginInit();
@@ -317,7 +316,6 @@
             // 
             this.misc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.misc.Controls.Add(this.label2);
             this.misc.Controls.Add(this.label1);
             this.misc.Controls.Add(this.graphSampleBufferSize);
             this.misc.Controls.Add(this.rememberWindowLayout);
@@ -328,6 +326,15 @@
             this.misc.TabIndex = 4;
             this.misc.TabStop = false;
             this.misc.Text = "Misc";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(67, 67);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(130, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Graph sample buffer (kSa)";
             // 
             // graphSampleBufferSize
             // 
@@ -350,25 +357,6 @@
             0,
             0,
             0});
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(67, 67);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Graph sample buffer (kSa)";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(203, 67);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "(Requires restart)";
             // 
             // OptionsDialog
             // 
@@ -408,35 +396,34 @@
             ((System.ComponentModel.ISupportInitialize)(this.graphSampleBufferSize)).EndInit();
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.CheckBox rememberWindowLayout;
-		private System.Windows.Forms.GroupBox searchForConnections;
-		private System.Windows.Forms.CheckBox openConnectionToFirstDeviceFound;
-		private System.Windows.Forms.Label searchTypeLabel;
-		private System.Windows.Forms.CheckBox searchForConnectionsAtStartup;
-		private System.Windows.Forms.ComboBox searchType;
-		private System.Windows.Forms.Button m_OK;
-		private System.Windows.Forms.Button m_Cancel;
-		private System.Windows.Forms.CheckBox disconnectFromSerialAfterSleepAndResetCommands;
-		private System.Windows.Forms.CheckBox displayReceivedErrorMessagesInMessageBox;
-		private System.Windows.Forms.NumericUpDown maximumNumberOfRetries;
-		private System.Windows.Forms.NumericUpDown timeout;
-		private System.Windows.Forms.Label maximumNumberOfRetriesLabel;
-		private System.Windows.Forms.Label timeoutLabel;
-		private System.Windows.Forms.Button m_ResetToDefaults;
-		private System.Windows.Forms.GroupBox firmwareUploader;
-		private System.Windows.Forms.CheckBox searchForConnectionsAfterSuccessfulUpload;
-		private System.Windows.Forms.CheckBox allowUploadWithoutSerialConnection;
-		private System.Windows.Forms.CheckBox configureUniqueUdpConnection;
+        private System.Windows.Forms.CheckBox rememberWindowLayout;
+        private System.Windows.Forms.GroupBox searchForConnections;
+        private System.Windows.Forms.CheckBox openConnectionToFirstDeviceFound;
+        private System.Windows.Forms.Label searchTypeLabel;
+        private System.Windows.Forms.CheckBox searchForConnectionsAtStartup;
+        private System.Windows.Forms.ComboBox searchType;
+        private System.Windows.Forms.Button m_OK;
+        private System.Windows.Forms.Button m_Cancel;
+        private System.Windows.Forms.CheckBox disconnectFromSerialAfterSleepAndResetCommands;
+        private System.Windows.Forms.CheckBox displayReceivedErrorMessagesInMessageBox;
+        private System.Windows.Forms.NumericUpDown maximumNumberOfRetries;
+        private System.Windows.Forms.NumericUpDown timeout;
+        private System.Windows.Forms.Label maximumNumberOfRetriesLabel;
+        private System.Windows.Forms.Label timeoutLabel;
+        private System.Windows.Forms.Button m_ResetToDefaults;
+        private System.Windows.Forms.GroupBox firmwareUploader;
+        private System.Windows.Forms.CheckBox searchForConnectionsAfterSuccessfulUpload;
+        private System.Windows.Forms.CheckBox allowUploadWithoutSerialConnection;
+        private System.Windows.Forms.CheckBox configureUniqueUdpConnection;
         private System.Windows.Forms.CheckBox readDeviceSettingsAfterOpeningConnection;
         private System.Windows.Forms.GroupBox connectDisconnectBehaviour;
         private System.Windows.Forms.GroupBox commandAndSettingsConfirmation;
         private System.Windows.Forms.GroupBox misc;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown graphSampleBufferSize;
-        private System.Windows.Forms.Label label2;
     }
 }

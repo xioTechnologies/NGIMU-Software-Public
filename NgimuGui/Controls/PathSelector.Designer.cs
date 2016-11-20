@@ -46,7 +46,7 @@
             // textbox
             // 
             this.textbox.AllowDrop = true;
-            this.textbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textbox.HelpText = "";
             this.textbox.HelpTextColor = System.Drawing.Color.Gray;

@@ -10,9 +10,9 @@ namespace SettingsObjectModelCodeGenerator
 {
     class Program
     {
-        static string FileTemplate; 
+        static string FileTemplate;
         static string CategoryTemplate;
-        static string SettingsTemplate; 
+        static string SettingsTemplate;
 
         static void Main(string[] args)
         {
@@ -33,7 +33,7 @@ namespace SettingsObjectModelCodeGenerator
             try
             {
                 RC.IsBuildMode = true;
-                RC.Verbosity = ConsoleVerbosity.Debug; 
+                RC.Verbosity = ConsoleVerbosity.Debug;
                 RC.ApplicationBuildReportPrefix = "SGEN";
 
                 RC.Theme = ConsoleColorTheme.Load(ConsoleColorDefaultThemes.Colorful);
@@ -46,13 +46,13 @@ namespace SettingsObjectModelCodeGenerator
                 // did the parser detect a /? arguemnt 
                 if (parser.HelpMode == true)
                 {
-                    return; 
+                    return;
                 }
 
                 if (XmlArg.Defined == false)
                 {
                     RC.WriteError(001, "No settings XML file supplied.");
-                    return; 
+                    return;
                 }
 
                 if (CodeArg.Defined == false)
@@ -65,7 +65,7 @@ namespace SettingsObjectModelCodeGenerator
                 {
                     RC.WriteError(001, "No documentation file supplied.");
                     return;
-                }   
+                }
 
                 string xmlFilePath = XmlArg.Value;
 
@@ -81,7 +81,7 @@ namespace SettingsObjectModelCodeGenerator
                 {
                     FileInfo info = new FileInfo(codeFilePath);
                 }
-                catch 
+                catch
                 {
                     RC.WriteError(002, "Settings destination file is not valid.");
                     return;
@@ -146,7 +146,7 @@ namespace SettingsObjectModelCodeGenerator
         private static void WriteDocumentation(string documentationFilePath, SettingsMetaData settings)
         {
             XmlDocument doc = new XmlDocument();
-            
+
             doc.AppendChild(doc.CreateComment(" THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT MODIFY. "));
 
             XmlNode root = doc.AppendChild(Helper.CreateElement(doc, "Documentation"));
@@ -159,13 +159,13 @@ namespace SettingsObjectModelCodeGenerator
                 metaNode.InnerText = settings.NoItemSelectedText;
 
                 root.AppendChild(metaNode);
-            }            
+            }
 
             foreach (SettingValue meta in settings.AllVariables)
             {
                 RC.WriteLine(ConsoleThemeColor.TitleText, " - " + meta.OscAddress);
-                
-                XmlElement metaNode = Helper.CreateElement(doc, "Setting");                 
+
+                XmlElement metaNode = Helper.CreateElement(doc, "Setting");
 
                 Helper.AppendAttributeAndValue(metaNode, "Address", meta.OscAddress);
 
@@ -174,7 +174,7 @@ namespace SettingsObjectModelCodeGenerator
                 root.AppendChild(metaNode);
             }
 
-            doc.Save(documentationFilePath); 
+            doc.Save(documentationFilePath);
         }
 
         private static string GenerateSettingsType(SettingsMetaData settings, ref List<string> groupTypesDefinitions)
@@ -183,9 +183,9 @@ namespace SettingsObjectModelCodeGenerator
 
             GenerateMembers(settings, true, groupTypesDefinitions, replacements, "Settings");
 
-            return DoReplacements(replacements, SettingsTemplate);            
+            return DoReplacements(replacements, SettingsTemplate);
         }
-        
+
         private static void GenerateCategoryType(string parentClassName, SettingCategoryMetaData category, ref List<string> groupTypesDefinitions)
         {
             Dictionary<string, string> replacements = new Dictionary<string, string>();
@@ -194,7 +194,7 @@ namespace SettingsObjectModelCodeGenerator
 
             GenerateMembers(category, false, groupTypesDefinitions, replacements, category.MemberName);
 
-            groupTypesDefinitions.Add(DoReplacements(replacements, CategoryTemplate)); 
+            groupTypesDefinitions.Add(DoReplacements(replacements, CategoryTemplate));
         }
 
         private static string DoReplacements(Dictionary<string, string> replacements, string template)
@@ -210,7 +210,7 @@ namespace SettingsObjectModelCodeGenerator
         private static void GenerateMembers(SettingCategoryMetaData category, bool isRoot, List<string> groupTypesDefinitions, Dictionary<string, string> replacements, string className)
         {
             RC.WriteLine(ConsoleThemeColor.TitleText, " - " + category.UIText);
-             
+
             StringBuilder Members = new StringBuilder();
             StringBuilder Members_Initiation = new StringBuilder();
             StringBuilder Settings_Initiation = new StringBuilder();
@@ -257,7 +257,7 @@ namespace SettingsObjectModelCodeGenerator
                     GenerateCategoryMember(Members, subCategory);
 
                     GenerateCategoryContruction(Members_Initiation, subCategory);
-                    
+
                     GenerateCategoryCopy(Members_Copy, subCategory);
                 }
             }
@@ -300,7 +300,7 @@ namespace SettingsObjectModelCodeGenerator
             replacements.Add("[$CategroryClassName]", className);
             replacements.Add("[$CategroryText]", category.UIText);
             replacements.Add("[$CategroryIsHidden]", category.IsHidden.ToString().ToLowerInvariant());
-            replacements.Add("[$CategoryPrefix]", category.CategoryPrefix.ToString()); 
+            replacements.Add("[$CategoryPrefix]", category.CategoryPrefix.ToString());
             replacements.Add("[$Members]", PrefixLines(new string[] { Members.ToString() }, '\t', 1));
             replacements.Add("[$Members_Initiation]", PrefixLines(new string[] { Members_Initiation.ToString() }, '\t', 2));
             replacements.Add("[$Members_Attach]", PrefixLines(new string[] { Members_Attach.ToString() }, '\t', 2));
@@ -323,7 +323,7 @@ namespace SettingsObjectModelCodeGenerator
             Members.AppendLine("/// Gets " + subCategory.UIText + " settings category.");
             Members.AppendLine("/// </summary>");
             Members.AppendLine(string.Format("public SettingsCategoryTypes.{0} {0} {{ get; private set; }}", subCategory.MemberName));
-            Members.AppendLine(); 
+            Members.AppendLine();
         }
 
         private static void GenerateSettingMemberCopy(StringBuilder Members_Copy, SettingValue value)
@@ -336,7 +336,7 @@ namespace SettingsObjectModelCodeGenerator
             Members_Initiation.AppendLine(string.Format("{0} = new {1}({2}, \"{3}\", \"{4}\", LookupDocumentation(\"{5}\"), \"{5}\", {6}, {7});",
                 value.MemberName,
                 value.SettingInstanceType,
-                value.CategoryFullMemberName, 
+                value.CategoryFullMemberName,
                 value.UIText,
                 value.DocumentationTitle,
                 value.OscAddress,
@@ -362,7 +362,7 @@ namespace SettingsObjectModelCodeGenerator
         {
             StringBuilder sb = new StringBuilder();
 
-            string prefix = new string(@char, count); 
+            string prefix = new string(@char, count);
 
             foreach (string block in blocks)
             {

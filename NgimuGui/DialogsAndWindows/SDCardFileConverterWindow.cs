@@ -90,8 +90,7 @@ namespace NgimuGui.DialogsAndWindows
             {
                 if (File.Exists(path) == false)
                 {
-                    MessageBox.Show(this, "The source file does not exist." + Environment.NewLine + path, "File Does Not Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    this.ShowError("The source file does not exist." + Environment.NewLine + path);
                     return;
                 }
             }
@@ -156,13 +155,13 @@ namespace NgimuGui.DialogsAndWindows
                     }
                     catch (Exception ex)
                     {
-                        this.Invoke(new Action<string, string>(ShowErrorMessage), ex.Message, "Error");
+                        this.InvokeShowError(ex.Message);
                     }
                 }
             }
             catch (Exception ex)
             {
-                this.Invoke(new Action<string, string>(ShowErrorMessage), ex.Message, "Error");
+                this.InvokeShowError(ex.Message);
             }
             finally
             {
@@ -174,11 +173,6 @@ namespace NgimuGui.DialogsAndWindows
         private void OnInfo(string message)
         {
             m_Progress.ProgressMessage = message;
-        }
-
-        private void ShowErrorMessage(string text, string caption)
-        {
-            MessageBox.Show(this, text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void Done()

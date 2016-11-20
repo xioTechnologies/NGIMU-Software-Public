@@ -89,6 +89,7 @@
     <Compile Include="Controls\AdvancedRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ControlExtensions.cs" />
     <Compile Include="Controls\HiLowStatusItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -97,6 +98,13 @@
     </Compile>
     <Compile Include="Controls\PathSelector.Designer.cs">
       <DependentUpon>PathSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DefaultGraphSettings.cs" />
+    <Compile Include="DialogsAndWindows\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="DialogsAndWindows\ReceivedErrorMessagesWindow.cs">
       <SubType>Form</SubType>
@@ -228,11 +236,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="TypeDescriptors\CustomEnumConverter.cs" />
+    <Compile Include="TypeDescriptors\FloatTypeConverter.cs" />
+    <Compile Include="TypeDescriptors\IPAddressTypeConverter.cs" />
+    <Compile Include="TypeDescriptors\MacAddressTypeConverter.cs" />
+    <Compile Include="TypeDescriptors\SettingCategoryExpander.cs" />
+    <Compile Include="TypeDescriptors\SettingCategoryPropertyDescriptor.cs" />
+    <Compile Include="TypeDescriptors\SettingsTypeDescriptor.cs" />
+    <Compile Include="TypeDescriptors\SettingValuePropertyInfo.cs" />
     <EmbeddedResource Include="3DView\Form3DView.resx">
       <DependentUpon>Form3DView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PathSelector.resx">
       <DependentUpon>PathSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DialogsAndWindows\ReceivedErrorMessagesWindow.resx">
       <DependentUpon>ReceivedErrorMessagesWindow.cs</DependentUpon>
@@ -302,6 +321,8 @@
     <Content Include="3DView\Compass.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\Rug Logo 256x256 %28Just Rug%29.png" />
+    <Content Include="Icons\x-io_rgb_black.png" />
     <Content Include="x-io_icon_white_transparent-small.ico" />
     <EmbeddedResource Include="DialogsAndWindows\GraphWindow.resx">
       <DependentUpon>GraphWindow.cs</DependentUpon>
@@ -381,17 +402,11 @@
       <Project>{fc4852f8-a108-4497-acbb-588d8ecad64b}</Project>
       <Name>NgimuApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NgimuGui.TypeDescriptors\NgimuGui.TypeDescriptors.csproj">
-      <Project>{CA7CEF59-DCAF-4CC0-BE86-8DDF677FD7E2}</Project>
-      <Name>NgimuGui.TypeDescriptors</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)Tools\Rpx.exe" "$(TargetPath)" "$(TargetDir)\Rug.Cmd.dll" "$(TargetDir)\Rug.Osc.dll" "$(TargetDir)\Rug.Osc.Ahoy.dll" "$(TargetDir)\Rug.LiteGL.dll" "$(TargetDir)\NgimuApi.dll" "$(TargetDir)\Rug.Forms.Console.dll" "$(TargetDir)\OpenTK.dll" "$(TargetDir)\OpenTK.GLControl.dll" /o "$(TargetDir)\Compressed\$(TargetFileName)" /i "$(ProjectDir)x-io_icon_white_transparent.ico" /v Normal /d
-"$(SolutionDir)Tools\Rpx.bat" "$(TargetDir)" "Compressed"
-</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)Tools\CreateDistribution\bin\$(ConfigurationName)\CreateDistribution.exe" "$(TargetDir)\" "$(TargetDir)Distribution" "*.dll;*.exe;3DView;Bootloader;Shaders"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui.DialogsAndWindows
 {
     partial class ProgressDialog
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.m_ProgressBar = new System.Windows.Forms.ProgressBar();
             this.m_ProgressMessage = new System.Windows.Forms.Label();
             this.m_CancelButton = new System.Windows.Forms.Button();
@@ -35,7 +35,7 @@
             // 
             // m_ProgressBar
             // 
-            this.m_ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.m_ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.m_ProgressBar.Location = new System.Drawing.Point(13, 13);
             this.m_ProgressBar.Name = "m_ProgressBar";
@@ -44,7 +44,7 @@
             // 
             // m_ProgressMessage
             // 
-            this.m_ProgressMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.m_ProgressMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.m_ProgressMessage.AutoEllipsis = true;
             this.m_ProgressMessage.Location = new System.Drawing.Point(13, 43);
@@ -84,12 +84,12 @@
             this.Load += new System.EventHandler(this.ProgressDialog_Load);
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.ProgressBar m_ProgressBar;
-		private System.Windows.Forms.Label m_ProgressMessage;
-		private System.Windows.Forms.Button m_CancelButton;
-	}
+        private System.Windows.Forms.ProgressBar m_ProgressBar;
+        private System.Windows.Forms.Label m_ProgressMessage;
+        private System.Windows.Forms.Button m_CancelButton;
+    }
 }

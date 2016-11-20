@@ -1,8 +1,8 @@
 ﻿namespace SettingsObjectModelCodeGenerator
 {
     public static partial class Helper
-	{
-		/*
+    {
+        /*
 		static byte[] GetBytes(string str)
 		{
 			return System.Text.Encoding.UTF8.GetBytes(str);
@@ -376,6 +376,6 @@
 
 			return chars;
 		}
-		 * */ 
-	}
+		 * */
+    }
 }

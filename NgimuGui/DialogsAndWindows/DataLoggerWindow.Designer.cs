@@ -1,33 +1,33 @@
 ﻿namespace NgimuGui.DialogsAndWindows
 {
     partial class DataLoggerWindow
-	{
-		/// <summary>
-		/// Required designer command.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    {
+        /// <summary>
+        /// Required designer command.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region m_Windows Form Designer generated code
+        #region m_Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.m_StopButton = new System.Windows.Forms.Button();
             this.m_StartButton = new System.Windows.Forms.Button();
@@ -40,12 +40,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.m_SessionNameBox = new NgimuGui.Controls.TextBoxWithHelpText();
             this.pathSelector = new NgimuGui.Controls.PathSelector();
+            this.openDirectory = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // m_StopButton
             // 
             this.m_StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.m_StopButton.Location = new System.Drawing.Point(498, 186);
+            this.m_StopButton.Location = new System.Drawing.Point(386, 186);
             this.m_StopButton.Name = "m_StopButton";
             this.m_StopButton.Size = new System.Drawing.Size(75, 23);
             this.m_StopButton.TabIndex = 5;
@@ -56,7 +57,7 @@
             // m_StartButton
             // 
             this.m_StartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.m_StartButton.Location = new System.Drawing.Point(416, 186);
+            this.m_StartButton.Location = new System.Drawing.Point(305, 186);
             this.m_StartButton.Name = "m_StartButton";
             this.m_StartButton.Size = new System.Drawing.Size(75, 23);
             this.m_StartButton.TabIndex = 4;
@@ -154,11 +155,23 @@
             this.pathSelector.Size = new System.Drawing.Size(476, 23);
             this.pathSelector.TabIndex = 13;
             // 
+            // openDirectory
+            // 
+            this.openDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.openDirectory.Location = new System.Drawing.Point(467, 186);
+            this.openDirectory.Name = "openDirectory";
+            this.openDirectory.Size = new System.Drawing.Size(105, 23);
+            this.openDirectory.TabIndex = 14;
+            this.openDirectory.Text = "Open Directory";
+            this.openDirectory.UseVisualStyleBackColor = true;
+            this.openDirectory.Click += new System.EventHandler(this.openDirectory_Click);
+            // 
             // DataLoggerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 221);
+            this.Controls.Add(this.openDirectory);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.m_SessionNameBox);
             this.Controls.Add(this.m_LoggingPeriodUnits);
@@ -183,20 +196,21 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.Button m_StopButton;
-		private System.Windows.Forms.Button m_StartButton;
-		private NgimuGui.Panels.ClockPanel m_ClockPanel;
+        private System.Windows.Forms.Button m_StopButton;
+        private System.Windows.Forms.Button m_StartButton;
+        private NgimuGui.Panels.ClockPanel m_ClockPanel;
         private NgimuGui.Controls.TextBoxWithHelpText m_LoggingPeriodBox;
-		private System.Windows.Forms.Timer timer1;
-		private System.Windows.Forms.Label m_FileNameLabel;
-		private System.Windows.Forms.Label m_LoggingPeriodLabel;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label m_FileNameLabel;
+        private System.Windows.Forms.Label m_LoggingPeriodLabel;
         private System.Windows.Forms.Label m_LoggingPeriodUnits;
         private System.Windows.Forms.Label label1;
         private Controls.TextBoxWithHelpText m_SessionNameBox;
         private Controls.PathSelector pathSelector;
+        private System.Windows.Forms.Button openDirectory;
     }
 }
