@@ -179,5 +179,10 @@ namespace NgimuApi.SearchForConnections
                 EndSearch();
             }
         }
+
+        public void BeginEndSearch()
+        {
+            EndSearch();
+        }
     }
 }

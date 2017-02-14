@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using NgimuForms;
 using Rug.Cmd;
 using Rug.Osc;
 

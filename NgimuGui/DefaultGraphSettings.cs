@@ -174,7 +174,7 @@ namespace NgimuGui
             {
                 GraphSettings settings = new GraphSettings()
                 {
-                    Title = "Thermometers",
+                    Title = "Temperature",
                     YAxisLabel = "Temperature (°C)",
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Text;
 using System.Windows.Forms;
 using NgimuApi;
-using NgimuGui.DialogsAndWindows;
+using NgimuForms;
+using NgimuForms.Controls;
+using NgimuForms.DialogsAndWindows;
 using NgimuGui.TypeDescriptors;
 
 namespace NgimuGui.Panels
@@ -46,7 +47,9 @@ namespace NgimuGui.Panels
 
         public void OnConnect(Connection comms)
         {
-            m_BackupSettings.CopyTo(comms.Settings);
+            // Do not copy settings from the backup 
+            //m_BackupSettings.CopyTo(comms.Settings);
+
             m_Settings = comms.Settings;
             SetPropertyGridObject(m_Settings);
             CheckChangedState();
@@ -85,22 +88,9 @@ namespace NgimuGui.Panels
             {
                 bool allValuesFailed;
                 bool allValuesSucceeded;
-                string messageString = GetCommunicationFailureString(20, out allValuesFailed, out allValuesSucceeded);
+                string messageString = Settings.GetCommunicationFailureString(m_Settings.Values, 20, out allValuesFailed, out allValuesSucceeded);
 
-                if (m_Settings.CheckFirmwareCompatibility() == FirmwareCompatibility.NotCompatible)
-                {
-                    StringBuilder sb = new StringBuilder();
-
-                    sb.AppendLine("The detected firmware version may not be compatible with this version of the software.");
-                    sb.AppendLine("");
-                    sb.AppendLine("Please use the latest software and firmware versions available on-line.");
-                    sb.AppendLine("");
-                    sb.AppendLine("Detected firmware version: " + m_Settings.FirmwareVersion.Value);
-                    sb.AppendLine("Expected firmware version: " + Settings.ExpectedFirmwareVersion);
-                    sb.AppendLine("Software version: v" + typeof(MainForm).Assembly.GetName().Version.Major + "." + typeof(MainForm).Assembly.GetName().Version.Minor);
-
-                    ParentForm.InvokeShowWarning(sb.ToString().TrimEnd());
-                }
+                ParentForm.ShowIncompatableFirmwareWarning(m_Settings);
 
                 if (allValuesSucceeded == true)
                 {
@@ -136,7 +126,7 @@ namespace NgimuGui.Panels
             {
                 bool allValuesFailed;
                 bool allValuesSucceeded;
-                string messageString = GetCommunicationFailureString(20, out allValuesFailed, out allValuesSucceeded);
+                string messageString = Settings.GetCommunicationFailureString(m_Settings.Values, 20, out allValuesFailed, out allValuesSucceeded);
 
                 if (allValuesSucceeded == true)
                 {
@@ -207,74 +197,6 @@ namespace NgimuGui.Panels
 
                 dialog.ShowDialog(this);
             }
-        }
-
-        private string GetCommunicationFailureString(int max, out bool allValuesFailed, out bool allValuesSucceeded)
-        {
-            allValuesFailed = true;
-            allValuesSucceeded = true;
-            StringBuilder sb = new StringBuilder();
-            int count = 0;
-            int truncatedCount = 0;
-
-            sb.AppendLine();
-            sb.AppendLine();
-
-            foreach (ISettingValue value in m_Settings.Values)
-            {
-                if (value.CommunicationResult.HasValue && value.CommunicationResult.Value == CommunicationProcessResult.Success)
-                {
-                    allValuesFailed = false;
-
-                    continue;
-                }
-
-                if (value.CommunicationResult.HasValue == false)
-                {
-                    continue;
-                }
-
-                allValuesSucceeded = false;
-
-                if (count++ >= max)
-                {
-                    truncatedCount++;
-                    continue;
-                }
-
-                //sb.AppendLine(); 
-                //sb.AppendLine(GetName(value));
-                sb.AppendLine(value.OscAddress);
-            }
-
-            if (truncatedCount > 0)
-            {
-                //sb.AppendLine();
-                sb.Append("... (" + truncatedCount + " more)");
-            }
-
-            return sb.ToString();
-        }
-
-        private string GetName(ISettingValue value)
-        {
-            string name = value.Name.Trim();
-
-            var category = value.Category;
-
-            while (category != null)
-            {
-                name = category.CategoryText.Trim() + " - " + name;
-
-                category = category.Parent;
-
-                if (category.Parent == null)
-                {
-                    break;
-                }
-            }
-
-            return name.Trim();
         }
 
         private void Process_Error(object sender, MessageEventArgs e)

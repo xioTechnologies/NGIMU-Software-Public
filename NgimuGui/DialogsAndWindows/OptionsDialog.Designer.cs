@@ -75,7 +75,7 @@
             // 
             // searchForConnections
             // 
-            this.searchForConnections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.searchForConnections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.searchForConnections.Controls.Add(this.configureUniqueUdpConnection);
             this.searchForConnections.Controls.Add(this.openConnectionToFirstDeviceFound);
@@ -253,7 +253,7 @@
             // 
             // firmwareUploader
             // 
-            this.firmwareUploader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.firmwareUploader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.firmwareUploader.Controls.Add(this.searchForConnectionsAfterSuccessfulUpload);
             this.firmwareUploader.Controls.Add(this.allowUploadWithoutSerialConnection);
@@ -286,7 +286,7 @@
             // 
             // connectDisconnectBehaviour
             // 
-            this.connectDisconnectBehaviour.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.connectDisconnectBehaviour.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.connectDisconnectBehaviour.Controls.Add(this.readDeviceSettingsAfterOpeningConnection);
             this.connectDisconnectBehaviour.Controls.Add(this.disconnectFromSerialAfterSleepAndResetCommands);
@@ -299,7 +299,7 @@
             // 
             // commandAndSettingsConfirmation
             // 
-            this.commandAndSettingsConfirmation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.commandAndSettingsConfirmation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.commandAndSettingsConfirmation.Controls.Add(this.maximumNumberOfRetries);
             this.commandAndSettingsConfirmation.Controls.Add(this.timeout);
@@ -314,7 +314,7 @@
             // 
             // misc
             // 
-            this.misc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.misc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.misc.Controls.Add(this.label1);
             this.misc.Controls.Add(this.graphSampleBufferSize);

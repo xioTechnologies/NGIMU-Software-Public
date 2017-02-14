@@ -8,7 +8,7 @@ namespace NgimuApi.Maths
     /// Quaternion.
     /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Quaternion
+    public struct Quaternion : IEquatable<Quaternion>
     {
         /// <summary>
         /// Quaternion identity.  Represents an alignment in orientation.
@@ -94,10 +94,10 @@ namespace NgimuApi.Maths
         /// </summary>
         public Quaternion(float w, float x, float y, float z)
         {
-            this.W = w;
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            W = w;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         /// <summary>
@@ -117,20 +117,24 @@ namespace NgimuApi.Maths
 
             int i = 0;
 
-            this.W = array[i++];
-            this.X = array[i++];
-            this.Y = array[i++];
-            this.Z = array[i++];
+            W = array[i++];
+            X = array[i++];
+            Y = array[i++];
+            Z = array[i++];
         }
 
         /// <summary>
-        /// Returns the quaternion conjugate.
+        /// Returns the quaternion conjugate. 
         /// </summary>
-        public void Conjugate()
+        /// <param name="quaternion">The quaternion.</param>
+        /// <returns>Quaternion conjugate.</returns>
+        public static Quaternion Conjugate(Quaternion quaternion)
         {
-            this.X = -this.X;
-            this.Y = -this.Y;
-            this.Z = -this.Z;
+            quaternion.X = -quaternion.X;
+            quaternion.Y = -quaternion.Y;
+            quaternion.Z = -quaternion.Z;
+
+            return quaternion;
         }
 
         /// <summary>
@@ -295,6 +299,52 @@ namespace NgimuApi.Maths
                 X.ToString(CultureInfo.InvariantCulture),
                 Y.ToString(CultureInfo.InvariantCulture),
                 Z.ToString(CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>
+        /// Implements the == operator.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator ==(Quaternion left, Quaternion right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Implements the != operator.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator !=(Quaternion left, Quaternion right)
+        {
+            return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="other">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object other)
+        {
+            return ((other is Quaternion) && (this == ((Quaternion)other)));
+        }
+
+        /// <summary>
+        /// Returns true if the numeric value of this instance is equal to the other quaternion.
+        /// </summary>
+        /// <param name="other">The other quaternion to be compared.</param>
+        /// <returns>True if the numeric value of this instance is equal to the other quaternion.</returns>
+        public bool Equals(Quaternion other)
+        {
+            return
+                (this.X == other.X) &&
+                (this.Y == other.Y) &&
+                (this.Z == other.Z) &&
+                (this.W == other.W);
         }
     }
 }

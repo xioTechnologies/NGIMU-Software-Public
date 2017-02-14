@@ -13,6 +13,8 @@ namespace NgimuApi.Logging
         public readonly StatisticsNode Statistics = new StatisticsNode();
         public readonly TimeStampsNode TimeStamps = new TimeStampsNode();
 
+        public string DirectoryName { get; set; }
+
         public void Save(string filePath)
         {
             XmlDocument doc = new XmlDocument();
@@ -96,15 +98,6 @@ namespace NgimuApi.Logging
 
             public string SerialNumber { get; set; }
 
-            public DeviceInformationNode()
-            {
-                DeviceName = "N/A";
-                SerialNumber = "N/A";
-                FirmwareVersion = "N/A";
-                BootloaderVersion = "N/A";
-                HardwareVersion = "N/A";
-            }
-
             internal void Save(XmlElement parent)
             {
                 XmlElement node = Helper.CreateElement(parent, "DeviceInformation");
@@ -120,11 +113,12 @@ namespace NgimuApi.Logging
 
             internal void SetValues(SettingsCategoryTypes.DeviceInformation deviceInformation)
             {
-                DeviceName = deviceInformation.DeviceName.Value;
-                SerialNumber = deviceInformation.SerialNumber.Value;
-                FirmwareVersion = deviceInformation.FirmwareVersion.HasRemoteValue == true ? deviceInformation.FirmwareVersion.Value : "N/A";
-                BootloaderVersion = deviceInformation.BootloaderVersion.HasRemoteValue == true ? deviceInformation.BootloaderVersion.Value : "N/A";
-                HardwareVersion = deviceInformation.HardwareVersion.HasRemoteValue == true ? deviceInformation.HardwareVersion.Value : "N/A";
+                // The strings "Unknown Device Name" and "Unknown Serial Number" match the strings in the method Settings.GetDeviceDescriptor() 
+                DeviceName = string.IsNullOrEmpty(deviceInformation.DeviceName.Value) ? "Unknown Device Name" : deviceInformation.DeviceName.Value;
+                SerialNumber = string.IsNullOrEmpty(deviceInformation.SerialNumber.Value) ? "Unknown Serial Number" : deviceInformation.SerialNumber.Value;
+                FirmwareVersion = string.IsNullOrEmpty(deviceInformation.FirmwareVersion.Value) ? "N/A" : deviceInformation.FirmwareVersion.Value;
+                BootloaderVersion = string.IsNullOrEmpty(deviceInformation.BootloaderVersion.Value) ? "N/A" : deviceInformation.BootloaderVersion.Value;
+                HardwareVersion = string.IsNullOrEmpty(deviceInformation.HardwareVersion.Value) ? "N/A" : deviceInformation.HardwareVersion.Value;
             }
         }
 

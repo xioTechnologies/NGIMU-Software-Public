@@ -31,7 +31,7 @@
             this.m_UploadButton = new System.Windows.Forms.Button();
             this.m_FilePathLabel = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.pathSelector = new NgimuGui.Controls.PathSelector();
+            this.pathSelector = new NgimuForms.Controls.PathSelector();
             this.SuspendLayout();
             // 
             // m_UploadButton
@@ -92,9 +92,6 @@
             this.Text = "Firmware Uploader";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UploadFirmwareDialog_FormClosing);
             this.Load += new System.EventHandler(this.UploadFirmwareDialog_Load);
-            this.ResizeBegin += new System.EventHandler(this.Form_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.Form_ResizeEnd);
-            this.Resize += new System.EventHandler(this.Form_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -104,6 +101,6 @@
         private System.Windows.Forms.Button m_UploadButton;
         private System.Windows.Forms.Label m_FilePathLabel;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private Controls.PathSelector pathSelector;
+        private NgimuForms.Controls.PathSelector pathSelector;
     }
 }

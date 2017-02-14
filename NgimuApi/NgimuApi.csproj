@@ -58,7 +58,7 @@
     <Compile Include="Data\RssiData.cs" />
     <Compile Include="SearchForConnections\AhoyQuerySerialPort.cs" />
     <Compile Include="SearchForConnections\AhoyQueryAllSerialPorts.cs" />
-    <Compile Include="SearchForConnections\ConnectionSearchInfo.cs" />
+    <Compile Include="SearchForConnections\ConnectionSearchResult.cs" />
     <Compile Include="SearchForConnections\SearchForConnections.cs" />
     <Compile Include="SearchForConnections\ConnectionSearchTypes.cs" />
     <Compile Include="Bootloader\BootloaderHelper.cs" />

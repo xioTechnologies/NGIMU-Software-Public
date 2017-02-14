@@ -1,80 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using NgimuApi;
 using NgimuApi.SearchForConnections;
+using NgimuForms;
 
 namespace NgimuGui
 {
-    internal class WindowOptions
-    {
-        /// <summary>
-        /// Is the window currently open.
-        /// </summary>
-        public bool IsOpen { get; set; }
-
-        /// <summary>
-        /// The current state of the window (maximised or normal).
-        /// </summary>
-        public FormWindowState WindowState { get; set; }
-
-        /// <summary>
-        /// The bounds of the window on the desktop.
-        /// </summary>
-        public Rectangle Bounds { get; set; }
-    }
-
-    internal class WindowManager
-    {
-        private readonly Dictionary<string, WindowOptions> m_Windows = new Dictionary<string, WindowOptions>();
-
-        public ICollection<string> Keys { get { return m_Windows.Keys; } }
-
-        public void Clear()
-        {
-            m_Windows.Clear();
-        }
-
-        public bool Contains(string key)
-        {
-            return m_Windows.ContainsKey(key);
-        }
-
-        public WindowOptions this[string key]
-        {
-            get
-            {
-                if (Contains(key) == false)
-                {
-                    m_Windows.Add(key, new WindowOptions());
-                }
-
-                return m_Windows[key];
-            }
-        }
-    }
-
     internal static class Options
     {
         /// <summary>
         /// The location of the options file
         /// </summary>
         private static string m_OptionsFileName = "~/Options.xml";
-
-        /// <summary>
-        /// The current state of the window (maximised or normal)
-        /// </summary>
-        public static FormWindowState WindowState { get; set; }
-
-        /// <summary>
-        /// The bounds of the window on the desktop
-        /// </summary>
-        public static Rectangle Bounds { get; set; }
-
-        public static readonly WindowManager Windows = new WindowManager();
 
         public static bool SearchForConnectionsAtStartup { get; set; }
 
@@ -126,12 +66,6 @@ namespace NgimuGui
 
         public static void SetDefaults()
         {
-            // set the bound to empty
-            Bounds = Rectangle.Empty;
-
-            // normal window state
-            WindowState = FormWindowState.Normal;
-
             ConnectionSearchType = ConnectionSearchTypes.All;
 
             SearchForConnectionsAtStartup = true;
@@ -158,7 +92,7 @@ namespace NgimuGui
 
             GraphSampleBufferSize = 24;
 
-            Windows.Clear();
+            WindowManager.Clear();
         }
 
         private static void Inner_Load()
@@ -200,37 +134,7 @@ namespace NgimuGui
                     AllowUploadWithoutSerialConnection = Helper.GetAttributeValue(node, "AllowUploadWithoutSerialConnection", AllowUploadWithoutSerialConnection);
                     SearchForConnectionsAfterSuccessfulUpload = Helper.GetAttributeValue(node, "SearchForConnectionsAfterSuccessfulUpload", SearchForConnectionsAfterSuccessfulUpload);
 
-                    // get the string for the bounding rectangle
-                    Bounds = CheckWindowBounds(Helper.GetAttributeValue(node, "Bounds", Bounds));
-
-                    // get the window state
-                    WindowState = Helper.GetAttributeValue(node, "WindowState", WindowState);
-
-                    foreach (XmlNode windowNode in node.SelectNodes("Windows/Window"))
-                    {
-                        string name = Helper.GetAttributeValue(windowNode, "Name", null);
-
-                        if (String.IsNullOrEmpty(name) == true)
-                        {
-                            continue;
-                        }
-
-                        if (Windows.Contains(name) == true)
-                        {
-                            continue;
-                        }
-
-                        WindowOptions options = Windows[name];
-
-                        // get the open state
-                        options.IsOpen = Helper.GetAttributeValue(windowNode, "IsOpen", options.IsOpen);
-
-                        // get the window state
-                        options.WindowState = Helper.GetAttributeValue(windowNode, "WindowState", options.WindowState);
-
-                        // get the bounding rectangle
-                        options.Bounds = CheckWindowBounds(Helper.GetAttributeValue(windowNode, "Bounds", options.Bounds));
-                    }
+                    WindowManager.Load(node.SelectSingleNode("Windows"));
                 }
             }
             catch (Exception ex)
@@ -268,73 +172,17 @@ namespace NgimuGui
 
                 if (RememberWindowLayout == true)
                 {
-                    Helper.AppendAttributeAndValue(node, "Bounds", Bounds);
-                    Helper.AppendAttributeAndValue(node, "WindowState", WindowState);
-
-                    XmlElement windows = Helper.CreateElement(doc, "Windows");
-
-                    foreach (string name in Windows.Keys)
-                    {
-                        WindowOptions options = Windows[name];
-
-                        XmlElement window = Helper.CreateElement(doc, "Window");
-
-                        Helper.AppendAttributeAndValue(window, "Name", name);
-
-                        Helper.AppendAttributeAndValue(window, "IsOpen", options.IsOpen);
-
-                        Helper.AppendAttributeAndValue(window, "WindowState", options.WindowState);
-
-                        Helper.AppendAttributeAndValue(window, "Bounds", options.Bounds);
-
-                        windows.AppendChild(window);
-                    }
-
-                    node.AppendChild(windows);
+                    WindowManager.Save(node);
                 }
 
                 Helper.EnsurePathExists(Helper.ResolvePath(m_OptionsFileName));
+
                 doc.Save(Helper.ResolvePath(m_OptionsFileName));
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Could not save options", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private static Rectangle CheckWindowBounds(Rectangle bounds)
-        {
-            // if the bounds is not empty
-            if (bounds != Rectangle.Empty)
-            {
-                // check that the bounds is on the screen
-                if (IsOnScreen(bounds) == false)
-                {
-                    // if the bounds is off the screen set it to empty
-                    bounds = Rectangle.Empty;
-                }
-            }
-
-            return bounds;
-        }
-
-        /// <summary>
-        /// Check that a rectangle is fully on the screen
-        /// </summary>
-        /// <param name="rectangle">the rectangle to check</param>
-        /// <returns>true if the rectangle is fully on a screen</returns>
-        private static bool IsOnScreen(Rectangle rectangle)
-        {
-            Screen[] screens = Screen.AllScreens;
-            foreach (Screen screen in screens)
-            {
-                if (screen.WorkingArea.Contains(rectangle))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

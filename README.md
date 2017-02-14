@@ -1,6 +1,23 @@
 NGIMU-Software
 ==============
 
+v1.3 (Feb 14 2016)
+------------------
+* Introduce Synchronised Network Manager application
+* Introduce SD Card File Converter application
+* Update expected firmware version
+* Update 3D models for latest hardware
+* Add network latency setting for synchronisation mater
+* Esc key can be used to close Received Error dialogue
+* Ensure data logger stopwatch final value matches logging time if specified
+* Refactor Data Logger for improved behaviour when device information unknown
+* Add keyboard shortcut to clear graph
+* Ignore negative timestamps when writing CSV files
+* Do not create CSV file for error messages
+* Rename Thermometers graph to temperature
+* Rename ConnectionSearchInfo to ConnectionSearchResult in API
+* Make quaternions IEquatable in API
+
 v1.2 (Nov 20 2016)
 ------------------
 * Abandon use of compression tool which may be flagged by security software

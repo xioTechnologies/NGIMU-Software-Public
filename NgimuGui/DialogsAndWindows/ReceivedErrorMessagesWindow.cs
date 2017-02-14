@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using NgimuForms.DialogsAndWindows;
 
 namespace NgimuGui.DialogsAndWindows
 {
@@ -23,6 +24,7 @@ namespace NgimuGui.DialogsAndWindows
         private void ReceivedErrorMessagesWindow_Load(object sender, EventArgs e)
         {
             ReceivedErrorMessages.Changed += ReceivedErrorMessages_Changed;
+
             UpdateText();
         }
 

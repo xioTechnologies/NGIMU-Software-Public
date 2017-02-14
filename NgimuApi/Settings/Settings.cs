@@ -241,7 +241,7 @@ namespace NgimuApi
 		public ISettingValue<IPAddress> WifiClientGateway { get; private set; }
 		
 		/// <summary>
-		/// Gets Wi-Fi Client SSIDLow Power Mode setting.
+		/// Gets Wi-Fi Client Low Power Mode setting.
 		/// </summary>
 		public ISettingValue<bool> WifiClientLowPower { get; private set; }
 		
@@ -274,6 +274,11 @@ namespace NgimuApi
 		/// Gets Synchronisation Master Send Port setting.
 		/// </summary>
 		public ISettingValue<ushort> SynchronisationMasterPort { get; private set; }
+		
+		/// <summary>
+		/// Gets Synchronisation Network Latency setting.
+		/// </summary>
+		public ISettingValue<uint> SynchronisationMasterLatency { get; private set; }
 		
 		/// <summary>
 		/// Gets Serial Enabled setting.
@@ -559,13 +564,14 @@ namespace NgimuApi
 			WifiClientIPAddress = new SettingValue_IPAddress(Wifi.Client, "IP Address", "Wi-Fi Client IP Address", LookupDocumentation("/wifi/client/ip"), "/wifi/client/ip", false, false);
 			WifiClientSubnet = new SettingValue_IPAddress(Wifi.Client, "Subnet", "Wi-Fi Client Subnet", LookupDocumentation("/wifi/client/subnet"), "/wifi/client/subnet", false, false);
 			WifiClientGateway = new SettingValue_IPAddress(Wifi.Client, "Gateway", "Wi-Fi Client Gateway", LookupDocumentation("/wifi/client/gateway"), "/wifi/client/gateway", false, false);
-			WifiClientLowPower = new SettingValue_Bool(Wifi.Client, "Low Power Mode", "Wi-Fi Client SSIDLow Power Mode", LookupDocumentation("/wifi/client/lowpower"), "/wifi/client/lowpower", false, false);
+			WifiClientLowPower = new SettingValue_Bool(Wifi.Client, "Low Power Mode", "Wi-Fi Client Low Power Mode", LookupDocumentation("/wifi/client/lowpower"), "/wifi/client/lowpower", false, false);
 			WifiSendIPAddress = new SettingValue_IPAddress(Wifi.Udp, "Send IP Address", "UDP Send IP Address", LookupDocumentation("/wifi/send/ip"), "/wifi/send/ip", false, false);
 			WifiSendPort = new SettingValue_UdpPort(Wifi.Udp, "Send Port", "UDP Send Port", LookupDocumentation("/wifi/send/port"), "/wifi/send/port", false, false);
 			WifiReceivePort = new SettingValue_UdpPort(Wifi.Udp, "Receive Port", "UDP Receive Port", LookupDocumentation("/wifi/receive/port"), "/wifi/receive/port", false, false);
 			WifiMaximiseThroughput = new SettingValue_Bool(Wifi.Udp, "Maximise Throughput", "UDP Maximise Throughput", LookupDocumentation("/wifi/throughput"), "/wifi/throughput", false, false);
 			SynchronisationMasterEnabled = new SettingValue_Bool(Wifi.SynchronisationMaster, "Enabled", "Synchronisation Master Enabled", LookupDocumentation("/wifi/synchronisation/enabled"), "/wifi/synchronisation/enabled", false, false);
 			SynchronisationMasterPort = new SettingValue_UdpPort(Wifi.SynchronisationMaster, "Send Port", "Synchronisation Master Send Port", LookupDocumentation("/wifi/synchronisation/port"), "/wifi/synchronisation/port", false, false);
+			SynchronisationMasterLatency = new SettingValue_UInt32(Wifi.SynchronisationMaster, "Network Latency (ms)", "Synchronisation Network Latency", LookupDocumentation("/wifi/synchronisation/latency"), "/wifi/synchronisation/latency", false, false);
 			SerialEnabled = new SettingValue_Bool(Serial, "Enabled", "Serial Enabled", LookupDocumentation("/serial/enabled"), "/serial/enabled", false, false);
 			SerialBaudRate = new SettingValue_UInt32(Serial, "Baud Rate", "Serial Baud Rate", LookupDocumentation("/serial/baud"), "/serial/baud", false, false);
 			SerialBaudRateError = new SettingValue_Float(Serial, "Baud Rate Error (%)", "Serial Baud Rate Error", LookupDocumentation("/serial/error"), "/serial/error", true, false);
@@ -1038,7 +1044,7 @@ namespace NgimuApi
 			public ISettingValue<IPAddress> WifiClientGateway { get; private set; }
 			
 			/// <summary>
-			/// Gets Wi-Fi Client SSIDLow Power Mode setting.
+			/// Gets Wi-Fi Client Low Power Mode setting.
 			/// </summary>
 			public ISettingValue<bool> WifiClientLowPower { get; private set; }
 		
@@ -1193,7 +1199,7 @@ namespace NgimuApi
 			/// <summary>
 			/// Gets a flag to indicate if this category is hidden.
 			/// </summary>
-			public override bool IsHidden { get { return true; } }
+			public override bool IsHidden { get { return false; } }
 		
 			/// <summary>
 			/// Gets Synchronisation Master Enabled setting.
@@ -1204,6 +1210,11 @@ namespace NgimuApi
 			/// Gets Synchronisation Master Send Port setting.
 			/// </summary>
 			public ISettingValue<ushort> SynchronisationMasterPort { get; private set; }
+			
+			/// <summary>
+			/// Gets Synchronisation Network Latency setting.
+			/// </summary>
+			public ISettingValue<uint> SynchronisationMasterLatency { get; private set; }
 		
 		    internal SynchronisationMaster(Wifi parent)
 		    {
@@ -1215,9 +1226,11 @@ namespace NgimuApi
 			{
 				SynchronisationMasterEnabled = settings.SynchronisationMasterEnabled;
 				SynchronisationMasterPort = settings.SynchronisationMasterPort;
+				SynchronisationMasterLatency = settings.SynchronisationMasterLatency;
 				
 				Add(settings.SynchronisationMasterEnabled);
 				Add(settings.SynchronisationMasterPort);
+				Add(settings.SynchronisationMasterLatency);
 				Finalise();
 			}
 		
@@ -1229,6 +1242,7 @@ namespace NgimuApi
 		    {
 				if (SynchronisationMasterEnabled.IsValueUndefined == false) { other.SynchronisationMasterEnabled.Value = SynchronisationMasterEnabled.Value; }
 				if (SynchronisationMasterPort.IsValueUndefined == false) { other.SynchronisationMasterPort.Value = SynchronisationMasterPort.Value; }
+				if (SynchronisationMasterLatency.IsValueUndefined == false) { other.SynchronisationMasterLatency.Value = SynchronisationMasterLatency.Value; }
 		    }
 		}
 		

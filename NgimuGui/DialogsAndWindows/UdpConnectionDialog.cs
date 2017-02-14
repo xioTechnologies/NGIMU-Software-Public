@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Windows.Forms;
 using NgimuApi;
+using NgimuForms.DialogsAndWindows;
 
 namespace NgimuGui.DialogsAndWindows
 {

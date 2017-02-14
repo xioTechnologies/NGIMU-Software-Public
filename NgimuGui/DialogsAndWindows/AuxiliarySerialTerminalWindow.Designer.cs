@@ -199,11 +199,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "AuxiliarySerialTerminal";
             this.Text = "Auxiliary Serial Terminal";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AuxiliarySerialTerminal_FormClosing);
             this.Load += new System.EventHandler(this.AuxiliarySerialTerminal_Load);
-            this.ResizeBegin += new System.EventHandler(this.Form_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.Form_ResizeEnd);
-            this.Resize += new System.EventHandler(this.Form_Resize);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

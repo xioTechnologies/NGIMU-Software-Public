@@ -22,7 +22,7 @@ namespace NgimuApi
         /// Enumerate all available connections. Note: This method blocks until connections have been enumerated.
         /// </summary>
         /// <returns>All available connections.</returns>
-        public static SearchForConnections.ConnectionSearchInfo[] EnumerateConnections()
+        public static SearchForConnections.ConnectionSearchResult[] EnumerateConnections()
         {
             return SearchForConnections.SearchForConnections.EnumerateConnections();
         }
@@ -224,7 +224,7 @@ namespace NgimuApi
         /// Create a connection using the supplied auto connection info.
         /// </summary>
         /// <param name="connectionInfo">Auto connection info that describes the connection.</param>
-        public Connection(SearchForConnections.ConnectionSearchInfo connectionInfo)
+        public Connection(SearchForConnections.ConnectionSearchResult connectionInfo)
             : this(connectionInfo.ConnectionInfo)
         {
 

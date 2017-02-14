@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.m_SendIPAddress = new NgimuGui.Controls.TextBoxWithHelpText();
+            this.m_SendIPAddress = new NgimuForms.Controls.TextBoxWithHelpText();
             this.m_Cancel = new System.Windows.Forms.Button();
             this.m_OKButton = new System.Windows.Forms.Button();
             this.m_AdapterIPAddress = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.m_SendPort = new NgimuGui.Controls.TextBoxWithHelpText();
-            this.m_ReceivePort = new NgimuGui.Controls.TextBoxWithHelpText();
+            this.m_SendPort = new NgimuForms.Controls.TextBoxWithHelpText();
+            this.m_ReceivePort = new NgimuForms.Controls.TextBoxWithHelpText();
             this.label3 = new System.Windows.Forms.Label();
             this.m_Broadcast = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
@@ -195,14 +195,14 @@
 
         #endregion
 
-        private NgimuGui.Controls.TextBoxWithHelpText m_SendIPAddress;
+        private NgimuForms.Controls.TextBoxWithHelpText m_SendIPAddress;
         private System.Windows.Forms.Button m_Cancel;
         private System.Windows.Forms.Button m_OKButton;
         private System.Windows.Forms.ComboBox m_AdapterIPAddress;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private NgimuGui.Controls.TextBoxWithHelpText m_SendPort;
-        private NgimuGui.Controls.TextBoxWithHelpText m_ReceivePort;
+        private NgimuForms.Controls.TextBoxWithHelpText m_SendPort;
+        private NgimuForms.Controls.TextBoxWithHelpText m_ReceivePort;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox m_Broadcast;
     }

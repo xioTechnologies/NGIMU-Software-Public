@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Rug.Osc;
 
 namespace NgimuApi
@@ -261,5 +262,72 @@ namespace NgimuApi
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the device descriptor.
+        /// </summary>
+        /// <returns>string in the format "{DeviceName} - {SerialNumber}"</returns>
+        public string GetDeviceDescriptor()
+        {
+            string deviceName = DeviceName.Value;
+            string serialNumber = SerialNumber.Value;
+
+            if (string.IsNullOrEmpty(deviceName) == true)
+            {
+                deviceName = "Unknown Device Name";
+            }
+
+            if (string.IsNullOrEmpty(serialNumber) == true)
+            {
+                serialNumber = "Unknown Serial Number";
+            }
+
+            return $"{deviceName} - {serialNumber}";
+        }
+
+        public static string GetCommunicationFailureString(IEnumerable<ISettingValue> values, int max, out bool allValuesFailed, out bool allValuesSucceeded)
+        {
+            allValuesFailed = true;
+            allValuesSucceeded = true;
+            StringBuilder sb = new StringBuilder();
+            int count = 0;
+            int truncatedCount = 0;
+
+            sb.AppendLine();
+            sb.AppendLine();
+
+            foreach (ISettingValue value in values)
+            {
+                if (value.CommunicationResult.HasValue && value.CommunicationResult.Value == CommunicationProcessResult.Success)
+                {
+                    allValuesFailed = false;
+
+                    continue;
+                }
+
+                if (value.CommunicationResult.HasValue == false)
+                {
+                    continue;
+                }
+
+                allValuesSucceeded = false;
+
+                if (count++ >= max)
+                {
+                    truncatedCount++;
+                    continue;
+                }
+
+                sb.AppendLine(value.OscAddress);
+            }
+
+            if (truncatedCount > 0)
+            {
+                sb.Append("... (" + truncatedCount + " more)");
+            }
+
+            return sb.ToString();
+        }
+
     }
 }

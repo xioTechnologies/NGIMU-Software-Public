@@ -200,6 +200,11 @@ namespace NgimuApi.SearchForConnections
 
             ServiceDiscovered?.Invoke(serviceInfo);
         }
+
+        public void BeginEndSearch()
+        {
+            EndSearch();
+        }
     }
 
     internal interface IAhoyQuerySerial : IAhoyQuery

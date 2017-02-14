@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D93178D2-973E-42D6-8E6A-2D971364BCFA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NgimuForms</RootNamespace>
+    <AssemblyName>NgimuForms</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Rug.Cmd">
+      <HintPath>..\Libraries\Rug.Cmd.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Forms.Console">
+      <HintPath>..\Libraries\Rug.Forms.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Osc">
+      <HintPath>..\Libraries\Rug.Osc.dll</HintPath>
+    </Reference>
+    <Reference Include="Rug.Osc.Ahoy">
+      <HintPath>..\Libraries\Rug.Osc.Ahoy.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="Controls\ControlExtensions.cs" />
+    <Compile Include="Controls\PathSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PathSelector.Designer.cs">
+      <DependentUpon>PathSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBoxWithHelpText.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\DataLoggerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\DataLoggerWindow.Designer.cs">
+      <DependentUpon>DataLoggerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ExceptionDialog.Designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\FlashingDialogHelper.cs" />
+    <Compile Include="DialogsAndWindows\FolderBrowserLauncher.cs" />
+    <Compile Include="DialogsAndWindows\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SDCardFileConverterWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SDCardFileConverterWindow.Designer.cs">
+      <DependentUpon>SDCardFileConverterWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SearchingForConnectionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\SearchingForConnectionsDialog.Designer.cs">
+      <DependentUpon>SearchingForConnectionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GuiTerminal.cs" />
+    <Compile Include="WindowManager.cs" />
+    <Compile Include="Panels\ClockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\ClockPanel.Designer.cs">
+      <DependentUpon>ClockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NgimuApi\NgimuApi.csproj">
+      <Project>{FC4852F8-A108-4497-ACBB-588D8ECAD64B}</Project>
+      <Name>NgimuApi</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\Rug Logo 256x256 %28Just Rug%29.png" />
+    <Content Include="Icons\x-io_rgb_black.png" />
+    <Content Include="x-io_icon_white_transparent-small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\PathSelector.resx">
+      <DependentUpon>PathSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\DataLoggerWindow.resx">
+      <DependentUpon>DataLoggerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\SDCardFileConverterWindow.resx">
+      <DependentUpon>SDCardFileConverterWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\SearchingForConnectionsDialog.resx">
+      <DependentUpon>SearchingForConnectionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ClockPanel.resx">
+      <DependentUpon>ClockPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

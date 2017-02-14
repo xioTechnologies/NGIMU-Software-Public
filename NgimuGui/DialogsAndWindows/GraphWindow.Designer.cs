@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.graph = new Rug.LiteGL.Controls.TimestampGraph();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.horizontalRollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centerTraceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,14 +97,7 @@
             this.verticalZoomOutMenuItem,
             this.verticalZoomInMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(256, 270);
-            // 
-            // clearToolStripMenuItem
-            // 
-            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.clearToolStripMenuItem.Text = "Clear";
-            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(256, 292);
             // 
             // resetViewToolStripMenuItem
             // 
@@ -112,6 +105,14 @@
             this.resetViewToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.resetViewToolStripMenuItem.Text = "Restore Defaults";
             this.resetViewToolStripMenuItem.Click += new System.EventHandler(this.resetViewToolStripMenuItem_Click);
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
+            this.clearToolStripMenuItem.Text = "Clear";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -138,7 +139,7 @@
             // allToolStripMenuItem1
             // 
             this.allToolStripMenuItem1.Name = "allToolStripMenuItem1";
-            this.allToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            this.allToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
             | System.Windows.Forms.Keys.D0)));
             this.allToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
             this.allToolStripMenuItem1.Text = "All";
@@ -273,13 +274,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "GraphWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form3DView_FormClosed);
             this.Load += new System.EventHandler(this.Form_Load);
-            this.ResizeBegin += new System.EventHandler(this.Form_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.Form_ResizeEnd);
-            this.SizeChanged += new System.EventHandler(this.GraphWindow_SizeChanged);
-            this.VisibleChanged += new System.EventHandler(this.Form_VisibleChanged);
-            this.Resize += new System.EventHandler(this.Form_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -28,14 +28,12 @@
   <Setting Address="/firmware">Current firmware version running on the device.</Setting>
   <Setting Address="/bootloader">Current bootloader version running on the device.  The bootloader is programmed during production and cannot be updated by the end user.</Setting>
   <Setting Address="/hardware">Hardware version of the device.</Setting>
-  <Setting Address="/wifi/enabled">
-  </Setting>
-  <Setting Address="/wifi/firmware">
-  </Setting>
-  <Setting Address="/wifi/mac">
-  </Setting>
-  <Setting Address="/wifi/ip">
-  </Setting>
+  <Setting Address="/wifi/enabled">The Wi-Fi module must be enabled for it to be used.  Disabling Wi-Fi will reduce power consumption and extend battery life significantly.  It is recommended that Wi-Fi is disabled if it is not used.</Setting>
+  <Setting Address="/wifi/firmware">The current firmware version installed on the Wi-Fi module.  The value of this read-only setting is only valid if Wi-Fi is enabled.</Setting>
+  <Setting Address="/wifi/mac">The fixed MAC address Wi-Fi module.  The value of this read-only setting is only valid if Wi-Fi is enabled.</Setting>
+  <Setting Address="/wifi/ip">The current IP address of the Wi-FI module.  The value of this read-only setting is only valid if Wi-Fi is enabled.
+
+      The IP address is fixed to 192.168.1.1 in AP mode.  In client mode, the IP address is either assigned automatically by the router or access point if DHCP is enabled, or set as client IP address setting if DHCP is disabled.  The value of this read-only setting is only valid is only available if Wi-Fi is enabled.</Setting>
   <Setting Address="/wifi/mode">
   </Setting>
   <Setting Address="/wifi/antenna">
@@ -62,6 +60,8 @@
   </Setting>
   <Setting Address="/wifi/synchronisation/enabled">If enabled then the device will function as a synchronisation master and will periodically broadcast synchronisation messages to all other devices on the network.  The other devices will function as synchronisation slaves and will adjust their date/time to stay in sync with the master.  Only one device on the network may be enabled as a synchronisation master.</Setting>
   <Setting Address="/wifi/synchronisation/port">The synchronisation master send port is the UDP send port for synchronisation messages sent by the device when configured as a synchronisation master.  This port must be the same as the UDP receive port configured on each synchronisation slave.</Setting>
+  <Setting Address="/wifi/synchronisation/latency">The expected network latency in milliseconds.  This is the delay between the sending of a synchronisation message from the synchronisation master and the reception of this message by a synchronisation slave.\par
+        It is recommended that this value is not adjusted unless an alternative value has been verified as an accurate measurement of the network latency.</Setting>
   <Setting Address="/serial/enabled">
   </Setting>
   <Setting Address="/serial/baud">

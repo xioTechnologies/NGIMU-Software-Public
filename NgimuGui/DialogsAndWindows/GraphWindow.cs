@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using NgimuApi;
+using NgimuForms.DialogsAndWindows;
 using Rug.LiteGL.Controls;
 
 namespace NgimuGui.DialogsAndWindows
@@ -19,7 +19,7 @@ namespace NgimuGui.DialogsAndWindows
 
         private string GraphSettingsFilePath { get { return Helper.ResolvePath("~/Graph Settings/" + defaultGraphSettings.Title + ".xml"); } }
 
-        public GraphWindow(GraphSettings defaultGraphSettings)
+        public GraphWindow(GraphSettings defaultGraphSettings) : base(defaultGraphSettings.Title)
         {
             this.defaultGraphSettings = defaultGraphSettings;
 
@@ -57,6 +57,8 @@ namespace NgimuGui.DialogsAndWindows
         {
             if ((keyData & Keys.Control) == Keys.Control && (keyData & Keys.Alt) == Keys.Alt)
             {
+                keyData = keyData & ~(Keys.Control | Keys.Alt);
+
                 for (int i = 0; i < graph.Traces.Count + 1; i++)
                 {
                     if ((keyData & (Keys)((int)Keys.D0 + i)) == (Keys)((int)Keys.D0 + i))
@@ -67,15 +69,21 @@ namespace NgimuGui.DialogsAndWindows
             }
             else if ((keyData & Keys.Control) == Keys.Control)
             {
-                if ((keyData & Keys.Back) == Keys.Back)
+                keyData = keyData & ~(Keys.Control | Keys.Alt);
+
+                if (keyData == Keys.Back)
                 {
-                    //SetVerticalAutoscaleIndex(-1, false);
                     graph.ResetView();
+                }
+
+                if (keyData == Keys.L)
+                {
+                    graph.Clear();
                 }
 
                 for (int i = 0; i < graph.Traces.Count + 1; i++)
                 {
-                    if ((keyData & (Keys)((int)Keys.D0 + i)) == (Keys)((int)Keys.D0 + i))
+                    if (keyData == (Keys)((int)Keys.D0 + i))
                     {
                         SetVerticalAutoscaleIndex(i - 1, false);
                     }
@@ -83,9 +91,11 @@ namespace NgimuGui.DialogsAndWindows
             }
             else if ((keyData & Keys.Alt) == Keys.Alt)
             {
+                keyData = keyData & ~(Keys.Control | Keys.Alt);
+
                 for (int i = 0; i < graph.Traces.Count + 1; i++)
                 {
-                    if ((keyData & (Keys)((int)Keys.D0 + i)) == (Keys)((int)Keys.D0 + i))
+                    if (keyData == (Keys)((int)Keys.D0 + i))
                     {
                         SetHorizontalAutoscaleIndex(i - 1, false);
                     }
@@ -127,11 +137,6 @@ namespace NgimuGui.DialogsAndWindows
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
-
-            if (e.CloseReason == CloseReason.UserClosing || e.CloseReason == CloseReason.None)
-            {
-                Options.Windows[ID].IsOpen = false;
-            }
         }
 
         public void SaveSettings()
@@ -143,15 +148,6 @@ namespace NgimuGui.DialogsAndWindows
 
         private void Form_Load(object sender, EventArgs e)
         {
-            if (Options.Windows[ID].Bounds != Rectangle.Empty)
-            {
-                this.DesktopBounds = Options.Windows[ID].Bounds;
-            }
-
-            WindowState = Options.Windows[ID].WindowState;
-
-            Options.Windows[ID].IsOpen = true;
-
             verticalTrackItems.Add(verticalAutoscaleMenuItem.DropDownItems[0] as ToolStripMenuItem);
             horizontalTrackItems.Add(horizontalAutoscaleMenuItem.DropDownItems[0] as ToolStripMenuItem);
 
@@ -188,13 +184,6 @@ namespace NgimuGui.DialogsAndWindows
             graph_ViewReset(null, EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Form visible changed event to start/stop form update formUpdateTimer.
-        /// </summary>
-        private void Form_VisibleChanged(object sender, EventArgs e)
-        {
-        }
-
         private void Graph_UserChangedViewport(Rug.LiteGL.Controls.GraphBase graph, bool xChanged, bool yChanged)
         {
             if (yChanged == true)
@@ -205,16 +194,6 @@ namespace NgimuGui.DialogsAndWindows
             if (xChanged == true)
             {
                 SetHorizontalAutoscaleIndex(-1, true);
-            }
-        }
-
-        private void GraphWindow_SizeChanged(object sender, EventArgs e)
-        {
-            Options.Windows[ID].WindowState = WindowState;
-
-            if (WindowState == FormWindowState.Normal)
-            {
-                Options.Windows[ID].Bounds = this.DesktopBounds;
             }
         }
 
@@ -336,36 +315,6 @@ namespace NgimuGui.DialogsAndWindows
         {
             SetVerticalAutoscaleIndex((int)(sender as ToolStripMenuItem).Tag, false);
         }
-
-        #region Window Resize / Move Events
-
-        private void Form_ResizeBegin(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form_ResizeEnd(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                Options.Windows[ID].Bounds = this.DesktopBounds;
-            }
-        }
-
-        private void Form_Resize(object sender, EventArgs e)
-        {
-            if (WindowState != FormWindowState.Minimized)
-            {
-                Options.Windows[ID].WindowState = WindowState;
-            }
-        }
-
-        private void Form3DView_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-        }
-
-        #endregion Window Resize / Move Events
 
         private void verticalZoomInMenuItem_Click(object sender, EventArgs e)
         {

@@ -548,8 +548,8 @@
             this.m_TemperatureMenuItem.CheckOnClick = true;
             this.m_TemperatureMenuItem.Name = "m_TemperatureMenuItem";
             this.m_TemperatureMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.m_TemperatureMenuItem.Tag = "Thermometers";
-            this.m_TemperatureMenuItem.Text = "Thermometers";
+            this.m_TemperatureMenuItem.Tag = "Temperature";
+            this.m_TemperatureMenuItem.Text = "Temperature";
             this.m_TemperatureMenuItem.CheckedChanged += new System.EventHandler(this.ScopeMenuItem_CheckedChanged);
             // 
             // toolStripMenuItem3
@@ -716,14 +716,15 @@
             // 
             this.m_AboutMenuItem.Name = "m_AboutMenuItem";
             this.m_AboutMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.m_AboutMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.m_AboutMenuItem.Size = new System.Drawing.Size(152, 22);
             this.m_AboutMenuItem.Text = "About";
             this.m_AboutMenuItem.Visible = false;
+            this.m_AboutMenuItem.Click += new System.EventHandler(this.m_AboutMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -740,9 +741,6 @@
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.ResizeBegin += new System.EventHandler(this.Form_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.Form_ResizeEnd);
-            this.Resize += new System.EventHandler(this.Form_Resize);
             this.m_TabControl.ResumeLayout(false);
             this.m_TerminalTab.ResumeLayout(false);
             this.m_MessagesTab.ResumeLayout(false);

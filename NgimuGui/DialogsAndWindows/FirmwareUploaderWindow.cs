@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using NgimuApi;
 using NgimuApi.Bootloader;
+using NgimuForms;
+using NgimuForms.Controls;
+using NgimuForms.DialogsAndWindows;
 
 namespace NgimuGui.DialogsAndWindows
 {
@@ -26,7 +28,7 @@ namespace NgimuGui.DialogsAndWindows
 
         public event EventHandler AutoConnectRequest;
 
-        public FirmwareUploaderWindow()
+        public FirmwareUploaderWindow() : base(ID)
         {
             InitializeComponent();
 
@@ -46,15 +48,6 @@ namespace NgimuGui.DialogsAndWindows
 
         private void UploadFirmwareDialog_Load(object sender, EventArgs e)
         {
-            if (Options.Windows[ID].Bounds != Rectangle.Empty)
-            {
-                this.DesktopBounds = Options.Windows[ID].Bounds;
-            }
-
-            WindowState = Options.Windows[ID].WindowState;
-
-            Options.Windows[ID].IsOpen = true;
-
             pathSelector.SelectedPath = m_FilePath;
         }
 
@@ -75,7 +68,7 @@ namespace NgimuGui.DialogsAndWindows
             {
                 if (Options.AllowUploadWithoutSerialConnection == false)
                 {
-                    this.ShowError("The device is not connected via serial.");
+                    this.ShowError("The device must be connected via USB.");
                     return;
                 }
             }
@@ -248,16 +241,13 @@ namespace NgimuGui.DialogsAndWindows
         {
             e.Cancel = IsRunning;
 
-            if (e.Cancel == true)
+            if (e.Cancel != true)
             {
-                FlashingDialogHelper.FlashWindowEx(this);
                 return;
             }
 
-            if (e.CloseReason == CloseReason.UserClosing || e.CloseReason == CloseReason.None)
-            {
-                Options.Windows[ID].IsOpen = false;
-            }
+            FlashingDialogHelper.FlashWindowEx(this);
+            WindowManager.Get(WindowID).IsOpen = true;
         }
 
         public void Stop()
@@ -269,30 +259,5 @@ namespace NgimuGui.DialogsAndWindows
                 m_Thread.Join();
             }
         }
-
-        #region Window Resize / Move Events
-
-        private void Form_ResizeBegin(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form_ResizeEnd(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                Options.Windows[ID].Bounds = this.DesktopBounds;
-            }
-        }
-
-        private void Form_Resize(object sender, EventArgs e)
-        {
-            if (WindowState != FormWindowState.Minimized)
-            {
-                Options.Windows[ID].WindowState = WindowState;
-            }
-        }
-
-        #endregion
     }
 }

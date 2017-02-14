@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
-using System.Windows.Forms;
+using NgimuForms.DialogsAndWindows;
 using Rug.Osc;
 
 namespace NgimuGui.DialogsAndWindows
@@ -39,7 +38,7 @@ namespace NgimuGui.DialogsAndWindows
             }
         }
 
-        public AuxiliarySerialTerminalWindow()
+        public AuxiliarySerialTerminalWindow() : base(ID)
         {
             InitializeComponent();
 
@@ -55,15 +54,6 @@ namespace NgimuGui.DialogsAndWindows
 
         private void AuxiliarySerialTerminal_Load(object sender, EventArgs e)
         {
-            if (Options.Windows[ID].Bounds != Rectangle.Empty)
-            {
-                this.DesktopBounds = Options.Windows[ID].Bounds;
-            }
-
-            WindowState = Options.Windows[ID].WindowState;
-
-            Options.Windows[ID].IsOpen = true;
-
             serialTerminal1.PacketRecived += new OscPacketEvent(serialTerminal1_PacketRecived);
         }
 
@@ -103,39 +93,6 @@ namespace NgimuGui.DialogsAndWindows
         {
             CtsHigh.Checked = m_CtsValue;
             CtsLow.Checked = !m_CtsValue;
-        }
-
-        #region Window Resize / Move Events
-
-        private void Form_ResizeBegin(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form_ResizeEnd(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                Options.Windows[ID].Bounds = this.DesktopBounds;
-            }
-        }
-
-        private void Form_Resize(object sender, EventArgs e)
-        {
-            if (WindowState != FormWindowState.Minimized)
-            {
-                Options.Windows[ID].WindowState = WindowState;
-            }
-        }
-
-        #endregion
-
-        private void AuxiliarySerialTerminal_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing || e.CloseReason == CloseReason.None)
-            {
-                Options.Windows[ID].IsOpen = false;
-            }
         }
 
         private void RtsHigh_Click(object sender, EventArgs e)

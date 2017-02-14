@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NgimuApi;
+using NgimuForms.DialogsAndWindows;
 
 namespace NgimuGui.DialogsAndWindows
 {

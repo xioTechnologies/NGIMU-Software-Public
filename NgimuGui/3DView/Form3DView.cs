@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using NgimuApi.Maths;
-using NgimuGui.DialogsAndWindows;
+using NgimuForms.DialogsAndWindows;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -19,7 +19,7 @@ namespace NgimuGui
     /// </summary>
     public partial class Form3DView : BaseForm
     {
-        public readonly string ID = "Form3DView";
+        public static readonly string ID = "Form3DView";
 
         /// <summary>
         /// Quaternion describing sensor relative to Earth.
@@ -94,8 +94,10 @@ namespace NgimuGui
             }
         }
 
-        public Form3DView()
+        public Form3DView() : base(ID)
         {
+            base.IsOpenReflectsVisiblity = true;
+
             InitializeComponent();
 
             LoadOpenGLControl();
@@ -211,37 +213,10 @@ namespace NgimuGui
         }
 
         /// <summary>
-        /// Form closing event to minimise form instead of close.
-        /// </summary>
-        private void Form3DView_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing ||
-                e.CloseReason == CloseReason.None)
-            {
-                //this.WindowState = FormWindowState.Minimized;
-                Hide();
-
-                e.Cancel = true;
-            }
-        }
-
-        private void Form3DView_Load(object sender, EventArgs e)
-        {
-            if (Options.Windows[ID].Bounds != Rectangle.Empty)
-            {
-                this.DesktopBounds = Options.Windows[ID].Bounds;
-            }
-
-            WindowState = Options.Windows[ID].WindowState;
-        }
-
-        /// <summary>
         /// Form visible changed event to start/stop form update formUpdateTimer.
         /// </summary>
         private void Form3DView_VisibleChanged(object sender, EventArgs e)
         {
-            Options.Windows[ID].IsOpen = this.Visible;
-
             if (this.Visible)
             {
                 formUpdateTimer.Start();
@@ -784,33 +759,5 @@ namespace NgimuGui
 
             return new PointF(x, y);
         }
-
-        #region Window Resize / Move Events
-
-        private void Form_Resize(object sender, EventArgs e)
-        {
-            if (WindowState != FormWindowState.Minimized)
-            {
-                Options.Windows[ID].WindowState = WindowState;
-            }
-        }
-
-        private void Form_ResizeBegin(object sender, EventArgs e)
-        {
-        }
-
-        private void Form_ResizeEnd(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                Options.Windows[ID].Bounds = this.DesktopBounds;
-            }
-        }
-
-        private void Form3DView_FormClosed(object sender, FormClosedEventArgs e)
-        {
-        }
-
-        #endregion Window Resize / Move Events
     }
 }

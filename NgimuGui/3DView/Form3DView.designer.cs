@@ -149,13 +149,7 @@
             this.MinimumSize = new System.Drawing.Size(320, 240);
             this.Name = "Form3DView";
             this.Text = "3D View";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form3DView_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form3DView_FormClosed);
-            this.Load += new System.EventHandler(this.Form3DView_Load);
-            this.ResizeBegin += new System.EventHandler(this.Form_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.Form_ResizeEnd);
             this.VisibleChanged += new System.EventHandler(this.Form3DView_VisibleChanged);
-            this.Resize += new System.EventHandler(this.Form_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

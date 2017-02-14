@@ -67,7 +67,7 @@ namespace NgimuApi.Logging
             Helper.AppendAttributeAndValue(node, "SerialNumber", device.DeviceInformation.SerialNumber);
             Helper.AppendAttributeAndValue(node, "DeviceName", device.DeviceInformation.DeviceName);
             Helper.AppendAttributeAndValue(node, "ConnectionType", device.ConnectionInformation.ConnectionType.ToString());
-            Helper.AppendAttributeAndValue(node, "DirectoryName", Helper.CleanFileName(device.DeviceInformation.DeviceName + " - " + device.DeviceInformation.SerialNumber));
+            Helper.AppendAttributeAndValue(node, "DirectoryName", device.DirectoryName);
 
             parent.AppendChild(node);
         }

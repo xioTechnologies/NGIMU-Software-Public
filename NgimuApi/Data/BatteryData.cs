@@ -81,12 +81,12 @@ namespace NgimuApi.Data
 
             IsChargerConnected = false;
 
-            if (timeToEmpty == float.PositiveInfinity)
+            if (float.IsPositiveInfinity(timeToEmpty) == true)
             {
                 IsChargerConnected = true;
                 TimeToEmpty = TimeSpan.MaxValue;
             }
-            else if (timeToEmpty == float.NegativeInfinity)
+            else if (float.IsNegativeInfinity(timeToEmpty) == true)
             {
                 TimeToEmpty = TimeSpan.MinValue;
             }

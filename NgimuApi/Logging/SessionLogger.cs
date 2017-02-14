@@ -130,10 +130,9 @@ namespace NgimuApi.Logging
             directoryInfo.Create();
         }
 
-
-        internal void OnMessage(OscTimeTag? timetag)
+        internal void SetFirstTimestamp(OscTimeTag? timetag)
         {
-            if (timetag == null || timetag.HasValue == false)
+            if (timetag == null)
             {
                 return;
             }
@@ -228,20 +227,14 @@ namespace NgimuApi.Logging
 
         private void OnException(string message, System.Exception exception)
         {
-            if (Exception != null)
-            {
-                Exception(this, new ExceptionEventArgs(message, exception));
-            }
+            Exception?.Invoke(this, new ExceptionEventArgs(message, exception));
         }
 
         private void OnStopped()
         {
             CompletedEvent.Set();
 
-            if (Stopped != null)
-            {
-                Stopped(this, EventArgs.Empty);
-            }
+            Stopped?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

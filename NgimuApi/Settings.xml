@@ -59,12 +59,18 @@
 
   <Category MemberName="Wifi" UIText="Wi-Fi">
     <Setting MemberName="WifiEnabled" UIText="Enabled" DocumentationTitle="Wi-Fi Enabled" Type="Bool" OscAddress="/wifi/enabled">
+      The Wi-Fi module must be enabled for it to be used.  Disabling Wi-Fi will reduce power consumption and extend battery life significantly.  It is recommended that Wi-Fi is disabled if it is not used.
     </Setting>
     <Setting MemberName="WifiFirmwareVersion" UIText="Firmware Version" DocumentationTitle="Wi-Fi Firmware Version" Type="String" OscAddress="/wifi/firmware" Readonly="True">
+      The current firmware version installed on the Wi-Fi module.  The value of this read-only setting is only valid if Wi-Fi is enabled.
     </Setting>
     <Setting MemberName="WifiMacAddress" UIText="MAC Address" DocumentationTitle="Wi-Fi MAC Address" Type="MacAddress" OscAddress="/wifi/mac" Readonly="True">
+      The fixed MAC address Wi-Fi module.  The value of this read-only setting is only valid if Wi-Fi is enabled.
     </Setting>
     <Setting MemberName="WifiIPAddress" UIText="IP Address" DocumentationTitle="Wi-Fi IP Address" Type="IPAddress" OscAddress="/wifi/ip" Readonly="True">
+      The current IP address of the Wi-FI module.  The value of this read-only setting is only valid if Wi-Fi is enabled.
+
+      The IP address is fixed to 192.168.1.1 in AP mode.  In client mode, the IP address is either assigned automatically by the router or access point if DHCP is enabled, or set as client IP address setting if DHCP is disabled.  The value of this read-only setting is only valid is only available if Wi-Fi is enabled.
     </Setting>
     <Setting MemberName="WifiMode" UIText="Mode" DocumentationTitle="Wi-Fi Mode" Type="WifiMode" OscAddress="/wifi/mode">
     </Setting>
@@ -102,7 +108,7 @@
       <Setting MemberName="WifiClientGateway" UIText="Gateway" DocumentationTitle="Wi-Fi Client Gateway" Type="IPAddress" OscAddress="/wifi/client/gateway">
         This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
-      <Setting MemberName="WifiClientLowPower" UIText="Low Power Mode" DocumentationTitle="Wi-Fi Client SSIDLow Power Mode" Type="Bool" OscAddress="/wifi/client/lowpower">
+      <Setting MemberName="WifiClientLowPower" UIText="Low Power Mode" DocumentationTitle="Wi-Fi Client Low Power Mode" Type="Bool" OscAddress="/wifi/client/lowpower">
         This setting has no effect if Wi-Fi is not in Client mode.
       </Setting>
     </Category>
@@ -116,12 +122,16 @@
       <Setting MemberName="WifiMaximiseThroughput" UIText="Maximise Throughput" DocumentationTitle="UDP Maximise Throughput" Type="Bool" OscAddress="/wifi/throughput">
       </Setting>
     </Category>
-    <Category MemberName="SynchronisationMaster" UIText="Synchronisation Master" Hidden="True">
+    <Category MemberName="SynchronisationMaster" UIText="Synchronisation Master" Hidden="False">
       <Setting MemberName="SynchronisationMasterEnabled" UIText="Enabled" DocumentationTitle="Synchronisation Master Enabled" Type="bool" OscAddress="/wifi/synchronisation/enabled">
         If enabled then the device will function as a synchronisation master and will periodically broadcast synchronisation messages to all other devices on the network.  The other devices will function as synchronisation slaves and will adjust their date/time to stay in sync with the master.  Only one device on the network may be enabled as a synchronisation master.
       </Setting>
       <Setting MemberName="SynchronisationMasterPort" UIText="Send Port" DocumentationTitle="Synchronisation Master Send Port" Type="UdpPort" OscAddress="/wifi/synchronisation/port">
         The synchronisation master send port is the UDP send port for synchronisation messages sent by the device when configured as a synchronisation master.  This port must be the same as the UDP receive port configured on each synchronisation slave.
+      </Setting>
+      <Setting MemberName="SynchronisationMasterLatency" UIText="Network Latency (ms)" DocumentationTitle="Synchronisation Network Latency" Type="UInt32" OscAddress="/wifi/synchronisation/latency">
+        The expected network latency in milliseconds.  This is the delay between the sending of a synchronisation message from the synchronisation master and the reception of this message by a synchronisation slave.\par
+        It is recommended that this value is not adjusted unless an alternative value has been verified as an accurate measurement of the network latency.
       </Setting>
     </Category>
   </Category>

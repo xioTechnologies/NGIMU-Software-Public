@@ -15,24 +15,23 @@ namespace NgimuApi.Logging
 
         public readonly DeviceMetadata Metadata;
 
-        private Dictionary<string, CsvFileWriter> csvFileWriters = new Dictionary<string, CsvFileWriter>();
-        private Dictionary<string, DataBase> dataObjects = new Dictionary<string, DataBase>();
-        private List<string> excludedAddresses = new List<string>();
-        private bool directoryExistedBeforeStart = false;
+        private readonly Dictionary<string, CsvFileWriter> csvFileWriters = new Dictionary<string, CsvFileWriter>();
+        private readonly Dictionary<string, DataBase> dataObjects = new Dictionary<string, DataBase>();
+        private readonly List<string> excludedAddresses = new List<string>();
         private OscTimeTag firstTimestamp;
         private bool hasFirstTimestamp;
         private bool isRunning = false;
         private OscTimeTag lastTimestamp;
 
         /// <summary>Gets the root directory path.</summary>
-        private string rootDirectory;
+        private readonly string rootDirectory;
 
-        private SessionLogger session;
-        private object syncLock = new object();
+        private readonly SessionLogger session;
+        private readonly object syncLock = new object();
 
         public string ConnectionDescriptor { get; private set; }
 
-        public string Directory { get { return Path.Combine(rootDirectory, ConnectionDescriptor); } }
+        public string Directory => Path.Combine(rootDirectory, ConnectionDescriptor);
 
         public readonly int IndexInSession;
 
@@ -41,8 +40,6 @@ namespace NgimuApi.Logging
             IndexInSession = indexInSession;
 
             Metadata = new DeviceMetadata();
-
-            ConnectionDescriptor = Helper.CleanFileName("Unknown Device Name  " + IndexInSession.ToString());
 
             Connection = connection;
             this.session = session;
@@ -76,22 +73,22 @@ namespace NgimuApi.Logging
             {
                 excludedAddresses.Add(setting.OscAddress);
             }
+
+            // exclude errors
+            excludedAddresses.Add("/error");
         }
 
         public void Start()
         {
-            CheckDeviceInformation();
+            ConnectionDescriptor = Helper.CleanFileName(Connection.Settings.GetDeviceDescriptor());
 
-            ConnectionDescriptor = Helper.CleanFileName(Connection.Settings.DeviceName.Value + " - " + Connection.Settings.SerialNumber.Value);
-
-            DirectoryInfo directoryInfo = new DirectoryInfo(Directory);
-
-            directoryExistedBeforeStart = directoryInfo.Exists;
-
-            if (directoryInfo.Exists == false)
+            int index = 0;
+            while (System.IO.Directory.Exists(Directory) == true)
             {
-                directoryInfo.Create();
+                ConnectionDescriptor = Helper.CleanFileName(Connection.Settings.GetDeviceDescriptor() + " (" + (++index) + ")");
             }
+
+            System.IO.Directory.CreateDirectory(Directory);
 
             Metadata.DeviceInformation.SetValues(Connection.Settings.DeviceInformation);
 
@@ -116,16 +113,22 @@ namespace NgimuApi.Logging
                 // stash the path before the move (if one is to take place). 
                 string writtenToBasePath = Directory;
 
-                string resolvedSessionDescriptor = Helper.CleanFileName(Connection.Settings.DeviceName.Value + " - " + Connection.Settings.SerialNumber.Value);
-
-                string resolvedDirectory = Path.Combine(rootDirectory, resolvedSessionDescriptor);
-
-                if (Directory.Equals(resolvedDirectory) == false)
+                // Rename directory now that device information has been read from the file.
+                if (Connection.ConnectionType == ConnectionType.File)
                 {
-                    Helper.MoveDirectory(Directory, resolvedDirectory, directoryExistedBeforeStart == false);
+                    string resolvedSessionDescriptor = Helper.CleanFileName(Connection.Settings.GetDeviceDescriptor());
 
-                    ConnectionDescriptor = resolvedSessionDescriptor;
+                    string resolvedDirectory = Path.Combine(rootDirectory, resolvedSessionDescriptor);
+
+                    if (Directory.Equals(resolvedDirectory) == false)
+                    {
+                        Helper.MoveDirectory(Directory, resolvedDirectory, true);
+
+                        ConnectionDescriptor = resolvedSessionDescriptor;
+                    }
                 }
+
+                Metadata.DirectoryName = ConnectionDescriptor;
 
                 // Use the last available setting for the meta data. 
                 Metadata.DeviceInformation.SetValues(Connection.Settings.DeviceInformation);
@@ -156,28 +159,6 @@ namespace NgimuApi.Logging
             dataObjects.Add(data.OscAddress, data);
         }
 
-        private void CheckDeviceInformation()
-        {
-            if (Connection.ConnectionType == ConnectionType.File)
-            {
-                // these values will be overwritten during the read 
-                Connection.Settings.DeviceName.Value = "Unknown Device Name " + IndexInSession.ToString();
-                Connection.Settings.SerialNumber.Value = "Unknown Serial Number";
-            }
-            else
-            {
-                if (Connection.Settings.DeviceName.HasRemoteValue == false)
-                {
-                    Connection.Settings.DeviceName.Value = "Unknown Device Name " + IndexInSession.ToString();
-                }
-
-                if (Connection.Settings.SerialNumber.HasRemoteValue == false)
-                {
-                    Connection.Settings.SerialNumber.Value = "Unknown Serial Number";
-                }
-            }
-        }
-
         #region Message Event
 
         private void Connection_Message(Connection source, MessageDirection direction, Rug.Osc.OscMessage message)
@@ -196,7 +177,10 @@ namespace NgimuApi.Logging
                         return;
                     }
 
-                    OnMessage(message.TimeTag);
+                    if (SetFirstAndLastTimestamps(message.TimeTag) == false)
+                    {
+                        return;
+                    }
 
                     if (dataObjects.ContainsKey(message.Address) == true)
                     {
@@ -213,7 +197,9 @@ namespace NgimuApi.Logging
 
                         if (csvFileWriters.TryGetValue(message.Address, out logger) == false)
                         {
-                            logger = new CsvFileWriter(Path.Combine(Directory, Helper.ToLowerCamelCase(message.Address) + ".csv"));
+                            logger =
+                                new CsvFileWriter(Path.Combine(Directory,
+                                    Helper.ToLowerCamelCase(message.Address) + ".csv"));
 
                             logger.AddLine(data.CsvHeader);
 
@@ -223,14 +209,19 @@ namespace NgimuApi.Logging
                         logger.AddLine(data.ToCsv(session.FirstTimestamp));
 
                         logger.IncrementMessageCount();
+
+                        return;
                     }
-                    else if (excludedAddresses.Contains(message.Address) == false)
+
+                    if (excludedAddresses.Contains(message.Address) == false)
                     {
                         CsvFileWriter logger;
 
                         if (csvFileWriters.TryGetValue(message.Address, out logger) == false)
                         {
-                            logger = new CsvFileWriter(Path.Combine(Directory, Helper.ToLowerCamelCase(message.Address) + ".csv"));
+                            logger =
+                                new CsvFileWriter(Path.Combine(Directory,
+                                    Helper.ToLowerCamelCase(message.Address) + ".csv"));
 
                             logger.AddLine(Helper.UnknownMessageToCsvHeader(message));
 
@@ -240,6 +231,8 @@ namespace NgimuApi.Logging
                         logger.AddLine(Helper.UnknownMessageToCsv(session.FirstTimestamp, message));
 
                         logger.IncrementMessageCount();
+
+                        return;
                     }
                 }
                 catch (Exception ex)
@@ -249,25 +242,35 @@ namespace NgimuApi.Logging
             }
         }
 
-        private void OnMessage(OscTimeTag? timetag)
+        private bool SetFirstAndLastTimestamps(OscTimeTag? timetag)
         {
-            if (timetag == null || timetag.HasValue == false) // ? 
+            if (timetag == null)
             {
-                return;
+                return true;
             }
 
-            session.OnMessage(timetag);
-
-            lastTimestamp = timetag.Value;
+            session.SetFirstTimestamp(timetag);
 
             if (hasFirstTimestamp == true)
             {
-                return;
+                // if the time-tag is from the past then do not process it 
+                if (timetag.Value.Value < firstTimestamp.Value)
+                {
+                    return false;
+                }
+
+                lastTimestamp = timetag.Value;
+
+                return true;
             }
+
+            lastTimestamp = timetag.Value;
 
             firstTimestamp = timetag.Value;
 
             hasFirstTimestamp = true;
+
+            return true;
         }
 
         #endregion Message Event

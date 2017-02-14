@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using NgimuApi.SearchForConnections;
+using NgimuForms;
+using NgimuForms.Controls;
+using NgimuForms.DialogsAndWindows;
 
 namespace NgimuGui.DialogsAndWindows
 {
@@ -82,7 +85,7 @@ namespace NgimuGui.DialogsAndWindows
             timeout.Value = 100;
             graphSampleBufferSize.Value = 24;
 
-            Options.Windows.Clear();
+            WindowManager.Clear();
         }
 
         private void m_Cancel_Click(object sender, EventArgs e)

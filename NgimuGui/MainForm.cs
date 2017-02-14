@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -8,6 +7,9 @@ using System.Windows.Forms;
 using NgimuApi;
 using NgimuApi.Maths;
 using NgimuApi.SearchForConnections;
+using NgimuForms;
+using NgimuForms.Controls;
+using NgimuForms.DialogsAndWindows;
 using NgimuGui.DialogsAndWindows;
 using Rug.Cmd;
 using Rug.Cmd.Colors;
@@ -18,6 +20,8 @@ namespace NgimuGui
     public partial class MainForm : BaseForm
     {
         #region Private Members
+
+        public const string ID = "MainForm";
 
         private string m_Title;
 
@@ -45,7 +49,7 @@ namespace NgimuGui
 
         #region Setup
 
-        public MainForm()
+        public MainForm() : base(ID)
         {
             RC.Verbosity = ConsoleVerbosity.Normal;
             RC.BackgroundColor = ConsoleColorExt.Black;
@@ -65,13 +69,6 @@ namespace NgimuGui
             m_BatteryChargerStatusLabel.Text = "";
             m_AboutMenuItem.Click += m_AboutMenuItem_Click;
             m_AboutMenuItem.Visible = true;
-
-            if (Options.Bounds != Rectangle.Empty)
-            {
-                this.DesktopBounds = Options.Bounds;
-            }
-
-            WindowState = Options.WindowState;
 
             m_Title = typeof(MainForm).Assembly.GetName().Name + " v" + typeof(MainForm).Assembly.GetName().Version.Major + "." + typeof(MainForm).Assembly.GetName().Version.Minor;
 
@@ -172,16 +169,16 @@ namespace NgimuGui
 
                 ToolStripMenuItem toolStripMenuItem = item as ToolStripMenuItem;
 
-                toolStripMenuItem.Checked = Options.Windows[name].IsOpen;
+                toolStripMenuItem.Checked = WindowManager.Get(name).IsOpen;
             }
 
             m_Form3DView.VisibleChanged += Form3DView_FormClosed;
 
-            m_Form3DViewMenuItem.Checked = Options.Windows[m_Form3DView.ID].IsOpen;
-            m_AuxSerialTerminalMenuItem.Checked = Options.Windows[AuxiliarySerialTerminalWindow.ID].IsOpen;
-            m_UploadFirmwareMenuItem.Checked = Options.Windows[FirmwareUploaderWindow.ID].IsOpen;
-            m_LogDataMenuItem.Checked = Options.Windows[DataLoggerWindow.ID].IsOpen;
-            m_ConvertSDCardFile.Checked = Options.Windows[SDCardFileConverterWindow.ID].IsOpen;
+            m_Form3DViewMenuItem.Checked = WindowManager.Get(Form3DView.ID).IsOpen;
+            m_AuxSerialTerminalMenuItem.Checked = WindowManager.Get(AuxiliarySerialTerminalWindow.ID).IsOpen;
+            m_UploadFirmwareMenuItem.Checked = WindowManager.Get(FirmwareUploaderWindow.ID).IsOpen;
+            m_LogDataMenuItem.Checked = WindowManager.Get(DataLoggerWindow.ID).IsOpen;
+            m_ConvertSDCardFile.Checked = WindowManager.Get(SDCardFileConverterWindow.ID).IsOpen;
 
             if (Options.SearchForConnectionsAtStartup == true)
             {
@@ -304,7 +301,7 @@ namespace NgimuGui
             if (m_LogDataDialog != null)
             {
                 m_LogDataDialog.Stop();
-                m_LogDataDialog.ActiveConnection = null;
+                m_LogDataDialog.ActiveConnections.Clear();
             }
 
             m_Connection.Dispose();
@@ -371,7 +368,7 @@ namespace NgimuGui
 
             if (m_LogDataDialog != null)
             {
-                m_LogDataDialog.ActiveConnection = m_Connection;
+                m_LogDataDialog.ActiveConnections.Add(m_Connection);
             }
 
             if (m_UploadFirmwareDialog != null)
@@ -467,7 +464,7 @@ namespace NgimuGui
                 if (m_LogDataDialog != null)
                 {
                     m_LogDataDialog.Stop();
-                    m_LogDataDialog.ActiveConnection = null;
+                    m_LogDataDialog.ActiveConnections.Clear();
                 }
 
                 UncheckAllConnections();
@@ -597,7 +594,7 @@ namespace NgimuGui
         void Temperature_Updated(object sender, EventArgs e)
         {
 
-            AddGraphData("Thermometers", m_Connection.Temperature.Timestamp.ToDataTime(), m_Connection.Temperature.Processor, m_Connection.Temperature.GyroscopeAndAccelerometer, m_Connection.Temperature.EnvironmentalSensor);
+            AddGraphData("Temperature", m_Connection.Temperature.Timestamp.ToDataTime(), m_Connection.Temperature.Processor, m_Connection.Temperature.GyroscopeAndAccelerometer, m_Connection.Temperature.EnvironmentalSensor);
         }
 
         void AuxiliarySerial_Updated(object sender, EventArgs e)
@@ -891,12 +888,14 @@ namespace NgimuGui
                     continue;
                 }
 
-                if (info.Equals(item.Tag))
+                if (info.Equals(item.Tag) == false)
                 {
-                    foundItem = item;
-
-                    break;
+                    continue;
                 }
+
+                foundItem = item;
+
+                break;
             }
 
             if (foundItem == null)
@@ -917,17 +916,19 @@ namespace NgimuGui
         {
             using (SerialConnectionDialog dialog = new SerialConnectionDialog())
             {
-                if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                if (dialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
                 {
-                    SerialConnectionInfo info = new SerialConnectionInfo()
-                    {
-                        PortName = dialog.PortName,
-                        BaudRate = dialog.BaudRate,
-                        RtsCtsEnabled = dialog.RtsCtsEnabled,
-                    };
-
-                    ConnectSerial(info);
+                    return;
                 }
+
+                SerialConnectionInfo info = new SerialConnectionInfo()
+                {
+                    PortName = dialog.PortName,
+                    BaudRate = dialog.BaudRate,
+                    RtsCtsEnabled = dialog.RtsCtsEnabled,
+                };
+
+                ConnectSerial(info);
             }
         }
 
@@ -970,12 +971,12 @@ namespace NgimuGui
             }
         }
 
-        private void ConnectAuto(ConnectionSearchInfo info)
+        private void ConnectUsingSearchResult(ConnectionSearchResult connectionSearchResult)
         {
-            switch (info.ConnectionType)
+            switch (connectionSearchResult.ConnectionType)
             {
                 case ConnectionType.Udp:
-                    UdpConnectionInfo udpInfo = info.ConnectionInfo as UdpConnectionInfo;
+                    UdpConnectionInfo udpInfo = connectionSearchResult.ConnectionInfo as UdpConnectionInfo;
 
                     if (Options.ConfigureUniqueUdpConnection == true)
                     {
@@ -1014,7 +1015,7 @@ namespace NgimuGui
 
                     break;
                 case ConnectionType.Serial:
-                    ConnectSerial(info.ConnectionInfo as SerialConnectionInfo);
+                    ConnectSerial(connectionSearchResult.ConnectionInfo as SerialConnectionInfo);
                     break;
                 default:
                     break;
@@ -1127,7 +1128,7 @@ namespace NgimuGui
         {
             if (m_ConvertSDCardFile.Checked == true)
             {
-                m_ConvertSDCardFileDialog = new SDCardFileConverterWindow();
+                m_ConvertSDCardFileDialog = new SDCardFileConverterWindow { Text = "SD Card File Converter" };
 
                 m_ConvertSDCardFileDialog.FormClosed += new FormClosedEventHandler(ConvertSDCardFileDialog_FormClosed);
 
@@ -1180,7 +1181,7 @@ namespace NgimuGui
             if (m_LogDataMenuItem.Checked == true)
             {
                 m_LogDataDialog = new DataLoggerWindow();
-                m_LogDataDialog.ActiveConnection = m_Connection;
+                m_LogDataDialog.ActiveConnections.Add(m_Connection);
                 m_LogDataDialog.FormClosed += new FormClosedEventHandler(LogDataDialog_FormClosed);
                 //m_LogDataDialog.Show(this);
                 m_LogDataDialog.Show();
@@ -1334,31 +1335,6 @@ namespace NgimuGui
 
         #endregion
 
-        #region Window Resize / Move Events
-
-        private void Form_ResizeBegin(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form_ResizeEnd(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                Options.Bounds = this.DesktopBounds;
-            }
-        }
-
-        private void Form_Resize(object sender, EventArgs e)
-        {
-            if (WindowState != FormWindowState.Minimized)
-            {
-                Options.WindowState = WindowState;
-            }
-        }
-
-        #endregion
-
         private void SearchForConnectionsItem_Click(object sender, EventArgs e)
         {
             if (m_DisconnectMenuItem.Enabled == true)
@@ -1368,9 +1344,12 @@ namespace NgimuGui
 
             using (SearchingForConnectionsDialog dialog = new SearchingForConnectionsDialog())
             {
+                dialog.ConnectionSearchType = Options.ConnectionSearchType;
+                dialog.OpenConnectionToFirstDeviceFound = Options.OpenConnectionToFirstDeviceFound;
+
                 if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-                    ConnectAuto(dialog.Info);
+                    ConnectUsingSearchResult(dialog.ConnectionSearchResults[0]);
                 }
             }
         }
@@ -1452,16 +1431,7 @@ namespace NgimuGui
                 dialog.Filter = "Text Files|*.txt|All Files|*.*";
                 dialog.Title = "Save Settings To File";
 
-                if (String.IsNullOrEmpty(m_SettingsPanel.Settings.DeviceName.Value) == true ||
-                   String.IsNullOrEmpty(m_SettingsPanel.Settings.SerialNumber.Value) == true)
-                {
-                    dialog.FileName = NgimuApi.Helper.CleanFileName("Settings.txt");
-                }
-                else
-                {
-                    dialog.FileName = NgimuApi.Helper.CleanFileName(m_SettingsPanel.Settings.DeviceName.Value + " - " + m_SettingsPanel.Settings.SerialNumber.Value + " Settings.txt");
-                }
-
+                dialog.FileName = NgimuApi.Helper.CleanFileName(m_SettingsPanel.Settings.GetDeviceDescriptor() + " Settings.txt");
 
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
