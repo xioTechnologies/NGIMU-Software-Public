@@ -67,7 +67,6 @@ namespace NgimuGui
         private void MainForm_Load(object sender, EventArgs e)
         {
             m_BatteryChargerStatusLabel.Text = "";
-            m_AboutMenuItem.Click += m_AboutMenuItem_Click;
             m_AboutMenuItem.Visible = true;
 
             m_Title = typeof(MainForm).Assembly.GetName().Name + " v" + typeof(MainForm).Assembly.GetName().Version.Major + "." + typeof(MainForm).Assembly.GetName().Version.Minor;

@@ -130,19 +130,20 @@
   <Setting Address="/auxserial/timeout">This setting has no effect if OSC passthrough mode is enabled.</Setting>
   <Setting Address="/auxserial/framing">This setting has no effect if OSC passthrough mode is enabled.</Setting>
   <Setting Address="/idle">If CPU idle mode is enabled then the CPU will continuously cycle between idle mode and active mode to reduce power consumption and extend battery life.  Users wishing to achieve best possible throughput and latency can disable CPU idle mode for a marginal increase in performance.\par
-      It is recommended that CPU idle mode is set to {\i Enabled for battery only} so that power consumption is automatically reduced while the device is powered from a battery, and best possible performance is achieved while USB or external power is connected.</Setting>
+      It is recommended that CPU idle mode is set to "Enabled for battery only" so that power consumption is automatically reduced while the device is powered from a battery, and best possible performance is achieved while USB or external power is connected.</Setting>
   <Setting Address="/leds">Disabling the LEDs will only provide a marginal reduction in power consumption.  This setting is intended to benefit situations where light from the LEDs is undesirable.\par
-      The {\i identify} command may still be used when the LEDs are disabled.  The green status LED will still blink each time the button is pressed to indicate that the device is switched on.</Setting>
-  <Setting Address="/currentlimit">If USB/external current limit is enabled then the device will not draw more than 500 mA from either USB or the external power input of the serial interface.  If USB/external current limit is disabled then the device will not draw more than 1.8 A.  This higher limit enables faster battery charging.\par
+      The identify command may still be used when the LEDs are disabled.  The green status LED will still blink each time the button is pressed to indicate that the device is switched on.</Setting>
+  <Setting Address="/currentlimit">If external current limit is enabled then the device will not draw more than 500 mA from either USB or the external power input of the serial interface.  If external current limit is disabled then the device will not draw more than 1.8 A.  This higher limit enables faster battery charging.\par
       It is recommended that USB/external current limit is disabled if no battery is connected because peak current demands of the device may exceed 500 mA even if the average current demand is much lower.  Limiting the current to less than the demand may result in the device resetting unexpectedly.</Setting>
   <Setting Address="/sleeptimer">Number of seconds the device will remain switched on before automatically entering sleep mode.  A value of 0 seconds will disable the sleep timer.\par
       The sleep timer is automatically disabled while USB is connected and will restart on each of the following events:\line
       {  }• Button press\line
       {  }• Reception of any message\line
-      {  }• Motion detection (if {\i motion trigger wakeup} enabled)</Setting>
+      {  }• Motion detection (if motion trigger wakeup enabled)</Setting>
   <Setting Address="/wakeuptimer">Number of seconds the device will remain in sleep mode before automatically switching on.  A value of 0 seconds will disable the wakeup timer.  The wake up timer will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>
   <Setting Address="/motiontrigger">If motion trigger wakeup is enabled then the device will switch on when motion is detected.  The motion trigger wake up will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>
-  <Setting Address="/muted">Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi {\i low power mode} is enabled.  The device can be unmuted at any time by sending the {\i unmute} command.</Setting>
+  <Setting Address="/powerwakeup">If external power wakeup is enabled then the device will switch on when power is provided by either USB or the external power input of the serial interface.</Setting>
+  <Setting Address="/muted">Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi low power mode is enabled.  The device can be unmuted at any time by sending the unmute command.</Setting>
   <Setting Address="/battery/voltage">The minimum operating battery voltage in Volts.  This value is used to calculate the battery percentage and time to empty.\par
         Changes to this setting will only take effect after the device has been disconnected from all power sources and the battery disconnected.</Setting>
   <Setting Address="/battery/capacity">The capacity of the connected battery in mAh.  This value is used to calculate the battery percentage, time to empty, battery health, and number of charge/discharge cycles.\par

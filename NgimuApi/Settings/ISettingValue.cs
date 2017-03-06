@@ -21,6 +21,8 @@ namespace NgimuApi
         Wifi2GHzChannel,
         Wifi5GHzChannel,
 
+        OscPassthroughMode,
+
         CpuIdleMode,
 
         UdpPort,

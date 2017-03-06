@@ -1,7 +1,14 @@
 NGIMU-Software
 ==============
 
-v1.3 (Feb 14 2016)
+v1.4 (Mar 06 2017)
+------------------
+* Add setting for external power wakeup
+* Fix bug that prevented the About dialogue from closing first time
+* Redesign send rates dialogue in Synchronised Network Manager
+* Add setting for USB/external power wakeup
+
+v1.3 (Feb 14 2017)
 ------------------
 * Introduce Synchronised Network Manager application
 * Introduce SD Card File Converter application

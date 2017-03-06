@@ -56,6 +56,7 @@ namespace NgimuGui.TypeDescriptors
                 Variable.SettingValueType == SettingValueType.WifiAntenna ||
                 Variable.SettingValueType == SettingValueType.WifiRegion ||
                 Variable.SettingValueType == SettingValueType.WifiBand ||
+                Variable.SettingValueType == SettingValueType.OscPassthroughMode || 
                 Variable.SettingValueType == SettingValueType.CpuIdleMode)
             {
                 ConverterTypeName = typeof(CustomEnumConverter).AssemblyQualifiedName;

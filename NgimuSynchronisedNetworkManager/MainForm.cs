@@ -141,7 +141,7 @@ namespace NgimuSynchronisedNetworkManager
 
                     dataLogger?.ActiveConnections.Add(connection);
                     sendRates?.ActiveConnections.Add(connection);
-                    sendRates?.UpdateRows();
+                    sendRates?.UpdateColumns();
 
                     StringBuilder sb = new StringBuilder();
 
@@ -610,7 +610,7 @@ namespace NgimuSynchronisedNetworkManager
             dataLogger?.ActiveConnections.Clear();
 
             sendRates?.ActiveConnections.Clear();
-            sendRates?.UpdateRows();
+            sendRates?.UpdateColumns();
 
             ProgressDialog progress = new ProgressDialog();
 

@@ -26,7 +26,7 @@
         /// <summary>
         /// The expected firmware version.
         /// </summary>
-        public const string ExpectedFirmwareVersion = "v1.3 (Feb 10 2017 12:55:45)";
+        public const string ExpectedFirmwareVersion = "v1.4 (Mar  6 2017 00:06:40)";
 
         /// <summary>
         /// Checks the firmware compatibility.

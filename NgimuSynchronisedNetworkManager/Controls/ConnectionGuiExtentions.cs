@@ -124,6 +124,54 @@ namespace NgimuSynchronisedNetworkManager.Controls
         }
 
 
+        public static void WriteSettings(this Control control, IEnumerable<SettingCategrory> settingCategrories)
+        {
+            using (ProgressDialog dialog = new ProgressDialog()
+            {
+                ProgressMessage = "Writing settings to all devices.",
+                Style = ProgressBarStyle.Marquee,
+                CancelButtonEnabled = false,
+            })
+            {
+                Thread thread = new Thread(() =>
+                {
+                    Parallel.ForEach(settingCategrories,
+                        (settingCategrory) =>
+                        {
+                            string messageString = "";
+                            CommunicationProcessResult result;
+
+                            do
+                            {
+                                result = settingCategrory.Write();
+
+                                bool allValuesFailed;
+                                bool allValuesSucceeded;
+
+                                messageString = Settings.GetCommunicationFailureString(settingCategrory.Values, 20, out allValuesFailed, out allValuesSucceeded);
+
+                                StringBuilder fullMessageString = new StringBuilder();
+
+                                fullMessageString.AppendLine("Error while communicating with " + settingCategrory.Connection.Settings.GetDeviceDescriptor() + ".");
+                                fullMessageString.AppendLine();
+
+                                fullMessageString.Append("Failed to confirm write of following settings:" + messageString);
+
+                                messageString = fullMessageString.ToString();
+                            }
+                            while (result != CommunicationProcessResult.Success &&
+                                   dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
+                        });
+
+                    control.Invoke(new MethodInvoker(dialog.Close));
+                });
+
+                thread.Start();
+
+                dialog.ShowDialog(control);
+            }
+        }
+
         public static void ReadSettings(this Control control, IEnumerable<ISettingValue> settingValues)
         {
             using (ProgressDialog dialog = new ProgressDialog()
@@ -156,6 +204,54 @@ namespace NgimuSynchronisedNetworkManager.Controls
                                 fullMessageString.AppendLine();
 
                                 fullMessageString.Append("Failed to read the following setting:" + messageString);
+
+                                messageString = fullMessageString.ToString();
+                            }
+                            while (result != CommunicationProcessResult.Success &&
+                                   dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
+                        });
+
+                    control.Invoke(new MethodInvoker(dialog.Close));
+                });
+
+                thread.Start();
+
+                dialog.ShowDialog(control);
+            }
+        }
+
+        public static void ReadSettings(this Control control, IEnumerable<SettingCategrory> settingCategrories)
+        {
+            using (ProgressDialog dialog = new ProgressDialog()
+            {
+                ProgressMessage = "Reading settings from all devices.",
+                Style = ProgressBarStyle.Marquee,
+                CancelButtonEnabled = false,
+            })
+            {
+                Thread thread = new Thread(() =>
+                {
+                    Parallel.ForEach(settingCategrories,
+                        (settingCategrory) =>
+                        {
+                            string messageString = "";
+                            CommunicationProcessResult result;
+
+                            do
+                            {
+                                result = settingCategrory.Read();
+
+                                bool allValuesFailed;
+                                bool allValuesSucceeded;
+
+                                messageString = Settings.GetCommunicationFailureString(settingCategrory.Values, 20, out allValuesFailed, out allValuesSucceeded);
+
+                                StringBuilder fullMessageString = new StringBuilder();
+
+                                fullMessageString.AppendLine("Error while communicating with " + settingCategrory.Connection.Settings.GetDeviceDescriptor() + ".");
+                                fullMessageString.AppendLine();
+
+                                fullMessageString.Append("Failed to read the following settings:" + messageString);
 
                                 messageString = fullMessageString.ToString();
                             }

@@ -1199,6 +1199,26 @@ namespace NgimuApi
         }
     }
 
+    public enum OscPassthroughMode : int
+    {
+        [Description("Disabled")]
+        Disabled = 0,
+
+        [Description("Enabled")]
+        Enabled = 1,
+
+        [Description("Enabled with timestamp")]
+        EnabledWithTimestamp = 2,
+    }
+
+    internal sealed class SettingValue_OscPassthroughMode : SettingValue_Enum<OscPassthroughMode>
+    {
+        public override SettingValueType SettingValueType { get { return SettingValueType.OscPassthroughMode; } }
+
+        public SettingValue_OscPassthroughMode(SettingCategrory category, string name, string title, string description, string oscAddress, bool isReadonly, bool isHidden)
+            : base(category, name, title, description, oscAddress, isReadonly, isHidden)
+        { }
+    }
 
     public enum CpuIdleMode : int
     {

@@ -32,7 +32,7 @@
             this.writeButton = new System.Windows.Forms.Button();
             this.readButton = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Device = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SettingName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.sendRatesGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +45,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.sendRatesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.sendRatesGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Device});
+            this.SettingName});
             this.sendRatesGrid.Location = new System.Drawing.Point(13, 13);
             this.sendRatesGrid.Name = "sendRatesGrid";
             this.sendRatesGrid.RowHeadersVisible = false;
@@ -55,22 +55,22 @@
             // writeButton
             // 
             this.writeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.writeButton.Location = new System.Drawing.Point(517, 346);
+            this.writeButton.Location = new System.Drawing.Point(537, 346);
             this.writeButton.Name = "writeButton";
-            this.writeButton.Size = new System.Drawing.Size(95, 23);
+            this.writeButton.Size = new System.Drawing.Size(75, 23);
             this.writeButton.TabIndex = 4;
-            this.writeButton.Text = "Write All (F6)";
+            this.writeButton.Text = "Write All";
             this.writeButton.UseVisualStyleBackColor = true;
             this.writeButton.Click += new System.EventHandler(this.writeAllButton_Click);
             // 
             // readButton
             // 
             this.readButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.readButton.Location = new System.Drawing.Point(416, 346);
+            this.readButton.Location = new System.Drawing.Point(456, 346);
             this.readButton.Name = "readButton";
-            this.readButton.Size = new System.Drawing.Size(95, 23);
+            this.readButton.Size = new System.Drawing.Size(75, 23);
             this.readButton.TabIndex = 3;
-            this.readButton.Text = "Read All (F5)";
+            this.readButton.Text = "Read All";
             this.readButton.UseVisualStyleBackColor = true;
             this.readButton.Click += new System.EventHandler(this.readAllButton_Click);
             // 
@@ -83,15 +83,16 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // Device
+            // SettingName
             // 
-            this.Device.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Device.HeaderText = "Device";
-            this.Device.MinimumWidth = 120;
-            this.Device.Name = "Device";
-            this.Device.ReadOnly = true;
+            this.SettingName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.SettingName.HeaderText = "Send Rates";
+            this.SettingName.MinimumWidth = 120;
+            this.SettingName.Name = "SettingName";
+            this.SettingName.ReadOnly = true;
+            this.SettingName.Width = 120;
             // 
-            // SendRates
+            // SendRatesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -100,7 +101,7 @@
             this.Controls.Add(this.readButton);
             this.Controls.Add(this.sendRatesGrid);
             this.KeyPreview = true;
-            this.Name = "SendRates";
+            this.Name = "SendRatesWindow";
             this.Text = "Send Rates";
             this.Load += new System.EventHandler(this.SendRates_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SendRates_KeyDown);
@@ -115,6 +116,6 @@
         private System.Windows.Forms.Button writeButton;
         private System.Windows.Forms.Button readButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Device;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SettingName;
     }
 }

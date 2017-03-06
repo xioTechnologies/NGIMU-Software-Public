@@ -20,7 +20,7 @@ namespace SettingsObjectModelCodeGenerator
         WifiBand,
         Wifi2GHzChannel,
         Wifi5GHzChannel,
-
+        OscPassthroughMode, 
         CpuIdleMode,
 
         UdpPort,
@@ -66,6 +66,8 @@ namespace SettingsObjectModelCodeGenerator
                         return "Wifi2GHzChannel";
                     case SettingValueType.Wifi5GHzChannel:
                         return "Wifi5GHzChannel";
+                    case SettingValueType.OscPassthroughMode:
+                        return "OscPassthroughMode"; 
                     case SettingValueType.CpuIdleMode:
                         return "CpuIdleMode";
                     case SettingValueType.UdpPort:
@@ -112,6 +114,8 @@ namespace SettingsObjectModelCodeGenerator
                         return "SettingValue_Wifi2GHzChannel";
                     case SettingValueType.Wifi5GHzChannel:
                         return "SettingValue_Wifi5GHzChannel";
+                    case SettingValueType.OscPassthroughMode:
+                        return "SettingValue_OscPassthroughMode"; 
                     case SettingValueType.CpuIdleMode:
                         return "SettingValue_CpuIdleMode";
                     case SettingValueType.UdpPort:

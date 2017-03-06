@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.softwareVersion = new System.Windows.Forms.Label();
@@ -56,15 +55,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(275, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(93, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Application Name:";
             // 
             // label2
             // 
@@ -147,7 +137,7 @@
             // applicationName
             // 
             this.applicationName.AutoSize = true;
-            this.applicationName.Location = new System.Drawing.Point(433, 12);
+            this.applicationName.Location = new System.Drawing.Point(275, 12);
             this.applicationName.Name = "applicationName";
             this.applicationName.Size = new System.Drawing.Size(111, 13);
             this.applicationName.TabIndex = 12;
@@ -201,7 +191,6 @@
             this.Controls.Add(this.softwareVersion);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -219,7 +208,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label softwareVersion;

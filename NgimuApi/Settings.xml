@@ -243,14 +243,14 @@
   <Category MemberName="PowerManagement" UIText="Power Management">
     <Setting MemberName="CpuIdleMode" UIText="CPU Idle Mode" Type="CpuIdleMode" OscAddress="/idle">
       If CPU idle mode is enabled then the CPU will continuously cycle between idle mode and active mode to reduce power consumption and extend battery life.  Users wishing to achieve best possible throughput and latency can disable CPU idle mode for a marginal increase in performance.\par
-      It is recommended that CPU idle mode is set to {\i Enabled for battery only} so that power consumption is automatically reduced while the device is powered from a battery, and best possible performance is achieved while USB or external power is connected.
+      It is recommended that CPU idle mode is set to "Enabled for battery only" so that power consumption is automatically reduced while the device is powered from a battery, and best possible performance is achieved while USB or external power is connected.
     </Setting>
     <Setting MemberName="LedsEnabled" UIText="LEDs Enabled" Type="Bool" OscAddress="/leds">
       Disabling the LEDs will only provide a marginal reduction in power consumption.  This setting is intended to benefit situations where light from the LEDs is undesirable.\par
-      The {\i identify} command may still be used when the LEDs are disabled.  The green status LED will still blink each time the button is pressed to indicate that the device is switched on.
+      The identify command may still be used when the LEDs are disabled.  The green status LED will still blink each time the button is pressed to indicate that the device is switched on.
     </Setting>
-    <Setting MemberName="UsbExternalCurrentLimit" UIText="USB/External Current Limit" Type="Bool" OscAddress="/currentlimit">
-      If USB/external current limit is enabled then the device will not draw more than 500 mA from either USB or the external power input of the serial interface.  If USB/external current limit is disabled then the device will not draw more than 1.8 A.  This higher limit enables faster battery charging.\par
+    <Setting MemberName="ExternalCurrentLimit" UIText="External Current Limit" Type="Bool" OscAddress="/currentlimit">
+      If external current limit is enabled then the device will not draw more than 500 mA from either USB or the external power input of the serial interface.  If external current limit is disabled then the device will not draw more than 1.8 A.  This higher limit enables faster battery charging.\par
       It is recommended that USB/external current limit is disabled if no battery is connected because peak current demands of the device may exceed 500 mA even if the average current demand is much lower.  Limiting the current to less than the demand may result in the device resetting unexpectedly.
     </Setting>
     <Setting MemberName="SleepTimer" UIText="Sleep Timer (s)" DocumentationTitle="Sleep Timer" Type="UInt32" OscAddress="/sleeptimer">
@@ -258,7 +258,7 @@
       The sleep timer is automatically disabled while USB is connected and will restart on each of the following events:\line
       {  }• Button press\line
       {  }• Reception of any message\line
-      {  }• Motion detection (if {\i motion trigger wakeup} enabled)
+      {  }• Motion detection (if motion trigger wakeup enabled)
     </Setting>
     <Setting MemberName="WakeupTimer" UIText="Wakeup Timer (s)" DocumentationTitle="Wakeup Timer" Type="UInt32" OscAddress="/wakeuptimer">
       Number of seconds the device will remain in sleep mode before automatically switching on.  A value of 0 seconds will disable the wakeup timer.  The wake up timer will not switch the device on if the device entered sleep mode after detecting a low battery voltage.
@@ -266,8 +266,11 @@
     <Setting MemberName="MotionTriggerWakeup" UIText="Motion Trigger Wakeup" Type="Bool" OscAddress="/motiontrigger">
       If motion trigger wakeup is enabled then the device will switch on when motion is detected.  The motion trigger wake up will not switch the device on if the device entered sleep mode after detecting a low battery voltage.
     </Setting>
+    <Setting MemberName="ExternalPowerWakeup" UIText="External Power Wakeup" Type="Bool" OscAddress="/powerwakeup">
+      If external power wakeup is enabled then the device will switch on when power is provided by either USB or the external power input of the serial interface.
+    </Setting>
     <Setting MemberName="MutedOnStartup" UIText="Muted On Startup" Type="Bool" OscAddress="/muted">
-      Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi {\i low power mode} is enabled.  The device can be unmuted at any time by sending the {\i unmute} command.
+      Muting the device will reduce power consumptions in some situations.  For example, when Wi-Fi low power mode is enabled.  The device can be unmuted at any time by sending the unmute command.
     </Setting>
     <Category MemberName="Battery" UIText="Battery">
       <Setting MemberName="BatteryMinimumVoltage" UIText="Minimum Voltage (V)" DocumentationTitle="Battery Minimum Voltage" Type="Float" OscAddress="/battery/voltage" Readonly="False">
