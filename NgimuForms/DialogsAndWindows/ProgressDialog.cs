@@ -77,12 +77,12 @@ namespace NgimuForms.DialogsAndWindows
 
         private void ProgressDialog_Load(object sender, EventArgs e)
         {
-
+            this.ControlBox = CancelButtonEnabled;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Escape)
+            if (keyData == Keys.Escape && CancelButtonEnabled == true)
             {
                 cancelButton.PerformClick();
 

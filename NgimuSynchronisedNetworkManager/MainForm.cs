@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -21,6 +22,8 @@ namespace NgimuSynchronisedNetworkManager
     public partial class MainForm : BaseForm
     {
         public const int SynchronisationMasterPort = 9000;
+        public const string DefaultWifiClientSSID = "NGIMU Router 5 GHz (Hidden)";
+        public const float DefaultSendRateRssi = 2; 
 
         List<ConnectionRow> connectionsRows = new List<ConnectionRow>();
 
@@ -141,7 +144,6 @@ namespace NgimuSynchronisedNetworkManager
 
                     dataLogger?.ActiveConnections.Add(connection);
                     sendRates?.ActiveConnections.Add(connection);
-                    sendRates?.UpdateColumns();
 
                     StringBuilder sb = new StringBuilder();
 
@@ -201,6 +203,8 @@ namespace NgimuSynchronisedNetworkManager
                 }
             }
 
+            sendRates?.UpdateColumns();
+
             if (result == DialogResult.Cancel)
             {
                 DisconnectAll();
@@ -212,6 +216,23 @@ namespace NgimuSynchronisedNetworkManager
             VerifyConfiguration();
 
             CreateSynchronisationMasterListener();
+
+            ApplySort(); 
+        }
+
+        private void ApplySort()
+        {
+            if (dataGridView1.SortedColumn == null || dataGridView1.SortOrder == SortOrder.None)
+            {
+                return; 
+            }
+
+            ListSortDirection direction = 
+                dataGridView1.SortOrder == SortOrder.Ascending ? 
+                    ListSortDirection.Ascending : 
+                    ListSortDirection.Descending; 
+
+            dataGridView1.Sort(dataGridView1.SortedColumn, direction);
         }
 
         private void VerifyConfiguration()
@@ -340,10 +361,10 @@ namespace NgimuSynchronisedNetworkManager
             if (someDevicesHaveRssiSendRateOfZero == true)
             {
                 StringBuilder sb = new StringBuilder();
-
+                
                 sb.AppendLine("The RSSI send rate of one or more devices is set to zero.");
                 sb.AppendLine();
-                sb.Append("Click OK to set the RSSI send rate to 2 Hz for all devices.");
+                sb.Append($"Click OK to set the RSSI send rate to {DefaultSendRateRssi} Hz for all devices.");
 
                 switch (this.ShowError(sb.ToString(), MessageBoxButtons.OKCancel))
                 {
@@ -389,6 +410,8 @@ namespace NgimuSynchronisedNetworkManager
             bool canceled = false;
             int currentProgress = 0;
 
+            string currentConnectionString = ""; 
+
             Thread connectingToMultipleConnections = new Thread(() =>
             {
                 progress.OnCancel += (o, args) =>
@@ -398,7 +421,7 @@ namespace NgimuSynchronisedNetworkManager
 
                 EventHandler<MessageEventArgs> reportInfo = (o, args) =>
                 {
-                    progress.UpdateProgress(currentProgress, args.Message);
+                    progress.UpdateProgress(currentProgress, currentConnectionString + args.Message);
                 };
 
                 reporter.Info += reportInfo;
@@ -417,6 +440,8 @@ namespace NgimuSynchronisedNetworkManager
                         }
 
                         ConnectionSearchResult autoConnectionInfo = connectionSearchResults[i];
+
+                        currentConnectionString = "Connecting to " + autoConnectionInfo.DeviceDescriptor + ". "; 
 
                         progress.UpdateProgress(currentProgress++, autoConnectionInfo.DeviceDescriptor);
 
@@ -617,32 +642,49 @@ namespace NgimuSynchronisedNetworkManager
             progress.Text = "Disconnecting";
             progress.Style = ProgressBarStyle.Continuous;
 
+            progress.CancelButtonEnabled = false;
             progress.ProgressMessage = "";
             progress.Progress = 0;
             progress.ProgressMaximum = connectionsRows.Count;
 
+            ManualResetEvent dialogDoneEvent = new ManualResetEvent(false);
+
             Thread disconnectThread = new Thread(() =>
             {
-                int index = 0;
-                foreach (ConnectionRow connection in connectionsRows)
+                try
                 {
-                    Invoke(new MethodInvoker(() =>
+                    int index = 0;
+                    foreach (ConnectionRow connection in connectionsRows)
                     {
-                        progress.ProgressMessage = "Disconnecting from " + connection.Connection.Settings.GetDeviceDescriptor() + ".";
-                        progress.Progress = ++index;
-                    }));
+                        if (progress.Visible == true)
+                        {
+                            Invoke(new MethodInvoker(() =>
+                            {
+                                progress.ProgressMessage = "Disconnecting from " + connection.Connection.Settings.GetDeviceDescriptor() + ".";
+                                progress.Progress = ++index;
+                            }));
+                        }
 
-                    connection.Connection.Dispose();
+                        connection.Connection.Dispose();
+                    }
+
+                    Thread.CurrentThread.Join(100);
+                }
+                finally
+                {
+                    dialogDoneEvent.Set();
                 }
 
-                Thread.CurrentThread.Join(100);
-
                 Invoke(new MethodInvoker(() => { progress.Close(); }));
+
             });
+
             disconnectThread.Name = "Disconnecting from " + connectionsRows.Count + " Devices";
             disconnectThread.Start();
 
             progress.ShowDialog(this);
+
+            dialogDoneEvent.WaitOne();
 
             connectionsRows.Clear();
             dataGridView1.Rows.Clear();
@@ -908,6 +950,106 @@ namespace NgimuSynchronisedNetworkManager
             {
                 dialog.ShowDialog(this);
             }
+        }
+
+        private void ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProgressDialog progress = new ProgressDialog
+            {
+                Text = "Configure Wireless Settings Via USB",
+                Style = ProgressBarStyle.Marquee,
+                CancelButtonEnabled = true,
+                ProgressMessage = "",
+                Progress = 0,
+                ProgressMaximum = 1
+            };
+
+            ManualResetEvent contiueResetEvent = new ManualResetEvent(false);
+
+            bool hasBeenCanceled = false;
+
+            progress.OnCancel += delegate (object s, FormClosingEventArgs fce)
+            {
+                hasBeenCanceled = true;
+                contiueResetEvent.Set();
+            };
+
+            progress.FormClosed += delegate (object s, FormClosedEventArgs fce)
+            {
+                contiueResetEvent.Set();
+            };
+
+            Thread configureWirelessSettingsViaUSBThread = new Thread(() =>
+            {
+                while (hasBeenCanceled == false)
+                {
+                    progress.UpdateProgress(0, "Connect next NGIMU to be configured.");
+
+                    bool found = false;
+                    ConnectionSearchResult foundConnectionSearchResult = null;
+
+                    // search for serial only connections
+                    using (SearchForConnections searchForConnections = new SearchForConnections(ConnectionSearchTypes.Serial))
+                    {
+                        searchForConnections.DeviceDiscovered += delegate(ConnectionSearchResult connectionSearchResult)
+                        {
+                            found = true;
+                            foundConnectionSearchResult = connectionSearchResult;
+                            contiueResetEvent.Set();
+                        };
+
+                        contiueResetEvent.Reset();
+
+                        searchForConnections.BeginSearch();
+
+                        contiueResetEvent.WaitOne();
+
+                        searchForConnections.EndSearch();
+                    }
+
+                    if (hasBeenCanceled == true)
+                    {
+                        break; 
+                    }
+
+                    if (foundConnectionSearchResult == null)
+                    {
+                        break; 
+                    }
+
+                    string deviceDescriptor = foundConnectionSearchResult.DeviceDescriptor;
+
+                    // open connection to first device found 
+                    progress.UpdateProgress(0, $"Found device {deviceDescriptor}.");
+
+                    using (Connection connection = new Connection(foundConnectionSearchResult))
+                    {
+                        connection.Connect();
+
+                        connection.Settings.WifiMode.Value = WifiMode.Client;
+                        connection.Settings.WifiClientSSID.Value = DefaultWifiClientSSID;
+                        connection.Settings.SendRateRssi.Value = DefaultSendRateRssi;
+
+                        progress.UpdateProgress(0, $"Writing settings to device {deviceDescriptor}.");
+
+                        this.WriteSettingsWithExistingProgress(progress, new [] { connection.Settings });        
+                    }
+
+                    //if (hasBeenCanceled == true)
+                    //{
+                    //    break;
+                    //}
+
+                    this.InvokeShowInformation($@"Configuration of ""{deviceDescriptor}"" complete.{Environment.NewLine}{Environment.NewLine}Disconnect the device then click OK");
+                }
+
+                Invoke(new MethodInvoker(() => { progress.Close(); }));
+            });
+
+            configureWirelessSettingsViaUSBThread.Name = "Configure Wireless Settings Via USB";
+            configureWirelessSettingsViaUSBThread.Start();
+
+            progress.ShowDialog(this);
         }
     }
 

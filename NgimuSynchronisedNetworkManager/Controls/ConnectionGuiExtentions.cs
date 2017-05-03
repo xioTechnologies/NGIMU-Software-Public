@@ -123,6 +123,37 @@ namespace NgimuSynchronisedNetworkManager.Controls
             }
         }
 
+        //public static void WriteSettingsUsingProgress(this Control control, ProgressDialog dialog, IEnumerable<ISettingValue> settingValues)
+        //{
+        //    Parallel.ForEach(settingValues,
+        //        (settingValue) =>
+        //        {
+        //            string messageString = "";
+        //            CommunicationProcessResult result;
+
+        //            do
+        //            {
+        //                result = settingValue.Write();
+
+        //                bool allValuesFailed;
+        //                bool allValuesSucceeded;
+
+        //                messageString = Settings.GetCommunicationFailureString(new ISettingValue[] { settingValue }, 20, out allValuesFailed, out allValuesSucceeded);
+
+        //                StringBuilder fullMessageString = new StringBuilder();
+
+        //                fullMessageString.AppendLine("Error while communicating with " + settingValue.Category.Connection.Settings.GetDeviceDescriptor() + ".");
+        //                fullMessageString.AppendLine();
+
+        //                fullMessageString.Append("Failed to confirm write of following setting:" + messageString);
+
+        //                messageString = fullMessageString.ToString();
+        //            }
+        //            while (result != CommunicationProcessResult.Success &&
+        //                   dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
+        //        });
+        //}
+
 
         public static void WriteSettings(this Control control, IEnumerable<SettingCategrory> settingCategrories)
         {
@@ -135,33 +166,7 @@ namespace NgimuSynchronisedNetworkManager.Controls
             {
                 Thread thread = new Thread(() =>
                 {
-                    Parallel.ForEach(settingCategrories,
-                        (settingCategrory) =>
-                        {
-                            string messageString = "";
-                            CommunicationProcessResult result;
-
-                            do
-                            {
-                                result = settingCategrory.Write();
-
-                                bool allValuesFailed;
-                                bool allValuesSucceeded;
-
-                                messageString = Settings.GetCommunicationFailureString(settingCategrory.Values, 20, out allValuesFailed, out allValuesSucceeded);
-
-                                StringBuilder fullMessageString = new StringBuilder();
-
-                                fullMessageString.AppendLine("Error while communicating with " + settingCategrory.Connection.Settings.GetDeviceDescriptor() + ".");
-                                fullMessageString.AppendLine();
-
-                                fullMessageString.Append("Failed to confirm write of following settings:" + messageString);
-
-                                messageString = fullMessageString.ToString();
-                            }
-                            while (result != CommunicationProcessResult.Success &&
-                                   dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
-                        });
+                    control.WriteSettingsWithExistingProgress(dialog, settingCategrories);
 
                     control.Invoke(new MethodInvoker(dialog.Close));
                 });
@@ -170,6 +175,37 @@ namespace NgimuSynchronisedNetworkManager.Controls
 
                 dialog.ShowDialog(control);
             }
+        }
+
+        public static void WriteSettingsWithExistingProgress(this Control control, ProgressDialog dialog, IEnumerable<SettingCategrory> settingCategrories)
+        {
+            Parallel.ForEach(settingCategrories,
+                (settingCategrory) =>
+                {
+                    string messageString = "";
+                    CommunicationProcessResult result;
+
+                    do
+                    {
+                        result = settingCategrory.Write();
+
+                        bool allValuesFailed;
+                        bool allValuesSucceeded;
+
+                        messageString = Settings.GetCommunicationFailureString(settingCategrory.Values, 20, out allValuesFailed, out allValuesSucceeded);
+
+                        StringBuilder fullMessageString = new StringBuilder();
+
+                        fullMessageString.AppendLine("Error while communicating with " + settingCategrory.Connection.Settings.GetDeviceDescriptor() + ".");
+                        fullMessageString.AppendLine();
+
+                        fullMessageString.Append("Failed to confirm write of following settings:" + messageString);
+
+                        messageString = fullMessageString.ToString();
+                    }
+                    while (result != CommunicationProcessResult.Success &&
+                           dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
+                });
         }
 
         public static void ReadSettings(this Control control, IEnumerable<ISettingValue> settingValues)

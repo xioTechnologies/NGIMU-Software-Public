@@ -1,6 +1,12 @@
 NGIMU-Software
 ==============
 
+v1.5 (May 03 2017)
+------------------
+* Add tool to configure wireless settings via USB in Synchronised Network Manager
+* Improvements to Send Rate dialogue window in Synchronised Network Manager
+* Disable Cancel button when disconnecting with Synchronised Network Manager
+
 v1.4 (Mar 06 2017)
 ------------------
 * Add setting for external power wakeup

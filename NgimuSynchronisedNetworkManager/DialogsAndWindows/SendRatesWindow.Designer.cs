@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.sendRatesGrid = new System.Windows.Forms.DataGridView();
+            this.SettingName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.writeButton = new System.Windows.Forms.Button();
             this.readButton = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SettingName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.sendRatesGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,6 +40,8 @@
             // 
             this.sendRatesGrid.AllowUserToAddRows = false;
             this.sendRatesGrid.AllowUserToDeleteRows = false;
+            this.sendRatesGrid.AllowUserToResizeColumns = false;
+            this.sendRatesGrid.AllowUserToResizeRows = false;
             this.sendRatesGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -51,6 +53,18 @@
             this.sendRatesGrid.RowHeadersVisible = false;
             this.sendRatesGrid.Size = new System.Drawing.Size(599, 327);
             this.sendRatesGrid.TabIndex = 0;
+            this.sendRatesGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.sendRatesGrid_CellBeginEdit);
+            this.sendRatesGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.sendRatesGrid_CellEndEdit);
+            // 
+            // SettingName
+            // 
+            this.SettingName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.SettingName.HeaderText = "Send Rates";
+            this.SettingName.MinimumWidth = 120;
+            this.SettingName.Name = "SettingName";
+            this.SettingName.ReadOnly = true;
+            this.SettingName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SettingName.Width = 120;
             // 
             // writeButton
             // 
@@ -59,7 +73,7 @@
             this.writeButton.Name = "writeButton";
             this.writeButton.Size = new System.Drawing.Size(75, 23);
             this.writeButton.TabIndex = 4;
-            this.writeButton.Text = "Write All";
+            this.writeButton.Text = "Write";
             this.writeButton.UseVisualStyleBackColor = true;
             this.writeButton.Click += new System.EventHandler(this.writeAllButton_Click);
             // 
@@ -70,7 +84,7 @@
             this.readButton.Name = "readButton";
             this.readButton.Size = new System.Drawing.Size(75, 23);
             this.readButton.TabIndex = 3;
-            this.readButton.Text = "Read All";
+            this.readButton.Text = "Read";
             this.readButton.UseVisualStyleBackColor = true;
             this.readButton.Click += new System.EventHandler(this.readAllButton_Click);
             // 
@@ -82,15 +96,6 @@
             this.dataGridViewTextBoxColumn1.MinimumWidth = 120;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // SettingName
-            // 
-            this.SettingName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.SettingName.HeaderText = "Send Rates";
-            this.SettingName.MinimumWidth = 120;
-            this.SettingName.Name = "SettingName";
-            this.SettingName.ReadOnly = true;
-            this.SettingName.Width = 120;
             // 
             // SendRatesWindow
             // 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,13 +17,28 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         private readonly Dictionary<string, DataGridViewRow> settingsToRowLookup = new Dictionary<string, DataGridViewRow>();
         private readonly Dictionary<Connection, DataGridViewSettingsValueColumn> connectionToColumnLookup = new Dictionary<Connection, DataGridViewSettingsValueColumn>();
 
-        private readonly DataGridViewCellStyle dataGridViewCellStyle = new DataGridViewCellStyle() { NullValue = "Unknown" };
+        private readonly DataGridViewCellStyle dataGridViewCellStyle;
+
+        private readonly DataGridViewCellStyle dataGridViewCellStyleBold;
+        private readonly List<DataGridViewCell> selectedCells = new List<DataGridViewCell>();
 
         public List<Connection> ActiveConnections { get; } = new List<Connection>();
 
         public SendRatesWindow()
         {
             InitializeComponent();
+
+            dataGridViewCellStyle = new DataGridViewCellStyle()
+            {
+                Font = new Font(sendRatesGrid.Font.FontFamily, sendRatesGrid.Font.Size, FontStyle.Regular),
+                NullValue = "Unknown"
+            };
+
+            dataGridViewCellStyleBold = new DataGridViewCellStyle()
+            {
+                Font = new Font(sendRatesGrid.Font.FontFamily, sendRatesGrid.Font.Size, FontStyle.Bold),
+                NullValue = "Unknown"
+            };
         }
 
         public void UpdateColumns()
@@ -33,6 +49,8 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
             }
 
             connectionToColumnLookup.Clear();
+
+            sendRatesGrid.SuspendLayout(); 
 
             foreach (Connection connection in ActiveConnections)
             {
@@ -53,10 +71,12 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
                     ValueType = typeof(float),
                 };
 
-                sendRatesGrid.Columns.Add(column); 
+                sendRatesGrid.Columns.Add(column);
 
                 connectionToColumnLookup.Add(connection, column);
             }
+
+            sendRatesGrid.ResumeLayout(true); 
 
             CopyValuesToGrid();
         }
@@ -68,7 +88,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
                 DataGridViewRow row = sendRatesGrid.Rows[sendRatesGrid.Rows.Add(value.Name)];
 
                 row.Tag = value.OscAddress;
-                
+
                 settingsToRowLookup.Add(value.OscAddress, row);
             }
 
@@ -101,7 +121,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
                     continue;
                 }
 
-                int cellIndex = column.Index; 
+                int cellIndex = column.Index;
 
                 foreach (ISettingValue settingValue in connection.Settings.SendRates.Values)
                 {
@@ -115,6 +135,20 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
                     DataGridViewRow row = settingsToRowLookup[settingValue.OscAddress];
 
                     row.Cells[cellIndex].Value = value;
+                    row.Cells[cellIndex].Tag = settingValue;
+
+                    if (value == null)
+                    {
+                        continue;
+                    }
+
+                    float floatValue = (float) value;
+                    float settingRemoteValue = (float) settingValue.GetRemoteValue();
+
+                    row.Cells[cellIndex].Style.ApplyStyle(
+                        Math.Abs(floatValue - settingRemoteValue) > float.Epsilon ? 
+                            dataGridViewCellStyleBold : 
+                            dataGridViewCellStyle);
                 }
             }
         }
@@ -157,6 +191,55 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
             if (e.KeyCode == Keys.F6)
             {
                 writeAllButton_Click(sender, e);
+            }
+        }
+
+        private void sendRatesGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            selectedCells.Clear();
+
+            foreach (DataGridViewCell cell in sendRatesGrid.SelectedCells)
+            {
+                selectedCells.Add(cell);
+            }
+        }
+
+        private void sendRatesGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row = sendRatesGrid.Rows[e.RowIndex];
+
+            DataGridViewSettingsValueColumn column = sendRatesGrid.Columns[e.ColumnIndex] as DataGridViewSettingsValueColumn;
+
+            object value = row.Cells[e.ColumnIndex].Value;
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                ISettingValue settingValue = (ISettingValue)cell.Tag;
+
+                if (settingValue == null)
+                {
+                    continue;
+                }
+
+                cell.Value = value;
+
+                float floatValue = 0f;
+
+                if (value == null || float.TryParse(value.ToString(), out floatValue) == false)
+                {
+                    floatValue = (float)settingValue.GetValue();
+                }
+
+                float settingRemoteValue = (float)settingValue.GetRemoteValue();
+
+                if (Math.Abs(floatValue - settingRemoteValue) > float.Epsilon)
+                {
+                    cell.Style.ApplyStyle(dataGridViewCellStyleBold);
+                }
+                else
+                {
+                    cell.Style.ApplyStyle(dataGridViewCellStyle);
+                }
             }
         }
     }
