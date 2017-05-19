@@ -139,7 +139,8 @@
       The sleep timer is automatically disabled while USB is connected and will restart on each of the following events:\line
       {  }• Button press\line
       {  }• Reception of any message\line
-      {  }• Motion detection (if motion trigger wakeup enabled)</Setting>
+      {  }• Motion detection (if motion trigger wakeup enabled)
+      {  }• External power connected (if external power wakeup enabled)</Setting>
   <Setting Address="/wakeuptimer">Number of seconds the device will remain in sleep mode before automatically switching on.  A value of 0 seconds will disable the wakeup timer.  The wake up timer will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>
   <Setting Address="/motiontrigger">If motion trigger wakeup is enabled then the device will switch on when motion is detected.  The motion trigger wake up will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>
   <Setting Address="/powerwakeup">If external power wakeup is enabled then the device will switch on when power is provided by either USB or the external power input of the serial interface.</Setting>

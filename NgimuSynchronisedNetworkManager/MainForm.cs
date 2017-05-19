@@ -56,6 +56,7 @@ namespace NgimuSynchronisedNetworkManager
         private OscListener synchronisationMasterListener;
         private DateTime synchronisationMasterTimeTimeStamp;
         private bool synchronisationMasterTimeConfirmedByUser = false;
+        private DataForwardingDialog dataForwardingDialog;
 
         private ConnectionRow SynchronisationMasterRow
         {
@@ -150,6 +151,8 @@ namespace NgimuSynchronisedNetworkManager
                     sb.AppendLine(connection.Settings.DeviceInformation.DeviceName.Value);
                     sb.AppendLine(connection.Settings.DeviceInformation.SerialNumber.Value);
 
+                    connection.Message += Connection_Message;
+
                     object[] cells = new object[Enum.GetNames(typeof(ColumnIndex)).Length];
                     DateTime[] timestamps = new DateTime[cells.Length];
 
@@ -218,6 +221,16 @@ namespace NgimuSynchronisedNetworkManager
             CreateSynchronisationMasterListener();
 
             ApplySort(); 
+        }
+
+        private void Connection_Message(Connection source, MessageDirection direction, OscMessage message)
+        {
+            if (direction == MessageDirection.Transmit)
+            {
+                return; 
+            }
+
+            dataForwardingDialog?.OnMessage(source, message); 
         }
 
         private void ApplySort()
@@ -665,6 +678,7 @@ namespace NgimuSynchronisedNetworkManager
                             }));
                         }
 
+                        connection.Connection.Message -= Connection_Message;
                         connection.Connection.Dispose();
                     }
 
@@ -703,7 +717,7 @@ namespace NgimuSynchronisedNetworkManager
         }
 
         private void OnSyncMessage(OscMessage message)
-        {
+        {            
             if (message.Count != 1)
             {
                 return;
@@ -714,6 +728,8 @@ namespace NgimuSynchronisedNetworkManager
                 return;
             }
 
+            ConnectionRow synchronisationMasterRow = SynchronisationMasterRow;
+
             synchronisationMasterTimeTimeStamp = DateTime.UtcNow;
 
             DateTime synchronisationMasterTime = ((OscTimeTag)message[0]).ToDataTime();
@@ -722,10 +738,23 @@ namespace NgimuSynchronisedNetworkManager
             {
                 synchronisationMasterTimeLabel.Text = string.Format(synchronisationMasterTimeLabel.Tag.ToString(), NgimuApi.Helper.DateTimeToString(synchronisationMasterTime, false));
             }));
-
-            if (SynchronisationMasterRow == null)
+            
+            if (synchronisationMasterRow == null)
             {
                 return;
+            }
+
+            if (Equals(((UdpConnectionInfo)synchronisationMasterRow.Connection.ConnectionInfo).SendIPAddress, message.Origin.Address) == false ||
+                message.Origin.Port != SynchronisationMasterPort)
+            {
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.AppendLine("More than one synchronisation master is sending on the network.");
+
+                this.InvokeShowError(sb.ToString());
+                
+                return; 
             }
 
             if (synchronisationMasterTimeConfirmedByUser == true)
@@ -799,6 +828,8 @@ namespace NgimuSynchronisedNetworkManager
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DisconnectAll();
+
+            dataForwardingDialog?.Close(); 
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -1050,6 +1081,23 @@ namespace NgimuSynchronisedNetworkManager
             configureWirelessSettingsViaUSBThread.Start();
 
             progress.ShowDialog(this);
+        }
+
+        private void dataForwardingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataForwardingDialog == null)
+            {
+                dataForwardingDialog = new DataForwardingDialog();
+
+                dataForwardingDialog.FormClosed += DataForwardingDialog_FormClosed;
+
+                dataForwardingDialog.Show(); 
+            }
+        }
+
+        private void DataForwardingDialog_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            dataForwardingDialog = null; 
         }
     }
 

@@ -73,6 +73,12 @@
     <Compile Include="DialogsAndWindows\SendRatesWindow.Designer.cs">
       <DependentUpon>SendRatesWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="DialogsAndWindows\DataForwardingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\DataForwardingDialog.Designer.cs">
+      <DependentUpon>DataForwardingDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DialogsAndWindows\SendRatesWindow.resx">
       <DependentUpon>SendRatesWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\DataForwardingDialog.resx">
+      <DependentUpon>DataForwardingDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -1,6 +1,12 @@
 NGIMU-Software
 ==============
 
+v1.6 (May 19 2017)
+------------------
+* Fix bug in NGIMU GUI that could result in messages being permanently muted
+* Synchronised Network Manager displays error message if a rogue synchronisation master is detected
+* Add Synchronised Network Manager tool for forwarding data
+
 v1.5 (May 03 2017)
 ------------------
 * Add tool to configure wireless settings via USB in Synchronised Network Manager

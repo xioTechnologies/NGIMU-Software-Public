@@ -48,10 +48,11 @@
             this.commandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataLoggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configureWirelessSettingsViaUSBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerFast = new System.Windows.Forms.Timer(this.components);
-            this.configureWirelessSettingsViaUSBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataForwardingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -230,6 +231,7 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dataLoggerToolStripMenuItem,
+            this.dataForwardingToolStripMenuItem,
             this.configureWirelessSettingsViaUSBToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
@@ -241,6 +243,13 @@
             this.dataLoggerToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
             this.dataLoggerToolStripMenuItem.Text = "Data Logger";
             this.dataLoggerToolStripMenuItem.Click += new System.EventHandler(this.dataLoggerToolStripMenuItem_Click);
+            // 
+            // configureWirelessSettingsViaUSBToolStripMenuItem
+            // 
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Name = "configureWirelessSettingsViaUSBToolStripMenuItem";
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Text = "Configure Wireless Settings Via USB";
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Click += new System.EventHandler(this.ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -264,12 +273,12 @@
             this.timerFast.Interval = 50;
             this.timerFast.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // configureWirelessSettingsViaUSBToolStripMenuItem
+            // dataForwardingToolStripMenuItem
             // 
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Name = "configureWirelessSettingsViaUSBToolStripMenuItem";
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Text = "Configure Wireless Settings Via USB";
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Click += new System.EventHandler(this.ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click);
+            this.dataForwardingToolStripMenuItem.Name = "dataForwardingToolStripMenuItem";
+            this.dataForwardingToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.dataForwardingToolStripMenuItem.Text = "Data Forwarding";
+            this.dataForwardingToolStripMenuItem.Click += new System.EventHandler(this.dataForwardingToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -320,6 +329,7 @@
         private System.Windows.Forms.DataGridViewButtonColumn Identify;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configureWirelessSettingsViaUSBToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataForwardingToolStripMenuItem;
     }
 }
 

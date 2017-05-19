@@ -259,6 +259,7 @@
       {  }• Button press\line
       {  }• Reception of any message\line
       {  }• Motion detection (if motion trigger wakeup enabled)
+      {  }• External power connected (if external power wakeup enabled)
     </Setting>
     <Setting MemberName="WakeupTimer" UIText="Wakeup Timer (s)" DocumentationTitle="Wakeup Timer" Type="UInt32" OscAddress="/wakeuptimer">
       Number of seconds the device will remain in sleep mode before automatically switching on.  A value of 0 seconds will disable the wakeup timer.  The wake up timer will not switch the device on if the device entered sleep mode after detecting a low battery voltage.

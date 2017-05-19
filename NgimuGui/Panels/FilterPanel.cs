@@ -10,15 +10,15 @@ namespace NgimuGui.Panels
 {
     public partial class FilterPanel : UserControl
     {
-        private List<string> m_Muted = new List<string>();
-        private List<string> m_Soloed = new List<string>();
+        private readonly List<string> m_Muted = new List<string>();
+        private readonly List<string> m_Soloed = new List<string>();
 
-        private CheckBox MuteAll = new CheckBox();
-        private CheckBox SoloAll = new CheckBox();
+        private readonly CheckBox MuteAll = new CheckBox();
+        private readonly CheckBox SoloAll = new CheckBox();
 
-        private Dictionary<string, AddressInstance> m_AddressLookup = new Dictionary<string, AddressInstance>();
+        private readonly Dictionary<string, AddressInstance> m_AddressLookup = new Dictionary<string, AddressInstance>();
 
-        private ManualResetEvent m_AddNewAddress = new ManualResetEvent(false);
+        private readonly ManualResetEvent m_AddNewAddress = new ManualResetEvent(false);
         private DateTime m_LastUpdate;
 
         public FilterPanel()
@@ -234,7 +234,10 @@ namespace NgimuGui.Panels
 
             if (instance.Solo == true)
             {
-                m_Soloed.Add(address);
+                if (m_Soloed.Contains(address) == false)
+                {
+                    m_Soloed.Add(address);
+                }
             }
             else
             {
@@ -250,7 +253,10 @@ namespace NgimuGui.Panels
 
             if (instance.Solo == true)
             {
-                m_Soloed.Add(address);
+                if (m_Soloed.Contains(address) == false)
+                {
+                    m_Soloed.Add(address);
+                }
             }
             else
             {
@@ -266,7 +272,10 @@ namespace NgimuGui.Panels
 
             if (instance.Mute == true)
             {
-                m_Muted.Add(address);
+                if (m_Muted.Contains(address) == false)
+                {
+                    m_Muted.Add(address);
+                }
             }
             else
             {
@@ -282,7 +291,10 @@ namespace NgimuGui.Panels
 
             if (instance.Mute == true)
             {
-                m_Muted.Add(address);
+                if (m_Muted.Contains(address) == false)
+                {
+                    m_Muted.Add(address);
+                }
             }
             else
             {

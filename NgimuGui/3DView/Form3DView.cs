@@ -10,6 +10,7 @@ using Rug.LiteGL;
 using Rug.LiteGL.Effect;
 using Rug.LiteGL.Meshes;
 using Rug.LiteGL.Simple;
+using NgimuForms.Controls;
 using TextRenderer = Rug.LiteGL.Text.TextRenderer;
 
 namespace NgimuGui
@@ -600,17 +601,9 @@ namespace NgimuGui
             }
             catch (Exception ex)
             {
-                newModel.UnloadResources();
+                newModel?.UnloadResources();
 
-                using (ExceptionDialog dialog = new ExceptionDialog())
-                {
-                    dialog.Title = "Could Not Load Object File";
-
-                    dialog.Label = ex.Message;
-                    dialog.Detail = ex.ToString();
-
-                    dialog.ShowDialog(this);
-                }
+                this.ShowError("Could not load object file. Please ensure the model file has normals and triangular faces"); 
 
                 return false;
             }
