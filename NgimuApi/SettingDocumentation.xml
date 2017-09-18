@@ -87,32 +87,19 @@
       It is recommended that the magnetometer is ignored when the device is used in environments where the dominant ambient magnetic field is not that of the Earth.  For example, when operating near large metal structures.  It is therefore often necessary for the magnetometer to be ignored when operating in indoor environments.</Setting>
   <Setting Address="/ahrs/magnetic/min">The minimum valid magnetic field intensity in uT.  The AHRS algorithm will automatically ignore magnetometer measurements while the magnetic field intensity is not within a valid range.  This prevents unexpected large magnetic distortions from influencing the measurement of orientation.  The heading component of orientation will be derived from only gyroscope measurements while the magnetic field intensity is detected as being invalid.</Setting>
   <Setting Address="/ahrs/magnetic/max">The maximum valid magnetic field intensity in uT.  The AHRS algorithm will automatically ignore magnetometer measurements while the magnetic field intensity is not within a valid range.  This prevents unexpected large magnetic distortions from influencing the measurement of orientation.  The heading component of orientation will be derived from only gyroscope measurements while the magnetic field intensity is detected as being invalid.</Setting>
-  <Setting Address="/rate/sensors">
-  </Setting>
-  <Setting Address="/rate/magnitudes">
-  </Setting>
-  <Setting Address="/rate/quaternion">
-  </Setting>
-  <Setting Address="/rate/matrix">
-  </Setting>
-  <Setting Address="/rate/euler">
-  </Setting>
-  <Setting Address="/rate/linear">
-  </Setting>
-  <Setting Address="/rate/earth">
-  </Setting>
-  <Setting Address="/rate/altitude">
-  </Setting>
-  <Setting Address="/rate/temperature">
-  </Setting>
-  <Setting Address="/rate/humidity">
-  </Setting>
-  <Setting Address="/rate/battery">
-  </Setting>
-  <Setting Address="/rate/analogue">
-  </Setting>
-  <Setting Address="/rate/rssi">
-  </Setting>
+  <Setting Address="/rate/sensors">Send rate of the sensors message in messages per second.  The sensors message contains measurements from the gyroscope, accelerometer, magnetometer, and barometer.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/magnitudes">Send rate of the magnitudes message in messages per second.  The magnitudes message contains measurements of the gyroscope, accelerometer, and magnetometer magnitudes.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/quaternion">Send rate of the quaternion message in messages per second.  The quaternion message contains the quaternion output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/matrix">Send rate of the rotation matrix message in messages per second.  The rotation matrix message contains the rotation matrix output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/euler">Send rate of the Euler angles message in messages per second.  The Euler angles message contains the Euler angle output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/linear">Send rate of the linear acceleration message in messages per second.  The linear acceleration message contains the linear acceleration output of the on-board sensor fusion algorithm describing gravity-free acceleration in the sensor coordinate frame.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/earth">Send rate of the Earth acceleration message in messages per second.  The Earth acceleration message contains the Earth acceleration output of the on-board sensor fusion algorithm describing gravity-free acceleration in the Earth coordinate frame.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/altitude">Send rate of the altitude message in messages per second.  The altitude message contains the measurement of altitude above sea level.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/temperature">Send rate of the temperature message in messages per second.  The temperature message contains the measurements from each of the devices on-board temperature sensors.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/humidity">Send rate of the humidity message in messages per second.  The humidity message contains the relative humidity measurement.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/battery">Send rate of the battery message in messages per second.  The battery message contains the battery voltage and current measurements as well as the states of the fuel gauge algorithm.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/analogue">Send rate of the analogue inputs message in messages per second.  The analogue inputs message contains measurements of the analogue inputs voltages.  The send rate value does not affect the internal sample rate of measurements.</Setting>
+  <Setting Address="/rate/rssi">Send rate of the RSSI message in messages per second.  The RSSI message contains the RSSI (Receive Signal Strength Indicator) measurement for the wireless connection. This measurement is only valid if the Wi-Fi module is operating in client mode.  The send rate value does not affect the internal sample rate of measurements.</Setting>
   <Setting Address="/auxserial/enabled">
   </Setting>
   <Setting Address="/auxserial/baud">
@@ -139,7 +126,7 @@
       The sleep timer is automatically disabled while USB is connected and will restart on each of the following events:\line
       {  }• Button press\line
       {  }• Reception of any message\line
-      {  }• Motion detection (if motion trigger wakeup enabled)
+      {  }• Motion detection (if motion trigger wakeup enabled)\line
       {  }• External power connected (if external power wakeup enabled)</Setting>
   <Setting Address="/wakeuptimer">Number of seconds the device will remain in sleep mode before automatically switching on.  A value of 0 seconds will disable the wakeup timer.  The wake up timer will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>
   <Setting Address="/motiontrigger">If motion trigger wakeup is enabled then the device will switch on when motion is detected.  The motion trigger wake up will not switch the device on if the device entered sleep mode after detecting a low battery voltage.</Setting>

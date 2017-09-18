@@ -234,7 +234,7 @@
             this.horizonatalZoomOutMenuItem.Name = "horizonatalZoomOutMenuItem";
             this.horizonatalZoomOutMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
             this.horizonatalZoomOutMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.horizonatalZoomOutMenuItem.Text = "Horizonatal Zoom Out";
+            this.horizonatalZoomOutMenuItem.Text = "Horizontal Zoom Out";
             this.horizonatalZoomOutMenuItem.Click += new System.EventHandler(this.horizonatalZoomOutMenuItem_Click);
             // 
             // horizonatalZoomInMenuItem
@@ -242,7 +242,7 @@
             this.horizonatalZoomInMenuItem.Name = "horizonatalZoomInMenuItem";
             this.horizonatalZoomInMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
             this.horizonatalZoomInMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.horizonatalZoomInMenuItem.Text = "Horizonatal Zoom In";
+            this.horizonatalZoomInMenuItem.Text = "Horizontal Zoom In";
             this.horizonatalZoomInMenuItem.Click += new System.EventHandler(this.horizonatalZoomInMenuItem_Click);
             // 
             // verticalZoomOutMenuItem

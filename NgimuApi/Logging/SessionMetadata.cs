@@ -15,8 +15,17 @@ namespace NgimuApi.Logging
 
         public SessionMetadata()
         {
-            ApplicationInformation.ApplicationName = Assembly.GetEntryAssembly().GetName().Name;
-            ApplicationInformation.ApplicationVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            ApplicationInformation.ApplicationName = "Unknown Application";
+            ApplicationInformation.ApplicationVersion = "Unknown Application Version";
+
+            Assembly applicationAssembly = Assembly.GetEntryAssembly();
+
+            if (applicationAssembly != null)
+            {
+                ApplicationInformation.ApplicationName = Assembly.GetEntryAssembly().GetName().Name;
+                ApplicationInformation.ApplicationVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            }            
+
             ApplicationInformation.ApiVersion = typeof(DeviceMetadata).Assembly.GetName().Version.ToString();
 
             UserInformation.UserName = Environment.UserName;

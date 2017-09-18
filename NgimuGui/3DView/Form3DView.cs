@@ -603,7 +603,7 @@ namespace NgimuGui
             {
                 newModel?.UnloadResources();
 
-                this.ShowError("Could not load object file. Please ensure the model file has normals and triangular faces"); 
+                this.ShowError("Could not load object file. Please ensure the model file has normals and triangular faces."); 
 
                 return false;
             }

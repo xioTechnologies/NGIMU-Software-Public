@@ -1,6 +1,11 @@
 NGIMU-Software
 ==============
 
+v1.7 (Sep 19 2017)
+------------------
+* Fix bug in API affecting SD card file conversion
+* Add send rate information to settings documentation
+
 v1.6 (May 19 2017)
 ------------------
 * Fix bug in NGIMU GUI that could result in messages being permanently muted
