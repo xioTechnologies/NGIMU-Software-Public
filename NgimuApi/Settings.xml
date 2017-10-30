@@ -79,6 +79,9 @@
     <Setting MemberName="WifiRegion" UIText="Region" DocumentationTitle="Wi-Fi Region" Type="WifiRegion" OscAddress="/wifi/region">
     </Setting>
     <Category MemberName="AP" UIText="AP">
+      <Setting MemberName="WifiAPSsid" UIText="SSID" DocumentationTitle="Wi-Fi AP SSID" Type="String" OscAddress="/wifi/ap/ssid" Readonly="True">
+        This setting has no effect if Wi-Fi is not in AP mode.
+      </Setting>
       <Setting MemberName="WifiAPBand" UIText="Band" DocumentationTitle="Wi-Fi AP Band" Type="WifiBand" OscAddress="/wifi/ap/band">
         This setting has no effect if Wi-Fi is not in AP mode.
       </Setting>
@@ -141,8 +144,6 @@
     </Setting>
     <Setting MemberName="SerialBaudRate" UIText="Baud Rate" DocumentationTitle="Serial Baud Rate" Type="UInt32" OscAddress="/serial/baud">
     </Setting>
-    <Setting MemberName="SerialBaudRateError" UIText="Baud Rate Error (%)" DocumentationTitle="Serial Baud Rate Error" Type="Float" OscAddress="/serial/error" Readonly="True">
-    </Setting>
     <Setting MemberName="SerialRtsCtsEnabled" UIText="RTS/CTS Enabled" DocumentationTitle="Serial RTS/CTS Enabled" Type="Bool" OscAddress="/serial/rtscts">
     </Setting>
     <Setting MemberName="SerialInvertDataLines" UIText="Invert Data Lines" DocumentationTitle="Serial Invert Data Lines" Type="Bool" OscAddress="/serial/invert">
@@ -150,6 +151,8 @@
   </Category>
 
   <Category MemberName="SDCard" UIText="SD Card">
+    <Setting MemberName="sdCardStartStopLoggingAutomatically" UIText="Start/Stop Logging Automatically" DocumentationTitle="SD Card Start/Stop Logging Automatically" Type="Bool" OscAddress="/sd/automatic" Readonly="False">
+    </Setting>
     <Setting MemberName="sdCardFileNamePrefix" UIText="File Name Prefix" DocumentationTitle="SD Card File Name Prefix" Type="String" OscAddress="/sd/prefix">
     </Setting>
     <Setting MemberName="sdCardFileNumber" UIText="File Number" DocumentationTitle="SD Card File Number" Type="UInt32" OscAddress="/sd/number">
@@ -184,43 +187,43 @@
 
   <Category MemberName="SendRates" UIText="Send Rates">
     <Setting MemberName="SendRateSensors" UIText="Sensors (Hz)" DocumentationTitle="Sensors Send Rate" Type="Float" OscAddress="/rate/sensors">
-    Send rate of the sensors message in messages per second.  The sensors message contains measurements from the gyroscope, accelerometer, magnetometer, and barometer.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the sensors message in messages per second.  The sensors message contains measurements from the gyroscope, accelerometer, magnetometer, and barometer.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateMagnitudes" UIText="Magnitudes (Hz)" DocumentationTitle="Magnitudes Send Rate" Type="Float" OscAddress="/rate/magnitudes">
-    Send rate of the magnitudes message in messages per second.  The magnitudes message contains measurements of the gyroscope, accelerometer, and magnetometer magnitudes.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the magnitudes message in messages per second.  The magnitudes message contains measurements of the gyroscope, accelerometer, and magnetometer magnitudes.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateQuaternion" UIText="Quaternion (Hz)" DocumentationTitle="Quaternion Send Rate" Type="Float" OscAddress="/rate/quaternion">
-    Send rate of the quaternion message in messages per second.  The quaternion message contains the quaternion output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the quaternion message in messages per second.  The quaternion message contains the quaternion output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateRotationMatrix" UIText="Rotation Matrix (Hz)" DocumentationTitle="Rotation Matrix Send Rate" Type="Float" OscAddress="/rate/matrix">
-    Send rate of the rotation matrix message in messages per second.  The rotation matrix message contains the rotation matrix output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the rotation matrix message in messages per second.  The rotation matrix message contains the rotation matrix output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateEulerAngles" UIText="Euler Angles (Hz)" DocumentationTitle="Euler Angles Send Rate" Type="Float" OscAddress="/rate/euler">
-    Send rate of the Euler angles message in messages per second.  The Euler angles message contains the Euler angle output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the Euler angles message in messages per second.  The Euler angles message contains the Euler angle output of the on-board AHRS algorithm describing the orientation of the device relative to the Earth (NWU convention).  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateLinearAcceleration" UIText="Linear Acceleration (Hz)" DocumentationTitle="Linear Acceleration Send Rate" Type="Float" OscAddress="/rate/linear">
-    Send rate of the linear acceleration message in messages per second.  The linear acceleration message contains the linear acceleration output of the on-board sensor fusion algorithm describing gravity-free acceleration in the sensor coordinate frame.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the linear acceleration message in messages per second.  The linear acceleration message contains the linear acceleration output of the on-board sensor fusion algorithm describing gravity-free acceleration in the sensor coordinate frame.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateEarthAcceleration" UIText="Earth Acceleration (Hz)" DocumentationTitle="Earth Acceleration Send Rate" Type="Float" OscAddress="/rate/earth">
-    Send rate of the Earth acceleration message in messages per second.  The Earth acceleration message contains the Earth acceleration output of the on-board sensor fusion algorithm describing gravity-free acceleration in the Earth coordinate frame.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the Earth acceleration message in messages per second.  The Earth acceleration message contains the Earth acceleration output of the on-board sensor fusion algorithm describing gravity-free acceleration in the Earth coordinate frame.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateAltitude" UIText="Altitude (Hz)" DocumentationTitle="Altitude Send Rate" Type="Float" OscAddress="/rate/altitude">
-    Send rate of the altitude message in messages per second.  The altitude message contains the measurement of altitude above sea level.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the altitude message in messages per second.  The altitude message contains the measurement of altitude above sea level.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateTemperature" UIText="Temperature (Hz)" DocumentationTitle="Temperature Send Rate" Type="Float" OscAddress="/rate/temperature">
-    Send rate of the temperature message in messages per second.  The temperature message contains the measurements from each of the devices on-board temperature sensors.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the temperature message in messages per second.  The temperature message contains the measurements from each of the devices on-board temperature sensors.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateHumidity" UIText="Humidity (Hz)" DocumentationTitle="Humidity Send Rate" Type="Float" OscAddress="/rate/humidity">
-    Send rate of the humidity message in messages per second.  The humidity message contains the relative humidity measurement.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the humidity message in messages per second.  The humidity message contains the relative humidity measurement.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateBattery" UIText="Battery (Hz)" DocumentationTitle="Battery Send Rate" Type="Float" OscAddress="/rate/battery">
-    Send rate of the battery message in messages per second.  The battery message contains the battery voltage and current measurements as well as the states of the fuel gauge algorithm.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the battery message in messages per second.  The battery message contains the battery voltage and current measurements as well as the states of the fuel gauge algorithm.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateAnalogueInputs" UIText="Analogue Inputs (Hz)" DocumentationTitle="Analogue Inputs Send Rate" Type="Float" OscAddress="/rate/analogue">
-    Send rate of the analogue inputs message in messages per second.  The analogue inputs message contains measurements of the analogue inputs voltages.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the analogue inputs message in messages per second.  The analogue inputs message contains measurements of the analogue inputs voltages.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
     <Setting MemberName="SendRateRssi" UIText="RSSI (Hz)" DocumentationTitle="RSSI Send Rate" Type="Float" OscAddress="/rate/rssi">
-    Send rate of the RSSI message in messages per second.  The RSSI message contains the RSSI (Receive Signal Strength Indicator) measurement for the wireless connection. This measurement is only valid if the Wi-Fi module is operating in client mode.  The send rate value does not affect the internal sample rate of measurements.
+      Send rate of the RSSI message in messages per second.  The RSSI message contains the RSSI (Receive Signal Strength Indicator) measurement for the wireless connection. This measurement is only valid if the Wi-Fi module is operating in client mode.  The send rate value does not affect the internal sample rate of measurements.
     </Setting>
   </Category>
 
@@ -228,8 +231,6 @@
     <Setting MemberName="AuxSerialEnabled" UIText="Enabled" DocumentationTitle="Auxiliary Serial Enabled" Type="Bool" OscAddress="/auxserial/enabled">
     </Setting>
     <Setting MemberName="AuxSerialBaudRate" UIText="Baud Rate" DocumentationTitle="Auxiliary Serial Baud Rate" Type="UInt32" OscAddress="/auxserial/baud">
-    </Setting>
-    <Setting MemberName="AuxSerialBaudRateError" UIText="Baud Rate Error (%)" DocumentationTitle="Auxiliary Serial Baud Rate Error" Type="Float" OscAddress="/auxserial/error" Readonly="True">
     </Setting>
     <Setting MemberName="AuxSerialRtsCtsEnabled" UIText="RTS/CTS Enabled" DocumentationTitle="Auxiliary Serial RTS/CTS Enabled" Type="Bool" OscAddress="/auxserial/rtscts">
     </Setting>

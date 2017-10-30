@@ -111,7 +111,7 @@ namespace NgimuForms
         /// <returns>true if the rectangle is fully on a screen</returns>
         public static bool IsOnScreen(Rectangle rectangle)
         {
-            return Screen.AllScreens.Any(screen => screen.WorkingArea.Contains(rectangle));
+            return Screen.AllScreens.Any(screen => screen.WorkingArea.IntersectsWith(rectangle));
         }
 
         public static Rectangle CheckWindowBounds(Rectangle bounds)

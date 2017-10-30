@@ -28,6 +28,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                     
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Messages Per Second", MaxDataPoints = graphSampleBufferSize });
 
@@ -43,6 +44,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize });
@@ -61,6 +63,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize });
@@ -80,6 +83,7 @@ namespace NgimuGui
                     GraphType = GraphType.Timestamp,
                     ShowLegend = true,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize });
@@ -98,6 +102,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Barometer", MaxDataPoints = graphSampleBufferSize });
 
@@ -113,6 +118,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "Roll", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Pitch", MaxDataPoints = graphSampleBufferSize });
@@ -130,6 +136,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize });
@@ -147,6 +154,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "X", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Y", MaxDataPoints = graphSampleBufferSize });
@@ -164,6 +172,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Altitude", MaxDataPoints = graphSampleBufferSize });
 
@@ -179,6 +188,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "Processor", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Gyroscope And Accelerometer", MaxDataPoints = graphSampleBufferSize });
@@ -196,6 +206,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Humidity", MaxDataPoints = graphSampleBufferSize });
 
@@ -211,6 +222,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Battery Percentage", MaxDataPoints = graphSampleBufferSize });
 
@@ -226,6 +238,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Battery Time To Empty", MaxDataPoints = graphSampleBufferSize });
 
@@ -241,6 +254,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Battery Voltage", MaxDataPoints = graphSampleBufferSize });
 
@@ -256,6 +270,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Battery Current", MaxDataPoints = graphSampleBufferSize });
 
@@ -271,6 +286,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, highSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "1", MaxDataPoints = graphSampleBufferSize });
                 settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "2", MaxDataPoints = graphSampleBufferSize });
@@ -293,6 +309,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Power", MaxDataPoints = graphSampleBufferSize });
 
@@ -308,6 +325,7 @@ namespace NgimuGui
                     AxesRange = new AxesRange(0, -1, lowSpeedTimespan, 1),
                     GraphType = GraphType.Timestamp,
                     VerticalAutoscaleIndex = int.MaxValue,
+                    
                 };
                 settings.Traces.Add(new Trace() { Color = Colors.Yellow, Name = "Percentage (%)", MaxDataPoints = graphSampleBufferSize });
 

@@ -64,7 +64,7 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.m_LoadDefaultsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_RestoreDefaultsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_SendCommandMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_GraphsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_Form3DViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -364,7 +364,7 @@
             this.saveAsToolStripMenuItem,
             this.loadToolStripMenuItem,
             this.toolStripSeparator2,
-            this.m_LoadDefaultsMenuItem});
+            this.m_RestoreDefaultsMenuItem});
             this.m_SettingsMenuItem.Name = "m_SettingsMenuItem";
             this.m_SettingsMenuItem.Size = new System.Drawing.Size(61, 20);
             this.m_SettingsMenuItem.Text = "Settings";
@@ -409,15 +409,16 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(185, 6);
             // 
-            // m_LoadDefaultsMenuItem
+            // m_RestoreDefaultsMenuItem
             // 
-            this.m_LoadDefaultsMenuItem.Name = "m_LoadDefaultsMenuItem";
-            this.m_LoadDefaultsMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.m_LoadDefaultsMenuItem.Text = "Load Defaults";
-            this.m_LoadDefaultsMenuItem.Click += new System.EventHandler(this.loadDefaultsToolStripMenuItem_Click);
+            this.m_RestoreDefaultsMenuItem.Name = "m_RestoreDefaultsMenuItem";
+            this.m_RestoreDefaultsMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.m_RestoreDefaultsMenuItem.Text = "Restore Defaults";
+            this.m_RestoreDefaultsMenuItem.Click += new System.EventHandler(this.restoreDefaultsToolStripMenuItem_Click);
             // 
             // m_SendCommandMenuItem
             // 
+            this.m_SendCommandMenuItem.Enabled = false;
             this.m_SendCommandMenuItem.Name = "m_SendCommandMenuItem";
             this.m_SendCommandMenuItem.Size = new System.Drawing.Size(76, 20);
             this.m_SendCommandMenuItem.Text = "Command";
@@ -716,7 +717,7 @@
             // 
             this.m_AboutMenuItem.Name = "m_AboutMenuItem";
             this.m_AboutMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.m_AboutMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.m_AboutMenuItem.Size = new System.Drawing.Size(126, 22);
             this.m_AboutMenuItem.Text = "About";
             this.m_AboutMenuItem.Visible = false;
             this.m_AboutMenuItem.Click += new System.EventHandler(this.m_AboutMenuItem_Click);
@@ -724,7 +725,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -816,7 +817,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem m_MessagePerSecondMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem m_LoadDefaultsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_RestoreDefaultsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reconnectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem m_AuxSerialTerminalMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

@@ -25,9 +25,13 @@ namespace NgimuApi
 
         Upload,
 
+        SdCardStartLogging,
+
+        SdCardStopLogging,
+
         AhrsInitialise,
 
-        AhrsZero,
+        AhrsZeroYaw,
 
         Echo,
 
@@ -36,6 +40,7 @@ namespace NgimuApi
         EepromErase,
 
         Ahoy,
+
     }
 
     /// <summary>
@@ -74,9 +79,13 @@ namespace NgimuApi
 
             AddCommand(Command.Upload, "Upload", false, false, "/upload", new string[0]);
 
+            AddCommand(Command.SdCardStartLogging, "SD Card Start Logging", false, true, "/sd/start", new string[0]);
+
+            AddCommand(Command.SdCardStopLogging, "SD Card Stop Logging", false, true, "/sd/stop", new string[0]);
+
             AddCommand(Command.AhrsInitialise, "AHRS Initialise", false, true, "/ahrs/initialise", new string[0]);
 
-            AddCommand(Command.AhrsZero, "AHRS Zero Yaw", false, true, "/ahrs/zero", new string[0]);
+            AddCommand(Command.AhrsZeroYaw, "AHRS Zero Yaw", false, true, "/ahrs/zero", new string[0]);
 
             AddCommand(Command.Echo, "Echo", false, false, "/echo", new string[0]);
 
@@ -85,6 +94,7 @@ namespace NgimuApi
             AddCommand(Command.EepromErase, "EEPROM Erase", false, false, "/eeprom/erase", new string[0]);
 
             AddCommand(Command.Ahoy, "Ahoy", false, false, "/ahoy", new string[0]);
+
         }
 
         private static void AddCommand(Command command, string name, bool disconnectSerialOnSuccess, bool isVisible, string address, string[] args)

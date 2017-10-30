@@ -9,6 +9,12 @@ namespace NgimuGui.DialogsAndWindows
 {
     public partial class GraphWindow : BaseForm
     {
+        public enum TrackingMode : int
+        {
+            None = -1, 
+            All = int.MaxValue, 
+        }
+
         public readonly string ID;
 
         private GraphSettings defaultGraphSettings;
@@ -16,6 +22,8 @@ namespace NgimuGui.DialogsAndWindows
 
         private List<ToolStripMenuItem> horizontalTrackItems = new List<ToolStripMenuItem>();
         private List<ToolStripMenuItem> verticalTrackItems = new List<ToolStripMenuItem>();
+
+        private bool paused = false; 
 
         private string GraphSettingsFilePath { get { return Helper.ResolvePath("~/Graph Settings/" + defaultGraphSettings.Title + ".xml"); } }
 
@@ -38,36 +46,35 @@ namespace NgimuGui.DialogsAndWindows
             graph.ShowLegend = graphSettings.ShowLegend;
             graph.AxesRange = graphSettings.AxesRange;
             graph.YAxisLabel = graphSettings.YAxisLabel;
-            graph.Rolling = graphSettings.RollMode;
+            graph.LockXMouse = false;
+            graph.Rolling = true;
 
             graph.Traces.AddRange(defaultGraphSettings.Traces);
         }
 
         public void AddData(DateTime timestamp, int index, float value)
         {
+            if (paused)
+            {
+                return; 
+            }
+
             graph.AddScopeData(timestamp, index, value);
         }
 
         public void AddData(DateTime timestamp, params float[] values)
         {
+            if (paused)
+            {
+                return; 
+            }
+
             graph.AddScopeData(timestamp, values);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if ((keyData & Keys.Control) == Keys.Control && (keyData & Keys.Alt) == Keys.Alt)
-            {
-                keyData = keyData & ~(Keys.Control | Keys.Alt);
-
-                for (int i = 0; i < graph.Traces.Count + 1; i++)
-                {
-                    if ((keyData & (Keys)((int)Keys.D0 + i)) == (Keys)((int)Keys.D0 + i))
-                    {
-                        CenterOnTrace(i - 1);
-                    }
-                }
-            }
-            else if ((keyData & Keys.Control) == Keys.Control)
+            if ((keyData & Keys.Control) == Keys.Control)
             {
                 keyData = keyData & ~(Keys.Control | Keys.Alt);
 
@@ -81,11 +88,36 @@ namespace NgimuGui.DialogsAndWindows
                     graph.Clear();
                 }
 
+                if (keyData == Keys.Space)
+                {
+                    pauseToolStripMenuItem.PerformClick(); 
+                }
+
+                if (keyData == Keys.Right)
+                {
+                    graph.ZoomGraph(0.1f, 0);
+                }
+
+                if (keyData == Keys.Left)
+                {
+                    graph.ZoomGraph(-0.1f, 0);
+                }
+
+                if (keyData == Keys.Down)
+                {
+                    graph.ZoomGraph(0, 0.1f);
+                }
+
+                if (keyData == Keys.Up)
+                {
+                    graph.ZoomGraph(0, -0.1f);
+                }
+
                 for (int i = 0; i < graph.Traces.Count + 1; i++)
                 {
                     if (keyData == (Keys)((int)Keys.D0 + i))
                     {
-                        SetVerticalAutoscaleIndex(i - 1, false);
+                        SetVerticalAutoscaleIndex(i == 0 ? TrackingMode.All : (TrackingMode)(i - 1), false);
                     }
                 }
             }
@@ -93,11 +125,31 @@ namespace NgimuGui.DialogsAndWindows
             {
                 keyData = keyData & ~(Keys.Control | Keys.Alt);
 
+                if (keyData == Keys.Left)
+                {
+                    graph.ScrollGraph(-0.1f, 0);
+                }
+
+                if (keyData == Keys.Right)
+                {
+                    graph.ScrollGraph(0.1f, 0);
+                }
+
+                if (keyData == Keys.Down)
+                {
+                    graph.ScrollGraph(0, 0.1f);
+                }
+
+                if (keyData == Keys.Up)
+                {
+                    graph.ScrollGraph(0, -0.1f);
+                }
+
                 for (int i = 0; i < graph.Traces.Count + 1; i++)
                 {
                     if (keyData == (Keys)((int)Keys.D0 + i))
                     {
-                        SetHorizontalAutoscaleIndex(i - 1, false);
+                        SetHorizontalAutoscaleIndex(i == 0 ? TrackingMode.All : (TrackingMode)(i - 1), false);
                     }
                 }
             }
@@ -107,28 +159,28 @@ namespace NgimuGui.DialogsAndWindows
 
         private void allHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetHorizontalAutoscaleIndex(int.MaxValue, false);
+            SetHorizontalAutoscaleIndex(TrackingMode.All, false);
         }
 
         private void allVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetVerticalAutoscaleIndex(int.MaxValue, false);
+            SetVerticalAutoscaleIndex(TrackingMode.All, false);
         }
 
         private void CenterAll_Click(object sender, EventArgs e)
         {
-            CenterOnTrace(int.MaxValue);
+            CenterOnTrace(TrackingMode.All);
         }
 
         private void CenterItem_Click(object sender, EventArgs e)
         {
-            CenterOnTrace((int)(sender as ToolStripMenuItem).Tag);
+            CenterOnTrace((TrackingMode)(int)(sender as ToolStripMenuItem).Tag);
         }
 
-        private void CenterOnTrace(int index)
+        private void CenterOnTrace(TrackingMode modeOrIndex)
         {
-            SetVerticalAutoscaleIndex(-1, false);
-            graph.CenterOnTrace(index);
+            SetVerticalAutoscaleIndex(TrackingMode.None, false);
+            graph.CenterOnTrace((int)modeOrIndex);
         }
 
         /// <summary>
@@ -154,13 +206,6 @@ namespace NgimuGui.DialogsAndWindows
             int index = 0;
             foreach (Trace trace in graph.Traces)
             {
-                ToolStripMenuItem centerItem = new ToolStripMenuItem(trace.Name, null, CenterItem_Click, (Keys.Control | Keys.Alt | (Keys)(int)Keys.D1 + index))
-                {
-                    Tag = index,
-                };
-
-                centerTraceToolStripMenuItem.DropDownItems.Add(centerItem);
-
                 ToolStripMenuItem verticalTrackItem = new ToolStripMenuItem(trace.Name, null, VerticalTrackItem_Click, (Keys)((int)Shortcut.Ctrl1 + index))
                 {
                     Tag = index,
@@ -188,12 +233,12 @@ namespace NgimuGui.DialogsAndWindows
         {
             if (yChanged == true)
             {
-                SetVerticalAutoscaleIndex(-1, true);
+                SetVerticalAutoscaleIndex(TrackingMode.None, true);
             }
 
             if (xChanged == true)
             {
-                SetHorizontalAutoscaleIndex(-1, true);
+                SetHorizontalAutoscaleIndex(TrackingMode.None, true);
             }
         }
 
@@ -207,24 +252,9 @@ namespace NgimuGui.DialogsAndWindows
             graph.ZoomGraph(0.1f, 0);
         }
 
-        private void horizontalRollToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            if (graph.Rolling == horizontalRollToolStripMenuItem.Checked)
-            {
-                return;
-            }
-
-            graph.Rolling = horizontalRollToolStripMenuItem.Checked;
-            graph.Clear();
-            graph.AxesRange = graph.DefaultAxesRange;
-
-            graphSettings.RollMode = graph.Rolling;
-            graphSettings.AxesRange = graph.AxesRange;
-        }
-
         private void HorizontalTrackItem_Click(object sender, EventArgs e)
         {
-            SetHorizontalAutoscaleIndex((int)(sender as ToolStripMenuItem).Tag, false);
+            SetHorizontalAutoscaleIndex((TrackingMode)(int)(sender as ToolStripMenuItem).Tag, false);
         }
 
         private void resetViewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -249,11 +279,11 @@ namespace NgimuGui.DialogsAndWindows
             graph.ScrollGraph(0, 0.1f);
         }
 
-        private void SetHorizontalAutoscaleIndex(int index, bool @override)
+        private void SetHorizontalAutoscaleIndex(TrackingMode modeOrIndex, bool @override)
         {
-            if (@override == false && graph.TrackHorizontalTraceIndex == index && graph.TrackHorizontalTrace == true)
+            if (@override == false && graph.TrackHorizontalTraceIndex == (int)modeOrIndex && graph.TrackHorizontalTrace == true)
             {
-                index = -1;
+                modeOrIndex = TrackingMode.None;
             }
 
             bool anyChecked = false;
@@ -262,29 +292,32 @@ namespace NgimuGui.DialogsAndWindows
             {
                 if (i == 0)
                 {
-                    horizontalTrackItems[i].Checked = index >= horizontalTrackItems.Count;
+                    horizontalTrackItems[i].Checked = (int) modeOrIndex >= horizontalTrackItems.Count;
                 }
                 else
                 {
-                    horizontalTrackItems[i].Checked = i - 1 == index;
+                    horizontalTrackItems[i].Checked = i - 1 == (int)modeOrIndex;
                 }
 
                 anyChecked |= horizontalTrackItems[i].Checked;
             }
 
             horizontalAutoscaleMenuItem.Checked = anyChecked;
+            graph.LockXZoom = anyChecked;
+            horizonatalZoomOutMenuItem.Enabled = !anyChecked;
+            horizonatalZoomInMenuItem.Enabled = !anyChecked;
 
-            graph.TrackHorizontalTraceIndex = index;
-            graph.TrackHorizontalTrace = index >= 0;
+            graph.TrackHorizontalTraceIndex = (int)modeOrIndex;
+            graph.TrackHorizontalTrace = modeOrIndex >= 0;
 
-            graphSettings.HorizontalAutoscaleIndex = index;
+            graphSettings.HorizontalAutoscaleIndex = (int)modeOrIndex;
         }
 
-        private void SetVerticalAutoscaleIndex(int index, bool @override)
+        private void SetVerticalAutoscaleIndex(TrackingMode modeOrIndex, bool @override)
         {
-            if (@override == false && graph.TrackVerticalTraceIndex == index && graph.TrackVerticalTrace == true)
+            if (@override == false && graph.TrackVerticalTraceIndex == (int)modeOrIndex && graph.TrackVerticalTrace == true)
             {
-                index = -1;
+                modeOrIndex = TrackingMode.None;
             }
 
             bool anyChecked = false;
@@ -293,11 +326,11 @@ namespace NgimuGui.DialogsAndWindows
             {
                 if (i == 0)
                 {
-                    verticalTrackItems[i].Checked = index >= verticalTrackItems.Count;
+                    verticalTrackItems[i].Checked = (int)modeOrIndex >= verticalTrackItems.Count;
                 }
                 else
                 {
-                    verticalTrackItems[i].Checked = i - 1 == index;
+                    verticalTrackItems[i].Checked = i - 1 == (int)modeOrIndex;
                 }
 
                 anyChecked |= verticalTrackItems[i].Checked;
@@ -305,15 +338,22 @@ namespace NgimuGui.DialogsAndWindows
 
             verticalAutoscaleMenuItem.Checked = anyChecked;
 
-            graph.TrackVerticalTraceIndex = index;
-            graph.TrackVerticalTrace = index >= 0;
+            verticalZoomOutMenuItem.Enabled = !anyChecked;
+            verticalZoomInMenuItem.Enabled = !anyChecked;
+            verticalScrollUpToolStripMenuItem.Enabled = !anyChecked;
+            verticalScrollDownToolStripMenuItem.Enabled = !anyChecked;
 
-            graphSettings.VerticalAutoscaleIndex = index;
+            graph.LockYMouse = anyChecked; 
+            graph.LockYZoom = anyChecked;
+            graph.TrackVerticalTraceIndex = (int)modeOrIndex;
+            graph.TrackVerticalTrace = modeOrIndex >= 0;
+
+            graphSettings.VerticalAutoscaleIndex = (int)modeOrIndex;
         }
 
         private void VerticalTrackItem_Click(object sender, EventArgs e)
         {
-            SetVerticalAutoscaleIndex((int)(sender as ToolStripMenuItem).Tag, false);
+            SetVerticalAutoscaleIndex((TrackingMode)(int)(sender as ToolStripMenuItem).Tag, false);
         }
 
         private void verticalZoomInMenuItem_Click(object sender, EventArgs e)
@@ -347,18 +387,10 @@ namespace NgimuGui.DialogsAndWindows
 
             graph.AxesRange = currentRange;
 
-            bool rollModeChanged = graph.Rolling != graphSettings.RollMode;
-            graph.Rolling = graphSettings.RollMode;
+            graph.Rolling = true; 
 
-            horizontalRollToolStripMenuItem.Checked = graphSettings.RollMode;
-
-            if (rollModeChanged == true)
-            {
-                graph.Clear();
-            }
-
-            SetHorizontalAutoscaleIndex(graphSettings.HorizontalAutoscaleIndex, true);
-            SetVerticalAutoscaleIndex(graphSettings.VerticalAutoscaleIndex, true);
+            SetHorizontalAutoscaleIndex((TrackingMode)graphSettings.HorizontalAutoscaleIndex, true);
+            SetVerticalAutoscaleIndex((TrackingMode)graphSettings.VerticalAutoscaleIndex, true);
         }
 
         public void SetSampleBufferSize(uint graphSampleBufferSize)
@@ -387,6 +419,32 @@ namespace NgimuGui.DialogsAndWindows
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             graph.Clear();
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            paused = pauseToolStripMenuItem.Checked;
+            graph.LockXMouse = false;
+        }
+
+        private void horizontalScrollLeftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            graph.ScrollGraph(-0.1f, 0);
+        }
+
+        private void horizontalScrollRightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            graph.ScrollGraph(0.1f, 0);
+        }
+
+        private void verticalScrollDownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            graph.ScrollGraph(0, 0.1f);
+        }
+
+        private void verticalScrollUpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            graph.ScrollGraph(0, -0.1f);
         }
     }
 }

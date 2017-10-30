@@ -40,6 +40,7 @@
   </Setting>
   <Setting Address="/wifi/region">
   </Setting>
+  <Setting Address="/wifi/ap/ssid">This setting has no effect if Wi-Fi is not in AP mode.</Setting>
   <Setting Address="/wifi/ap/band">This setting has no effect if Wi-Fi is not in AP mode.</Setting>
   <Setting Address="/wifi/ap/2ghzchannel">This setting has no effect if Wi-Fi is not in AP mode.</Setting>
   <Setting Address="/wifi/ap/5ghzchannel">This setting has no effect if Wi-Fi is not in AP mode.</Setting>
@@ -66,11 +67,11 @@
   </Setting>
   <Setting Address="/serial/baud">
   </Setting>
-  <Setting Address="/serial/error">
-  </Setting>
   <Setting Address="/serial/rtscts">
   </Setting>
   <Setting Address="/serial/invert">
+  </Setting>
+  <Setting Address="/sd/automatic">
   </Setting>
   <Setting Address="/sd/prefix">
   </Setting>
@@ -103,8 +104,6 @@
   <Setting Address="/auxserial/enabled">
   </Setting>
   <Setting Address="/auxserial/baud">
-  </Setting>
-  <Setting Address="/auxserial/error">
   </Setting>
   <Setting Address="/auxserial/rtscts">
   </Setting>

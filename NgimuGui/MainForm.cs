@@ -314,7 +314,7 @@ namespace NgimuGui
         {
             m_ReadFromDeviceMenuItem.Enabled = false;
             m_WriteToDeviceMenuItem.Enabled = false;
-            m_LoadDefaultsMenuItem.Enabled = false;
+            m_RestoreDefaultsMenuItem.Enabled = false;
 
             m_ConnectUdpMenuItem.CheckState = CheckState.Unchecked;
             m_ConnectSerialMenuItem.CheckState = CheckState.Unchecked;
@@ -431,7 +431,7 @@ namespace NgimuGui
 
             m_ReadFromDeviceMenuItem.Enabled = true;
             m_WriteToDeviceMenuItem.Enabled = true;
-            m_LoadDefaultsMenuItem.Enabled = true;
+            m_RestoreDefaultsMenuItem.Enabled = true;
 
             this.Text = m_Title + " - " + m_Connection.Name;
 
@@ -442,6 +442,8 @@ namespace NgimuGui
                 // Read all the settings
                 m_SettingsPanel.ReadFromDevice();
             }
+
+            m_SendCommandMenuItem.Enabled = true;
         }
 
         void ActiveConnection_Disconnected(object sender, EventArgs e)
@@ -469,6 +471,8 @@ namespace NgimuGui
                 UncheckAllConnections();
 
                 m_SettingsPanel.OnDisconnect();
+
+                m_SendCommandMenuItem.Enabled = false;
 
                 m_Connection = null;
 
@@ -1375,7 +1379,7 @@ namespace NgimuGui
             }
         }
 
-        private void loadDefaultsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void restoreDefaultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (m_Connection == null)
             {
@@ -1384,7 +1388,7 @@ namespace NgimuGui
 
             lock (m_CommandProcessLock)
             {
-                if (this.ShowWarning("All settings will be returned to the default values. This may result in your current connection being lost.", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.Cancel)
+                if (this.ShowWarning("All settings will be restored to the default values. This may result in your current connection being lost.", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.Cancel)
                 {
                     return;
                 }

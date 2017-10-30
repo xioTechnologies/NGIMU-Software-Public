@@ -196,6 +196,11 @@ namespace NgimuApi
 		public ISettingValue<WifiRegion> WifiRegion { get; private set; }
 		
 		/// <summary>
+		/// Gets Wi-Fi AP SSID setting.
+		/// </summary>
+		public ISettingValue<string> WifiAPSsid { get; private set; }
+		
+		/// <summary>
 		/// Gets Wi-Fi AP Band setting.
 		/// </summary>
 		public ISettingValue<WifiBand> WifiAPBand { get; private set; }
@@ -291,11 +296,6 @@ namespace NgimuApi
 		public ISettingValue<uint> SerialBaudRate { get; private set; }
 		
 		/// <summary>
-		/// Gets Serial Baud Rate Error setting.
-		/// </summary>
-		public ISettingValue<float> SerialBaudRateError { get; private set; }
-		
-		/// <summary>
 		/// Gets Serial RTS/CTS Enabled setting.
 		/// </summary>
 		public ISettingValue<bool> SerialRtsCtsEnabled { get; private set; }
@@ -304,6 +304,11 @@ namespace NgimuApi
 		/// Gets Serial Invert Data Lines setting.
 		/// </summary>
 		public ISettingValue<bool> SerialInvertDataLines { get; private set; }
+		
+		/// <summary>
+		/// Gets SD Card Start/Stop Logging Automatically setting.
+		/// </summary>
+		public ISettingValue<bool> sdCardStartStopLoggingAutomatically { get; private set; }
 		
 		/// <summary>
 		/// Gets SD Card File Name Prefix setting.
@@ -424,11 +429,6 @@ namespace NgimuApi
 		/// Gets Auxiliary Serial Baud Rate setting.
 		/// </summary>
 		public ISettingValue<uint> AuxSerialBaudRate { get; private set; }
-		
-		/// <summary>
-		/// Gets Auxiliary Serial Baud Rate Error setting.
-		/// </summary>
-		public ISettingValue<float> AuxSerialBaudRateError { get; private set; }
 		
 		/// <summary>
 		/// Gets Auxiliary Serial RTS/CTS Enabled setting.
@@ -560,6 +560,7 @@ namespace NgimuApi
 			WifiMode = new SettingValue_WifiMode(Wifi, "Mode", "Wi-Fi Mode", LookupDocumentation("/wifi/mode"), "/wifi/mode", false, false);
 			WifiAntenna = new SettingValue_WifiAntenna(Wifi, "Antenna", "Wi-Fi Antenna", LookupDocumentation("/wifi/antenna"), "/wifi/antenna", false, false);
 			WifiRegion = new SettingValue_WifiRegion(Wifi, "Region", "Wi-Fi Region", LookupDocumentation("/wifi/region"), "/wifi/region", false, false);
+			WifiAPSsid = new SettingValue_String(Wifi.AP, "SSID", "Wi-Fi AP SSID", LookupDocumentation("/wifi/ap/ssid"), "/wifi/ap/ssid", true, false);
 			WifiAPBand = new SettingValue_WifiBand(Wifi.AP, "Band", "Wi-Fi AP Band", LookupDocumentation("/wifi/ap/band"), "/wifi/ap/band", false, false);
 			WifiAP2GHzChannel = new SettingValue_Wifi2GHzChannel(Wifi.AP, "2.4 GHz Channel", "Wi-Fi AP 2.4 GHz Channel", LookupDocumentation("/wifi/ap/2ghzchannel"), "/wifi/ap/2ghzchannel", false, false);
 			WifiAP5GHzChannel = new SettingValue_Wifi5GHzChannel(Wifi.AP, "5 GHz Channel", "Wi-Fi AP 5 GHz Channel", LookupDocumentation("/wifi/ap/5ghzchannel"), "/wifi/ap/5ghzchannel", false, false);
@@ -579,9 +580,9 @@ namespace NgimuApi
 			SynchronisationMasterLatency = new SettingValue_UInt32(Wifi.SynchronisationMaster, "Network Latency (ms)", "Synchronisation Network Latency", LookupDocumentation("/wifi/synchronisation/latency"), "/wifi/synchronisation/latency", false, false);
 			SerialEnabled = new SettingValue_Bool(Serial, "Enabled", "Serial Enabled", LookupDocumentation("/serial/enabled"), "/serial/enabled", false, false);
 			SerialBaudRate = new SettingValue_UInt32(Serial, "Baud Rate", "Serial Baud Rate", LookupDocumentation("/serial/baud"), "/serial/baud", false, false);
-			SerialBaudRateError = new SettingValue_Float(Serial, "Baud Rate Error (%)", "Serial Baud Rate Error", LookupDocumentation("/serial/error"), "/serial/error", true, false);
 			SerialRtsCtsEnabled = new SettingValue_Bool(Serial, "RTS/CTS Enabled", "Serial RTS/CTS Enabled", LookupDocumentation("/serial/rtscts"), "/serial/rtscts", false, false);
 			SerialInvertDataLines = new SettingValue_Bool(Serial, "Invert Data Lines", "Serial Invert Data Lines", LookupDocumentation("/serial/invert"), "/serial/invert", false, false);
+			sdCardStartStopLoggingAutomatically = new SettingValue_Bool(SDCard, "Start/Stop Logging Automatically", "SD Card Start/Stop Logging Automatically", LookupDocumentation("/sd/automatic"), "/sd/automatic", false, false);
 			sdCardFileNamePrefix = new SettingValue_String(SDCard, "File Name Prefix", "SD Card File Name Prefix", LookupDocumentation("/sd/prefix"), "/sd/prefix", false, false);
 			sdCardFileNumber = new SettingValue_UInt32(SDCard, "File Number", "SD Card File Number", LookupDocumentation("/sd/number"), "/sd/number", false, false);
 			sdCardMaxFileSize = new SettingValue_UInt32(SDCard, "Maximum File Size (MB)", "SD Card Maximum File Size", LookupDocumentation("/sd/size"), "/sd/size", false, false);
@@ -606,7 +607,6 @@ namespace NgimuApi
 			SendRateRssi = new SettingValue_Float(SendRates, "RSSI (Hz)", "RSSI Send Rate", LookupDocumentation("/rate/rssi"), "/rate/rssi", false, false);
 			AuxSerialEnabled = new SettingValue_Bool(AuxiliarySerial, "Enabled", "Auxiliary Serial Enabled", LookupDocumentation("/auxserial/enabled"), "/auxserial/enabled", false, false);
 			AuxSerialBaudRate = new SettingValue_UInt32(AuxiliarySerial, "Baud Rate", "Auxiliary Serial Baud Rate", LookupDocumentation("/auxserial/baud"), "/auxserial/baud", false, false);
-			AuxSerialBaudRateError = new SettingValue_Float(AuxiliarySerial, "Baud Rate Error (%)", "Auxiliary Serial Baud Rate Error", LookupDocumentation("/auxserial/error"), "/auxserial/error", true, false);
 			AuxSerialRtsCtsEnabled = new SettingValue_Bool(AuxiliarySerial, "RTS/CTS Enabled", "Auxiliary Serial RTS/CTS Enabled", LookupDocumentation("/auxserial/rtscts"), "/auxserial/rtscts", false, false);
 			AuxSerialInvertDataLines = new SettingValue_Bool(AuxiliarySerial, "Invert Data Lines", "Auxiliary Serial Invert Data Lines", LookupDocumentation("/auxserial/invert"), "/auxserial/invert", false, false);
 			AuxSerialOscPassthrough = new SettingValue_Bool(AuxiliarySerial, "OSC Passthrough", "Auxiliary Serial OSC Passthrough", LookupDocumentation("/auxserial/passthrough"), "/auxserial/passthrough", false, false);
@@ -946,6 +946,11 @@ namespace NgimuApi
 			public override bool IsHidden { get { return false; } }
 		
 			/// <summary>
+			/// Gets Wi-Fi AP SSID setting.
+			/// </summary>
+			public ISettingValue<string> WifiAPSsid { get; private set; }
+			
+			/// <summary>
 			/// Gets Wi-Fi AP Band setting.
 			/// </summary>
 			public ISettingValue<WifiBand> WifiAPBand { get; private set; }
@@ -968,10 +973,12 @@ namespace NgimuApi
 		
 			internal override void AttachSettings(Settings settings)
 			{
+				WifiAPSsid = settings.WifiAPSsid;
 				WifiAPBand = settings.WifiAPBand;
 				WifiAP2GHzChannel = settings.WifiAP2GHzChannel;
 				WifiAP5GHzChannel = settings.WifiAP5GHzChannel;
 				
+				Add(settings.WifiAPSsid);
 				Add(settings.WifiAPBand);
 				Add(settings.WifiAP2GHzChannel);
 				Add(settings.WifiAP5GHzChannel);
@@ -984,6 +991,7 @@ namespace NgimuApi
 			/// <param name="other">Another category</param>
 		    public void CopyTo(AP other)
 		    {
+				if (WifiAPSsid.IsValueUndefined == false) { other.WifiAPSsid.Value = WifiAPSsid.Value; }
 				if (WifiAPBand.IsValueUndefined == false) { other.WifiAPBand.Value = WifiAPBand.Value; }
 				if (WifiAP2GHzChannel.IsValueUndefined == false) { other.WifiAP2GHzChannel.Value = WifiAP2GHzChannel.Value; }
 				if (WifiAP5GHzChannel.IsValueUndefined == false) { other.WifiAP5GHzChannel.Value = WifiAP5GHzChannel.Value; }
@@ -1433,11 +1441,6 @@ namespace NgimuApi
 			public ISettingValue<uint> SerialBaudRate { get; private set; }
 			
 			/// <summary>
-			/// Gets Serial Baud Rate Error setting.
-			/// </summary>
-			public ISettingValue<float> SerialBaudRateError { get; private set; }
-			
-			/// <summary>
 			/// Gets Serial RTS/CTS Enabled setting.
 			/// </summary>
 			public ISettingValue<bool> SerialRtsCtsEnabled { get; private set; }
@@ -1457,13 +1460,11 @@ namespace NgimuApi
 			{
 				SerialEnabled = settings.SerialEnabled;
 				SerialBaudRate = settings.SerialBaudRate;
-				SerialBaudRateError = settings.SerialBaudRateError;
 				SerialRtsCtsEnabled = settings.SerialRtsCtsEnabled;
 				SerialInvertDataLines = settings.SerialInvertDataLines;
 				
 				Add(settings.SerialEnabled);
 				Add(settings.SerialBaudRate);
-				Add(settings.SerialBaudRateError);
 				Add(settings.SerialRtsCtsEnabled);
 				Add(settings.SerialInvertDataLines);
 				Finalise();
@@ -1477,7 +1478,6 @@ namespace NgimuApi
 		    {
 				if (SerialEnabled.IsValueUndefined == false) { other.SerialEnabled.Value = SerialEnabled.Value; }
 				if (SerialBaudRate.IsValueUndefined == false) { other.SerialBaudRate.Value = SerialBaudRate.Value; }
-				if (SerialBaudRateError.IsValueUndefined == false) { other.SerialBaudRateError.Value = SerialBaudRateError.Value; }
 				if (SerialRtsCtsEnabled.IsValueUndefined == false) { other.SerialRtsCtsEnabled.Value = SerialRtsCtsEnabled.Value; }
 				if (SerialInvertDataLines.IsValueUndefined == false) { other.SerialInvertDataLines.Value = SerialInvertDataLines.Value; }
 		    }
@@ -1513,6 +1513,11 @@ namespace NgimuApi
 			public override bool IsHidden { get { return false; } }
 		
 			/// <summary>
+			/// Gets SD Card Start/Stop Logging Automatically setting.
+			/// </summary>
+			public ISettingValue<bool> sdCardStartStopLoggingAutomatically { get; private set; }
+			
+			/// <summary>
 			/// Gets SD Card File Name Prefix setting.
 			/// </summary>
 			public ISettingValue<string> sdCardFileNamePrefix { get; private set; }
@@ -1540,11 +1545,13 @@ namespace NgimuApi
 		
 			internal override void AttachSettings(Settings settings)
 			{
+				sdCardStartStopLoggingAutomatically = settings.sdCardStartStopLoggingAutomatically;
 				sdCardFileNamePrefix = settings.sdCardFileNamePrefix;
 				sdCardFileNumber = settings.sdCardFileNumber;
 				sdCardMaxFileSize = settings.sdCardMaxFileSize;
 				sdCardMaxFilePeriod = settings.sdCardMaxFilePeriod;
 				
+				Add(settings.sdCardStartStopLoggingAutomatically);
 				Add(settings.sdCardFileNamePrefix);
 				Add(settings.sdCardFileNumber);
 				Add(settings.sdCardMaxFileSize);
@@ -1558,6 +1565,7 @@ namespace NgimuApi
 			/// <param name="other">Another category</param>
 		    public void CopyTo(SDCard other)
 		    {
+				if (sdCardStartStopLoggingAutomatically.IsValueUndefined == false) { other.sdCardStartStopLoggingAutomatically.Value = sdCardStartStopLoggingAutomatically.Value; }
 				if (sdCardFileNamePrefix.IsValueUndefined == false) { other.sdCardFileNamePrefix.Value = sdCardFileNamePrefix.Value; }
 				if (sdCardFileNumber.IsValueUndefined == false) { other.sdCardFileNumber.Value = sdCardFileNumber.Value; }
 				if (sdCardMaxFileSize.IsValueUndefined == false) { other.sdCardMaxFileSize.Value = sdCardMaxFileSize.Value; }
@@ -1981,11 +1989,6 @@ namespace NgimuApi
 			public ISettingValue<uint> AuxSerialBaudRate { get; private set; }
 			
 			/// <summary>
-			/// Gets Auxiliary Serial Baud Rate Error setting.
-			/// </summary>
-			public ISettingValue<float> AuxSerialBaudRateError { get; private set; }
-			
-			/// <summary>
 			/// Gets Auxiliary Serial RTS/CTS Enabled setting.
 			/// </summary>
 			public ISettingValue<bool> AuxSerialRtsCtsEnabled { get; private set; }
@@ -2020,7 +2023,6 @@ namespace NgimuApi
 			{
 				AuxSerialEnabled = settings.AuxSerialEnabled;
 				AuxSerialBaudRate = settings.AuxSerialBaudRate;
-				AuxSerialBaudRateError = settings.AuxSerialBaudRateError;
 				AuxSerialRtsCtsEnabled = settings.AuxSerialRtsCtsEnabled;
 				AuxSerialInvertDataLines = settings.AuxSerialInvertDataLines;
 				AuxSerialOscPassthrough = settings.AuxSerialOscPassthrough;
@@ -2029,7 +2031,6 @@ namespace NgimuApi
 				
 				Add(settings.AuxSerialEnabled);
 				Add(settings.AuxSerialBaudRate);
-				Add(settings.AuxSerialBaudRateError);
 				Add(settings.AuxSerialRtsCtsEnabled);
 				Add(settings.AuxSerialInvertDataLines);
 				Add(settings.AuxSerialOscPassthrough);
@@ -2046,7 +2047,6 @@ namespace NgimuApi
 		    {
 				if (AuxSerialEnabled.IsValueUndefined == false) { other.AuxSerialEnabled.Value = AuxSerialEnabled.Value; }
 				if (AuxSerialBaudRate.IsValueUndefined == false) { other.AuxSerialBaudRate.Value = AuxSerialBaudRate.Value; }
-				if (AuxSerialBaudRateError.IsValueUndefined == false) { other.AuxSerialBaudRateError.Value = AuxSerialBaudRateError.Value; }
 				if (AuxSerialRtsCtsEnabled.IsValueUndefined == false) { other.AuxSerialRtsCtsEnabled.Value = AuxSerialRtsCtsEnabled.Value; }
 				if (AuxSerialInvertDataLines.IsValueUndefined == false) { other.AuxSerialInvertDataLines.Value = AuxSerialInvertDataLines.Value; }
 				if (AuxSerialOscPassthrough.IsValueUndefined == false) { other.AuxSerialOscPassthrough.Value = AuxSerialOscPassthrough.Value; }

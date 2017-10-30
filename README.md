@@ -1,6 +1,17 @@
 NGIMU-Software
 ==============
 
+v1.8 (Oct 30 2017)
+------------------
+* Rename "Load defaults" to "Restore defaults"
+* Disable commands in NGIMU GUI when not connected
+* Add commands to start/stop logging to SD card
+* Graphs always in roll mode
+* Graph vertical autoscale now applies to visible data only
+* Redesign graph context menu and keyboard/mouse controls
+* Fix bug that meant graph window position would be forgotten if any part was off screen
+* Fix bug that meant extremely high values could cause the graph to crash
+
 v1.7 (Sep 19 2017)
 ------------------
 * Fix bug in API affecting SD card file conversion
