@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -23,9 +24,11 @@ namespace NgimuSynchronisedNetworkManager
     {
         public const int SynchronisationMasterPort = 9000;
         public const string DefaultWifiClientSSID = "NGIMU Router 5 GHz (Hidden)";
-        public const float DefaultSendRateRssi = 2; 
+        public const float DefaultSendRateRssi = 2;
 
         List<ConnectionRow> connectionsRows = new List<ConnectionRow>();
+
+        private List<Image> icons = new List<Image>();
 
         enum ColumnIndex
         {
@@ -48,6 +51,53 @@ namespace NgimuSynchronisedNetworkManager
             public Connection Connection { get; set; }
 
             public DataGridViewRow Row { get; set; }
+
+            public ConnectionIcon Icon { get; set; } = ConnectionIcon.Information;
+            public IconInfo Error { get; set; }
+            public IconInfo Warning { get; set; }
+            public IconInfo Information { get; set; }
+
+            private int needsToRedrawIcons = 0; 
+
+            public bool CheckForIconRedraw()
+            {
+                return Interlocked.Exchange(ref needsToRedrawIcons, 0) != 0; 
+            }
+
+            public void SetError(string message)
+            {
+                Error.Message = message;
+                Error.Visible = true;
+
+                Interlocked.Exchange(ref needsToRedrawIcons, 1);
+            }
+
+            public void SetWarning(string message)
+            {
+                Warning.Message = message;
+                Warning.Visible = true;
+
+                Interlocked.Exchange(ref needsToRedrawIcons, 1);
+            }
+
+            public void SetInformation(string message)
+            {
+                Information.Message = message;
+                Information.Visible = true;
+
+                Interlocked.Exchange(ref needsToRedrawIcons, 1);
+            }
+        }
+
+        enum ConnectionIcon
+        {
+            None = 0,
+            Question = 1,
+            Asterisk = 2,
+            Exclamation = 3,
+            Error = 4,
+            Information = 5,
+            Warning = 6,
         }
 
         private DataLoggerWindow dataLogger;
@@ -58,16 +108,10 @@ namespace NgimuSynchronisedNetworkManager
         private bool synchronisationMasterTimeConfirmedByUser = false;
         private DataForwardingDialog dataForwardingDialog;
 
-        private ConnectionRow SynchronisationMasterRow
-        {
-            get
-            {
-                return (from connectionRow in connectionsRows
-                        let isMaster = connectionRow.Connection.Settings.SynchronisationMasterEnabled.HasRemoteValue == true && connectionRow.Connection.Settings.SynchronisationMasterEnabled.RemoteValue == true
-                        where isMaster == true
-                        select connectionRow).FirstOrDefault();
-            }
-        }
+        private ConnectionRow SynchronisationMasterRow => (from connectionRow in connectionsRows
+                                                           let isMaster = connectionRow.Connection.Settings.SynchronisationMasterEnabled.HasRemoteValue == true && connectionRow.Connection.Settings.SynchronisationMasterEnabled.RemoteValue == true
+                                                           where isMaster == true
+                                                           select connectionRow).FirstOrDefault();
 
 
         public MainForm()
@@ -81,6 +125,14 @@ namespace NgimuSynchronisedNetworkManager
             title = typeof(MainForm).Assembly.GetName().Name + " v" + typeof(MainForm).Assembly.GetName().Version.Major + "." + typeof(MainForm).Assembly.GetName().Version.Minor;
 
             SetTitle();
+
+            icons.Add(null);
+            icons.Add(GetImage(SystemIcons.Question));
+            icons.Add(GetImage(SystemIcons.Asterisk));
+            icons.Add(GetImage(SystemIcons.Exclamation));
+            icons.Add(GetImage(SystemIcons.Error));
+            icons.Add(GetImage(SystemIcons.Information));
+            icons.Add(GetImage(SystemIcons.Warning));
 
             List<ToolStripMenuItem> commandItems = new List<ToolStripMenuItem>();
 
@@ -112,6 +164,14 @@ namespace NgimuSynchronisedNetworkManager
             }
 
             commandsToolStripMenuItem.DropDownItems.AddRange(commandItems.ToArray());
+        }
+
+        private Image GetImage(Icon icon)
+        {
+            using (Image image = icon.ToBitmap())
+            {
+                return TextAndIconColumn.ResizeImage(image, 24, 24);
+            }
         }
 
         private void searchForConnectionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -178,6 +238,15 @@ namespace NgimuSynchronisedNetworkManager
                     connectionRow.Row = dataGridView1.Rows[dataGridView1.Rows.Add(cells)];
                     connectionRow.Row.Tag = connectionRow;
 
+                    connectionRow.Information = new IconInfo() { Image = icons[(int)ConnectionIcon.Information], Message = "", MessageIcon = MessageBoxIcon.Information, Visible = false };
+                    connectionRow.Warning = new IconInfo() { Image = icons[(int)ConnectionIcon.Warning], Message = "", MessageIcon = MessageBoxIcon.Warning, Visible = false };
+                    connectionRow.Error = new IconInfo() { Image = icons[(int)ConnectionIcon.Error], Message = "", MessageIcon = MessageBoxIcon.Error, Visible = false };
+
+                    (connectionRow.Row.Cells[(int)ColumnIndex.Device] as TextAndIconCell).Add(connectionRow.Information);
+                    (connectionRow.Row.Cells[(int)ColumnIndex.Device] as TextAndIconCell).Add(connectionRow.Warning);
+                    (connectionRow.Row.Cells[(int)ColumnIndex.Device] as TextAndIconCell).Add(connectionRow.Error);
+  
+
                     connectionRow.Connection.Battery.Received += (s, arg) =>
                     {
                         string text = String.Format("{0}%" + Environment.NewLine, connectionRow.Connection.Battery.Percentage.ToString("F0", CultureInfo.InvariantCulture));
@@ -220,30 +289,30 @@ namespace NgimuSynchronisedNetworkManager
 
             CreateSynchronisationMasterListener();
 
-            ApplySort(); 
+            ApplySort();
         }
 
         private void Connection_Message(Connection source, MessageDirection direction, OscMessage message)
         {
             if (direction == MessageDirection.Transmit)
             {
-                return; 
+                return;
             }
 
-            dataForwardingDialog?.OnMessage(source, message); 
+            dataForwardingDialog?.OnMessage(source, message);
         }
 
         private void ApplySort()
         {
             if (dataGridView1.SortedColumn == null || dataGridView1.SortOrder == SortOrder.None)
             {
-                return; 
+                return;
             }
 
-            ListSortDirection direction = 
-                dataGridView1.SortOrder == SortOrder.Ascending ? 
-                    ListSortDirection.Ascending : 
-                    ListSortDirection.Descending; 
+            ListSortDirection direction =
+                dataGridView1.SortOrder == SortOrder.Ascending ?
+                    ListSortDirection.Ascending :
+                    ListSortDirection.Descending;
 
             dataGridView1.Sort(dataGridView1.SortedColumn, direction);
         }
@@ -259,7 +328,10 @@ namespace NgimuSynchronisedNetworkManager
             {
                 Settings settings = connectionRow.Connection.Settings;
 
-                this.ShowIncompatableFirmwareWarning(settings);
+                if (this.TryGetIncompatableFirmwareWarningMessage(settings, out string message) == true)
+                {
+                    connectionRow.SetWarning(message); 
+                }
 
                 if (settings.SynchronisationMasterEnabled.Value == true)
                 {
@@ -374,7 +446,7 @@ namespace NgimuSynchronisedNetworkManager
             if (someDevicesHaveRssiSendRateOfZero == true)
             {
                 StringBuilder sb = new StringBuilder();
-                
+
                 sb.AppendLine("The RSSI send rate of one or more devices is set to zero.");
                 sb.AppendLine();
                 sb.Append($"Click OK to set the RSSI send rate to {DefaultSendRateRssi} Hz for all devices.");
@@ -423,7 +495,7 @@ namespace NgimuSynchronisedNetworkManager
             bool canceled = false;
             int currentProgress = 0;
 
-            string currentConnectionString = ""; 
+            string currentConnectionString = "";
 
             Thread connectingToMultipleConnections = new Thread(() =>
             {
@@ -454,7 +526,7 @@ namespace NgimuSynchronisedNetworkManager
 
                         ConnectionSearchResult autoConnectionInfo = connectionSearchResults[i];
 
-                        currentConnectionString = "Connecting to " + autoConnectionInfo.DeviceDescriptor + ". "; 
+                        currentConnectionString = "Connecting to " + autoConnectionInfo.DeviceDescriptor + ". ";
 
                         progress.UpdateProgress(currentProgress++, autoConnectionInfo.DeviceDescriptor);
 
@@ -717,7 +789,7 @@ namespace NgimuSynchronisedNetworkManager
         }
 
         private void OnSyncMessage(OscMessage message)
-        {            
+        {
             if (message.Count != 1)
             {
                 return;
@@ -738,7 +810,7 @@ namespace NgimuSynchronisedNetworkManager
             {
                 synchronisationMasterTimeLabel.Text = string.Format(synchronisationMasterTimeLabel.Tag.ToString(), NgimuApi.Helper.DateTimeToString(synchronisationMasterTime, false));
             }));
-            
+
             if (synchronisationMasterRow == null)
             {
                 return;
@@ -752,9 +824,31 @@ namespace NgimuSynchronisedNetworkManager
 
                 sb.AppendLine("More than one synchronisation master is sending on the network.");
 
-                this.InvokeShowError(sb.ToString());
-                
-                return; 
+                //this.InvokeShowError(sb.ToString());
+
+                sb.AppendLine();
+                sb.Append("Click OK to configure the first device as the synchronisation master.");
+
+                Invoke(new MethodInvoker(() =>
+                {
+                    switch (this.ShowError(sb.ToString(), MessageBoxButtons.OKCancel))
+                    {
+                        case DialogResult.OK:
+                            SelectSynchronisationMaster(connectionsRows[0]);
+                            break;
+                        case DialogResult.Cancel:
+                            DisconnectAll();
+                            return;
+                        default:
+                            break;
+                    }
+                }));
+
+                // destroy and recreate the sync master listener to clear out any junk messages that might have backed up when waiting for user input
+                synchronisationMasterListener?.Dispose();
+                CreateSynchronisationMasterListener();
+
+                return;
             }
 
             if (synchronisationMasterTimeConfirmedByUser == true)
@@ -829,7 +923,49 @@ namespace NgimuSynchronisedNetworkManager
         {
             DisconnectAll();
 
-            dataForwardingDialog?.Close(); 
+            dataForwardingDialog?.Close();
+        }
+
+        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            switch ((ColumnIndex) e.ColumnIndex)
+            {
+                case ColumnIndex.Device:
+                    Point mousePoint = dataGridView1.PointToClient(Control.MousePosition);
+
+                    if ((dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex] as TextAndIconCell).TryClick(mousePoint, out IconInfo iconInfo) == false)
+                    {
+                        return; 
+                    }
+
+                    iconInfo.Visible = false;
+
+                    switch (iconInfo.MessageIcon)
+                    {
+                        case MessageBoxIcon.None:
+                            break;
+                        case MessageBoxIcon.Warning:
+                            this.ShowWarning(iconInfo.Message, MessageBoxButtons.OK); 
+                            break;
+                        case MessageBoxIcon.Error:
+                            this.ShowError(iconInfo.Message, MessageBoxButtons.OK);
+                            break;
+                        case MessageBoxIcon.Information:
+                            this.ShowInformation(iconInfo.Message, MessageBoxButtons.OK);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -918,6 +1054,11 @@ namespace NgimuSynchronisedNetworkManager
                 }
 
                 connection.Row.SetValues(connection.Cells);
+
+                if (connection.CheckForIconRedraw())
+                {
+                    dataGridView1.InvalidateCell(connection.Row.Cells[0]); 
+                }
             }
 
             dataGridView1.ResumeLayout();
@@ -1022,7 +1163,7 @@ namespace NgimuSynchronisedNetworkManager
                     // search for serial only connections
                     using (SearchForConnections searchForConnections = new SearchForConnections(ConnectionSearchTypes.Serial))
                     {
-                        searchForConnections.DeviceDiscovered += delegate(ConnectionSearchResult connectionSearchResult)
+                        searchForConnections.DeviceDiscovered += delegate (ConnectionSearchResult connectionSearchResult)
                         {
                             found = true;
                             foundConnectionSearchResult = connectionSearchResult;
@@ -1040,12 +1181,12 @@ namespace NgimuSynchronisedNetworkManager
 
                     if (hasBeenCanceled == true)
                     {
-                        break; 
+                        break;
                     }
 
                     if (foundConnectionSearchResult == null)
                     {
-                        break; 
+                        break;
                     }
 
                     string deviceDescriptor = foundConnectionSearchResult.DeviceDescriptor;
@@ -1063,7 +1204,7 @@ namespace NgimuSynchronisedNetworkManager
 
                         progress.UpdateProgress(0, $"Writing settings to device {deviceDescriptor}.");
 
-                        this.WriteSettingsWithExistingProgress(progress, new [] { connection.Settings });        
+                        this.WriteSettingsWithExistingProgress(progress, new[] { connection.Settings });
                     }
 
                     //if (hasBeenCanceled == true)
@@ -1085,19 +1226,21 @@ namespace NgimuSynchronisedNetworkManager
 
         private void dataForwardingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dataForwardingDialog == null)
+            if (dataForwardingDialog != null)
             {
-                dataForwardingDialog = new DataForwardingDialog();
-
-                dataForwardingDialog.FormClosed += DataForwardingDialog_FormClosed;
-
-                dataForwardingDialog.Show(); 
+                return;
             }
+
+            dataForwardingDialog = new DataForwardingDialog();
+
+            dataForwardingDialog.FormClosed += DataForwardingDialog_FormClosed;
+
+            dataForwardingDialog.Show();
         }
 
         private void DataForwardingDialog_FormClosed(object sender, FormClosedEventArgs e)
         {
-            dataForwardingDialog = null; 
+            dataForwardingDialog = null;
         }
     }
 

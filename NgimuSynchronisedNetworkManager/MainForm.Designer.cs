@@ -32,7 +32,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.synchronisationMasterTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Device = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Device = new NgimuForms.Controls.TextAndIconColumn();
             this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.MessagesReceived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MessagesSent = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,11 +48,11 @@
             this.commandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataLoggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataForwardingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureWirelessSettingsViaUSBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerFast = new System.Windows.Forms.Timer(this.components);
-            this.dataForwardingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -103,6 +103,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(784, 515);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             // 
             // Device
             // 
@@ -244,6 +245,13 @@
             this.dataLoggerToolStripMenuItem.Text = "Data Logger";
             this.dataLoggerToolStripMenuItem.Click += new System.EventHandler(this.dataLoggerToolStripMenuItem_Click);
             // 
+            // dataForwardingToolStripMenuItem
+            // 
+            this.dataForwardingToolStripMenuItem.Name = "dataForwardingToolStripMenuItem";
+            this.dataForwardingToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.dataForwardingToolStripMenuItem.Text = "Data Forwarding";
+            this.dataForwardingToolStripMenuItem.Click += new System.EventHandler(this.dataForwardingToolStripMenuItem_Click);
+            // 
             // configureWirelessSettingsViaUSBToolStripMenuItem
             // 
             this.configureWirelessSettingsViaUSBToolStripMenuItem.Name = "configureWirelessSettingsViaUSBToolStripMenuItem";
@@ -272,13 +280,6 @@
             this.timerFast.Enabled = true;
             this.timerFast.Interval = 50;
             this.timerFast.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // dataForwardingToolStripMenuItem
-            // 
-            this.dataForwardingToolStripMenuItem.Name = "dataForwardingToolStripMenuItem";
-            this.dataForwardingToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
-            this.dataForwardingToolStripMenuItem.Text = "Data Forwarding";
-            this.dataForwardingToolStripMenuItem.Click += new System.EventHandler(this.dataForwardingToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -320,16 +321,16 @@
         private System.Windows.Forms.ToolStripMenuItem sendRatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel synchronisationMasterTimeLabel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Device;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem configureWirelessSettingsViaUSBToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataForwardingToolStripMenuItem;
+        private NgimuForms.Controls.TextAndIconColumn Device;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Master;
         private System.Windows.Forms.DataGridViewTextBoxColumn MessagesReceived;
         private System.Windows.Forms.DataGridViewTextBoxColumn MessagesSent;
         private Controls.DataGridViewProgressColumn BatteryPercentage;
         private Controls.DataGridViewProgressColumn Signal;
         private System.Windows.Forms.DataGridViewButtonColumn Identify;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configureWirelessSettingsViaUSBToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dataForwardingToolStripMenuItem;
     }
 }
 

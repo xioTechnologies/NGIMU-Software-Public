@@ -46,7 +46,8 @@ namespace NgimuGui.DialogsAndWindows
             graph.ShowLegend = graphSettings.ShowLegend;
             graph.AxesRange = graphSettings.AxesRange;
             graph.YAxisLabel = graphSettings.YAxisLabel;
-            graph.LockXMouse = false;
+            graph.LockXMouse = true;
+            graph.ZoomFromXMin = graph.LockXMouse;
             graph.Rolling = true;
 
             graph.Traces.AddRange(defaultGraphSettings.Traces);
@@ -127,12 +128,12 @@ namespace NgimuGui.DialogsAndWindows
 
                 if (keyData == Keys.Left)
                 {
-                    graph.ScrollGraph(-0.1f, 0);
+                    graph.ScrollGraph(0.1f, 0);
                 }
 
                 if (keyData == Keys.Right)
                 {
-                    graph.ScrollGraph(0.1f, 0);
+                    graph.ScrollGraph(-0.1f, 0);
                 }
 
                 if (keyData == Keys.Down)
@@ -264,21 +265,6 @@ namespace NgimuGui.DialogsAndWindows
             graph.ResetView();
         }
 
-        private void scrollDownToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            graph.ScrollGraph(0, -0.1f);
-        }
-
-        private void scrollLeftToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            graph.ScrollGraph(-0.1f, 0f);
-        }
-
-        private void scrollUpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            graph.ScrollGraph(0, 0.1f);
-        }
-
         private void SetHorizontalAutoscaleIndex(TrackingMode modeOrIndex, bool @override)
         {
             if (@override == false && graph.TrackHorizontalTraceIndex == (int)modeOrIndex && graph.TrackHorizontalTrace == true)
@@ -366,11 +352,6 @@ namespace NgimuGui.DialogsAndWindows
             graph.ZoomGraph(0, 0.1f);
         }
 
-        private void xScrollRightToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            graph.ScrollGraph(0.1f, 0f);
-        }
-
         private void graph_ViewReset(object sender, EventArgs e)
         {
             graphSettings = defaultGraphSettings.Clone();
@@ -424,25 +405,28 @@ namespace NgimuGui.DialogsAndWindows
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             paused = pauseToolStripMenuItem.Checked;
-            graph.LockXMouse = false;
+            graph.LockXMouse = !paused;
+            graph.ZoomFromXMin = graph.LockXMouse;
+            horizontalScrollLeftToolStripMenuItem.Enabled = paused;
+            horizontalScrollRightToolStripMenuItem.Enabled = paused;
         }
 
         private void horizontalScrollLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            graph.ScrollGraph(-0.1f, 0);
+            graph.ScrollGraph(0.1f, 0);
         }
 
         private void horizontalScrollRightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            graph.ScrollGraph(0.1f, 0);
+            graph.ScrollGraph(-0.1f, 0);
         }
 
-        private void verticalScrollDownToolStripMenuItem_Click(object sender, EventArgs e)
+        private void verticalScrollUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             graph.ScrollGraph(0, 0.1f);
         }
 
-        private void verticalScrollUpToolStripMenuItem_Click(object sender, EventArgs e)
+        private void verticalScrollDownToolStripMenuItem_Click(object sender, EventArgs e)
         {
             graph.ScrollGraph(0, -0.1f);
         }

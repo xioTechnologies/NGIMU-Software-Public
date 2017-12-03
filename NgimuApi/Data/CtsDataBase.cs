@@ -15,7 +15,7 @@ namespace NgimuApi.Data
             {
                 return Helper.ToCsv(
                         "Time (s)",
-                        "State");
+                        "State (Boolean)");
             }
         }
 
@@ -23,7 +23,7 @@ namespace NgimuApi.Data
         {
             return Helper.ToCsv(
                     CreateTimestampString(firstTimestamp),
-                    State ? 1 : 0
+                    State
                     );
         }
 

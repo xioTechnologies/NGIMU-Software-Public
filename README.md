@@ -1,6 +1,18 @@
 NGIMU-Software
 ==============
 
+v1.9 (Dec 01 2017)
+------------------
+* CSV files represent infinity and NaN as zero
+* Battery CSV files includes "Is Charger Connected" column
+* Data Forwarding to local host is enabled by default
+* Fix issue with Data Forwarding radio buttons
+* NGIMU Synchronised Network Manager displays firmware version warning an icon in the device column
+* Adjust GUI default options
+* Handle exception when serial hardware flow control permanently inhibit sending
+* Graphs represent infinity and NaN as zero
+* Fix bug that meant Data Forwarding on local host may not work
+
 v1.8 (Oct 30 2017)
 ------------------
 * Rename "Load defaults" to "Restore defaults"

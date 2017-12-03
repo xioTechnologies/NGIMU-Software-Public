@@ -94,7 +94,7 @@ namespace NgimuApi
         {
             if (obj is bool)
             {
-                sb.Append(((bool)obj).ToString(CultureInfo.InvariantCulture));
+                sb.Append((bool)obj == true ? "1" : "0");
             }
             else if (obj is int)
             {
@@ -122,11 +122,21 @@ namespace NgimuApi
             }
             else if (obj is float)
             {
-                sb.Append(((float)obj).ToString(CultureInfo.InvariantCulture));
+                float value = (float)obj;
+                if (float.IsInfinity(value) || float.IsNaN(value))
+                {
+                    value = 0;
+                }
+                sb.Append(value.ToString(CultureInfo.InvariantCulture));
             }
             else if (obj is double)
             {
-                sb.Append(((double)obj).ToString(CultureInfo.InvariantCulture));
+                double value = (double)obj;
+                if (double.IsInfinity(value) || double.IsNaN(value))
+                {
+                    value = 0;
+                }
+                sb.Append(value.ToString(CultureInfo.InvariantCulture));
             }
             else if (obj is decimal)
             {

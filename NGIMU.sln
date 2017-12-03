@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgimuGui", "NgimuGui\NgimuGui.csproj", "{1E1AB79E-3664-4195-82F9-3907CDA71882}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -69,5 +69,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9C9008A5-82A8-4DF3-8667-81460C23999D} = {5429C2B9-EBAA-4907-8971-BA561AAF150D}
 		{BA6D9EF7-40B1-4E7C-993A-F7F31F0B0504} = {5429C2B9-EBAA-4907-8971-BA561AAF150D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BBD96EF-1328-4C93-8CCF-8147DC23A45F}
 	EndGlobalSection
 EndGlobal

@@ -28,7 +28,7 @@ namespace NgimuGui
 
         public static bool DisconnectFromSerialAfterSleepAndResetCommands { get; set; }
 
-        public static bool DisplayReceivedErrorMessagesInMessageBox { get; set; }
+        public static bool DisplayReceivedErrorMessagesInMessageBox { get; set; } = false; 
 
         public static ConnectionSearchTypes ConnectionSearchType { get; set; }
 
@@ -36,7 +36,7 @@ namespace NgimuGui
 
         public static readonly List<ConnectionManagerInfo> UdpConnections = new List<ConnectionManagerInfo>();
 
-        public static bool AllowUploadWithoutSerialConnection { get; set; }
+        public static bool AllowUploadWithoutSerialConnection { get; set; } = true;
 
         public static bool SearchForConnectionsAfterSuccessfulUpload { get; set; }
 
@@ -80,9 +80,9 @@ namespace NgimuGui
 
             DisconnectFromSerialAfterSleepAndResetCommands = true;
 
-            DisplayReceivedErrorMessagesInMessageBox = true;
+            DisplayReceivedErrorMessagesInMessageBox = false;
 
-            AllowUploadWithoutSerialConnection = false;
+            AllowUploadWithoutSerialConnection = true;
 
             SearchForConnectionsAfterSuccessfulUpload = true;
 

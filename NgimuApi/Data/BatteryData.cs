@@ -111,7 +111,8 @@ namespace NgimuApi.Data
                         "Percentage (%)",
                         "Time To Empty (minutes)",
                         "Voltage (V)",
-                        "Current (mA)"
+                        "Current (mA)",
+                        "Is Charger Connected (Boolean)"
                         );
             }
         }
@@ -123,7 +124,8 @@ namespace NgimuApi.Data
                     Percentage,
                     TimeToEmpty,
                     Voltage,
-                    Current
+                    Current,
+                    IsChargerConnected
                     );
         }
     }

@@ -29,7 +29,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         public NetworkInterface NetworkAdapter { get; set; }
         public bool OnlyIpV4 { get; set; }
 
-        public IPAddress SendIPAddress { get; set; }
+        public IPAddress SendIPAddress { get; set; } = IPAddress.Loopback;
 
         public int SendPort { get; set; }
 
@@ -44,7 +44,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         {
             Disconnect();
 
-            sender = new OscSender(AdapterIPAddress, SendIPAddress, SendPort);
+            sender = new OscSender(AdapterIPAddress, 0, SendIPAddress, SendPort);
 
             sender.Connect();
 
@@ -269,6 +269,10 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
             disconnectButton.Enabled = false;
             prefixName.Enabled = true;
             prefixSerialNumber.Enabled = true;
+
+            prefixName.AutoCheck = true;
+            prefixSerialNumber.AutoCheck = true; 
+
             localHost.Enabled = true; 
         }
 
@@ -279,6 +283,10 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
             m_AdapterIPAddress.Enabled = false;
             connectButton.Enabled = false;
             disconnectButton.Enabled = true;
+
+            prefixName.AutoCheck = false;
+            prefixSerialNumber.AutoCheck = false;
+
             prefixName.Enabled = false;
             prefixSerialNumber.Enabled = false;
             localHost.Enabled = false;

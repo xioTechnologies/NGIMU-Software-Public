@@ -146,11 +146,13 @@ namespace NgimuForms.Controls
             return control.IsHandleCreated == true && control.Disposing == false && control.IsDisposed == false;
         }
 
-        public static void ShowIncompatableFirmwareWarning(this Control control, Settings settings)
+        public static bool TryGetIncompatableFirmwareWarningMessage(this Control control, Settings settings, out string message)
         {
             if (settings.CheckFirmwareCompatibility() != FirmwareCompatibility.NotCompatible)
             {
-                return;
+                message = null; 
+
+                return false;
             }
 
             StringBuilder dialogString = new StringBuilder();
@@ -165,7 +167,19 @@ namespace NgimuForms.Controls
             dialogString.AppendLine($"Expected firmware version: {Settings.ExpectedFirmwareVersion}");
             dialogString.AppendLine($"Software version: v{assembly.GetName().Version.Major}.{assembly.GetName().Version.Minor}");
 
-            control.InvokeShowWarning(dialogString.ToString().TrimEnd());
+            message = dialogString.ToString().TrimEnd();
+
+            return true; 
+        }
+
+        public static void ShowIncompatableFirmwareWarning(this Control control, Settings settings)
+        {
+            if (TryGetIncompatableFirmwareWarningMessage(control, settings, out string message) == false)
+            {
+                return; 
+            }
+
+            control.InvokeShowWarning(message);
         }
     }
 }

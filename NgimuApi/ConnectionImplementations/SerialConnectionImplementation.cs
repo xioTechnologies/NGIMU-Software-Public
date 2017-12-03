@@ -70,7 +70,14 @@ namespace NgimuApi.ConnectionImplementations
 
         public override void Send(OscPacket packet)
         {
-            oscSerial.Send(packet);
+            try
+            {
+                oscSerial.Send(packet);
+            }
+            catch (TimeoutException ex)
+            {
+
+            }
         }
 
         public override void Start()

@@ -70,7 +70,7 @@
             this.verticalScrollUpToolStripMenuItem,
             this.verticalScrollDownToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(251, 324);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(251, 302);
             // 
             // resetViewToolStripMenuItem
             // 
@@ -135,20 +135,20 @@
             // 
             // horizontalScrollLeftToolStripMenuItem
             // 
+            this.horizontalScrollLeftToolStripMenuItem.Enabled = false;
             this.horizontalScrollLeftToolStripMenuItem.Name = "horizontalScrollLeftToolStripMenuItem";
             this.horizontalScrollLeftToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Left)));
             this.horizontalScrollLeftToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.horizontalScrollLeftToolStripMenuItem.Text = "Horizontal Scroll Left";
-            this.horizontalScrollLeftToolStripMenuItem.Visible = false;
             this.horizontalScrollLeftToolStripMenuItem.Click += new System.EventHandler(this.horizontalScrollLeftToolStripMenuItem_Click);
             // 
             // horizontalScrollRightToolStripMenuItem
             // 
+            this.horizontalScrollRightToolStripMenuItem.Enabled = false;
             this.horizontalScrollRightToolStripMenuItem.Name = "horizontalScrollRightToolStripMenuItem";
             this.horizontalScrollRightToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Right)));
             this.horizontalScrollRightToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.horizontalScrollRightToolStripMenuItem.Text = "Horizontal Scroll Right";
-            this.horizontalScrollRightToolStripMenuItem.Visible = false;
             this.horizontalScrollRightToolStripMenuItem.Click += new System.EventHandler(this.horizontalScrollRightToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
@@ -194,7 +194,7 @@
             this.verticalScrollUpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Down)));
             this.verticalScrollUpToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.verticalScrollUpToolStripMenuItem.Text = "Vertical Scroll Down";
-            this.verticalScrollUpToolStripMenuItem.Click += new System.EventHandler(this.verticalScrollDownToolStripMenuItem_Click);
+            this.verticalScrollUpToolStripMenuItem.Click += new System.EventHandler(this.verticalScrollUpToolStripMenuItem_Click);
             // 
             // verticalScrollDownToolStripMenuItem
             // 
@@ -202,7 +202,7 @@
             this.verticalScrollDownToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Up)));
             this.verticalScrollDownToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.verticalScrollDownToolStripMenuItem.Text = "Vertical Scroll Up";
-            this.verticalScrollDownToolStripMenuItem.Click += new System.EventHandler(this.verticalScrollUpToolStripMenuItem_Click);
+            this.verticalScrollDownToolStripMenuItem.Click += new System.EventHandler(this.verticalScrollDownToolStripMenuItem_Click);
             // 
             // graph
             // 

@@ -43,12 +43,14 @@
             // 
             // m_SendIPAddress
             // 
+            this.m_SendIPAddress.Enabled = false;
             this.m_SendIPAddress.HelpText = "";
             this.m_SendIPAddress.HelpTextColor = System.Drawing.Color.Gray;
             this.m_SendIPAddress.Location = new System.Drawing.Point(153, 60);
             this.m_SendIPAddress.Name = "m_SendIPAddress";
             this.m_SendIPAddress.Size = new System.Drawing.Size(156, 20);
             this.m_SendIPAddress.TabIndex = 2;
+            this.m_SendIPAddress.Text = "127.0.0.1";
             this.m_SendIPAddress.TextChanged += new System.EventHandler(this.SendIPAddress_TextChanged);
             this.m_SendIPAddress.Enter += new System.EventHandler(this.BoxWithHelper_Enter);
             this.m_SendIPAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BoxWithHelper_KeyDown);
@@ -131,6 +133,8 @@
             // localHost
             // 
             this.localHost.AutoSize = true;
+            this.localHost.Checked = true;
+            this.localHost.CheckState = System.Windows.Forms.CheckState.Checked;
             this.localHost.Location = new System.Drawing.Point(315, 62);
             this.localHost.Name = "localHost";
             this.localHost.Size = new System.Drawing.Size(77, 17);
@@ -159,7 +163,6 @@
             this.prefixSerialNumber.Name = "prefixSerialNumber";
             this.prefixSerialNumber.Size = new System.Drawing.Size(91, 17);
             this.prefixSerialNumber.TabIndex = 11;
-            this.prefixSerialNumber.TabStop = true;
             this.prefixSerialNumber.Text = "Serial Number";
             this.prefixSerialNumber.UseVisualStyleBackColor = true;
             // 

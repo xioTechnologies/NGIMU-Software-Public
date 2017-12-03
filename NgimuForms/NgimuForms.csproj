@@ -63,6 +63,7 @@
     <Compile Include="Controls\PathSelector.Designer.cs">
       <DependentUpon>PathSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TextAndIconColumn.cs" />
     <Compile Include="Controls\TextBoxWithHelpText.cs">
       <SubType>Component</SubType>
     </Compile>
