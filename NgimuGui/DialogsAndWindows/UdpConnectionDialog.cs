@@ -11,14 +11,6 @@ namespace NgimuGui.DialogsAndWindows
 {
     public partial class UdpConnectionDialog : BaseForm
     {
-        private string m_AddressHelpText = "Device IP address";
-        private string m_SendPortHelpText = "Send port";
-        private string m_ReceivePortHelpText = "Receive port";
-
-        private bool m_SendIPAddress_HasError;
-        private bool m_SendPort_HasError;
-        private bool m_ReceivePort_HasError;
-
         public bool OnlyIpV4 { get; set; }
 
         struct IntefaceInfo
@@ -55,13 +47,6 @@ namespace NgimuGui.DialogsAndWindows
 
         private void UdpConnectionDialog_Load(object sender, EventArgs e)
         {
-            m_SendIPAddress.HelpTextColor = Color.LightGray;
-            m_SendIPAddress.HelpText = m_AddressHelpText;
-            m_SendPort.HelpTextColor = Color.LightGray;
-            m_SendPort.HelpText = m_SendPortHelpText;
-            m_ReceivePort.HelpTextColor = Color.LightGray;
-            m_ReceivePort.HelpText = m_ReceivePortHelpText;
-
             UdpConnectionInfo defaults = new UdpConnectionInfo();
 
             m_AdapterIPAddress.Items.Add(new IntefaceInfo() { NetworkInterface = defaults.NetworkAdapter, String = defaults.AdapterName, InterfaceName = defaults.AdapterName, IpAddress = defaults.AdapterIPAddress });
@@ -81,11 +66,10 @@ namespace NgimuGui.DialogsAndWindows
 
                 foreach (var ip in ipProps.UnicastAddresses)
                 {
-                    if (// (adapter.OperationalStatus == OperationalStatus.Up) &&
-                        ((ip.Address.AddressFamily == AddressFamily.InterNetwork) ||
-                        (OnlyIpV4 == false && ip.Address.AddressFamily == AddressFamily.InterNetworkV6)))
+                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork ||
+                        OnlyIpV4 == false && ip.Address.AddressFamily == AddressFamily.InterNetworkV6)
                     {
-                        m_AdapterIPAddress.Items.Add(new IntefaceInfo() { NetworkInterface = adapter, String = adapter.Description.ToString() + " (" + ip.Address.ToString() + ")", InterfaceName = adapter.Description.ToString(), IpAddress = ip.Address });
+                        m_AdapterIPAddress.Items.Add(new IntefaceInfo() { NetworkInterface = adapter, String = adapter.Description + " (" + ip.Address + ")", InterfaceName = adapter.Description, IpAddress = ip.Address });
                     }
                 }
             }
@@ -93,15 +77,6 @@ namespace NgimuGui.DialogsAndWindows
             m_AdapterIPAddress.SelectedIndex = 0;
 
             NetworkAdapter = null;
-
-            m_SendPort.Tag = m_SendPortHelpText;
-            m_SendPort.HideSelection = true;
-
-            m_ReceivePort.Tag = m_ReceivePortHelpText;
-            m_ReceivePort.HideSelection = true;
-
-            m_SendIPAddress.Tag = m_AddressHelpText;
-            m_SendIPAddress.HideSelection = true;
         }
 
         private void Broadcast_CheckedChanged(object sender, EventArgs e)
@@ -121,27 +96,20 @@ namespace NgimuGui.DialogsAndWindows
         private void SendIPAddress_TextChanged(object sender, EventArgs e)
         {
             SendIPAddress = null;
-            m_SendIPAddress_HasError = false;
 
             if (Helper.IsNullOrEmpty(m_SendIPAddress.Text) == true)
             {
-                //m_SendIPAddress.ForeColor = Color.LightGray; 
-
                 return;
             }
 
-            m_SendIPAddress.ForeColor = Control.DefaultForeColor;
-
-            IPAddress address;
-
-            if (IPAddress.TryParse(m_SendIPAddress.Text, out address) == false ||
+            if (IPAddress.TryParse(m_SendIPAddress.Text, out IPAddress address) == false ||
                 address.AddressFamily == AddressFamily.InterNetworkV6)
             {
-                m_SendIPAddress.ForeColor = Color.Red;
-                m_SendIPAddress_HasError = true;
+                m_SendIPAddress.HasError = true; ;
             }
             else
             {
+                m_SendIPAddress.HasError = false;
                 SendIPAddress = address;
             }
         }
@@ -149,28 +117,20 @@ namespace NgimuGui.DialogsAndWindows
         private void SendPort_TextChanged(object sender, EventArgs e)
         {
             SendPort = -1;
-            m_SendPort_HasError = false;
-
-            //if (m_SendPort.Text == m_SendPortHelpText)
+            
             if (Helper.IsNullOrEmpty(m_SendPort.Text) == true)
             {
-                //m_SendPort.ForeColor = Color.LightGray;
-
                 return;
             }
 
-            m_SendPort.ForeColor = Control.DefaultForeColor;
-
-            ushort port;
-
-            if (ushort.TryParse(m_SendPort.Text, out port) == false ||
+            if (ushort.TryParse(m_SendPort.Text, out ushort port) == false ||
                 port == 0)
             {
-                m_SendPort.ForeColor = Color.Red;
-                m_SendPort_HasError = true;
+                m_SendPort.HasError = true;
             }
             else
             {
+                m_SendPort.HasError = false;
                 SendPort = (int)port;
             }
         }
@@ -190,61 +150,24 @@ namespace NgimuGui.DialogsAndWindows
         private void ReceivePort_TextChanged(object sender, EventArgs e)
         {
             ReceivePort = -1;
-            m_ReceivePort_HasError = false;
-
+            
             if (Helper.IsNullOrEmpty(m_ReceivePort.Text) == true)
             {
                 return;
             }
-
-            m_ReceivePort.ForeColor = Control.DefaultForeColor;
-
-            ushort port;
-
-            if (ushort.TryParse(m_ReceivePort.Text, out port) == false ||
+            
+            if (ushort.TryParse(m_ReceivePort.Text, out ushort port) == false ||
                 port == 0)
             {
-                m_ReceivePort.ForeColor = Color.Red;
-                m_ReceivePort_HasError = true;
+                m_ReceivePort.HasError = true;
             }
             else
             {
+                m_ReceivePort.HasError = false;
+
                 ReceivePort = (int)port;
             }
-        }
-
-        private void BoxWithHelper_Leave(object sender, EventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-
-            if (Helper.IsNullOrEmpty(textbox.Text) == true)
-            {
-                textbox.HideSelection = true;
-            }
-        }
-
-        private void BoxWithHelper_Enter(object sender, EventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-
-            if (Helper.IsNullOrEmpty(textbox.Text) == true)
-            {
-            }
-        }
-
-        private void BoxWithHelper_KeyDown(object sender, KeyEventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-        }
-
-        private void BoxWithHelper_MouseEvent(object sender, MouseEventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-
-            if (Helper.IsNullOrEmpty(textbox.Text) == true)
-            {
-            }
-        }
+        }       
 
         private void UdpConnectionDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -273,9 +196,9 @@ namespace NgimuGui.DialogsAndWindows
 
         private bool ValidateValues()
         {
-            if (m_SendIPAddress_HasError == true ||
-                m_SendPort_HasError == true ||
-                m_ReceivePort_HasError == true)
+            if (m_SendIPAddress.HasError == true ||
+                m_SendPort.HasError == true ||
+                m_ReceivePort.HasError == true)
             {
                 return false;
             }

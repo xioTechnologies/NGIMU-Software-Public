@@ -13,23 +13,18 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 {
     public partial class DataForwardingDialog : BaseForm
     {
-        private readonly string addressHelpText = "Destination IP address";
         private readonly Dictionary<string, string> namesLookup = new Dictionary<string, string>();
         private readonly object namesLock = new object();
 
         private bool prefixOscWithName;
         private OscSender sender;
 
-        private bool sendIpAddressHasError;
-        private bool sendPortHasError;
-        private readonly string sendPortHelpText = "Send port";
-
         public IPAddress AdapterIPAddress { get; set; }
         public string AdapterName { get; set; }
         public NetworkInterface NetworkAdapter { get; set; }
         public bool OnlyIpV4 { get; set; }
 
-        public IPAddress SendIPAddress { get; set; } = IPAddress.Loopback;
+        public IPAddress SendIPAddress { get; set; }
 
         public int SendPort { get; set; }
 
@@ -59,13 +54,10 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
             {
                 namesLookup.Clear();
             }
+            
+            sender?.Dispose();
 
-            if (sender != null)
-            {
-                sender.Dispose();
-
-                sender = null;
-            }
+            sender = null;
         }
 
         public void OnMessage(Connection connection, OscMessage message)
@@ -74,10 +66,9 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
             if (prefixOscWithName == true)
             {
-                string sainName;
                 string unsanitizedName = connection.Settings.DeviceName.Value;
 
-                if (namesLookup.TryGetValue(unsanitizedName, out sainName) == false)
+                if (namesLookup.TryGetValue(unsanitizedName, out string sainName) == false)
                 {
                     sainName = SanitizeName(unsanitizedName);
 
@@ -108,45 +99,12 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
             AdapterName = info.InterfaceName;
             NetworkAdapter = info.NetworkInterface;
         }
-
-        private void BoxWithHelper_Enter(object sender, EventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-
-            if (Helper.IsNullOrEmpty(textbox.Text) == true)
-            {
-            }
-        }
-
-        private void BoxWithHelper_KeyDown(object sender, KeyEventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-        }
-
-        private void BoxWithHelper_Leave(object sender, EventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-
-            if (Helper.IsNullOrEmpty(textbox.Text) == true)
-            {
-                textbox.HideSelection = true;
-            }
-        }
-
-        private void BoxWithHelper_MouseEvent(object sender, MouseEventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-
-            if (Helper.IsNullOrEmpty(textbox.Text) == true)
-            {
-            }
-        }
-
+        
         private void LocalHost_CheckedChanged(object sender, EventArgs e)
         {
             if (localHost.Checked == true)
             {
-                m_SendIPAddress.Text = "127.0.0.1";
+                m_SendIPAddress.Text = IPAddress.Loopback.ToString();
                 m_SendIPAddress.Enabled = false;
             }
             else
@@ -201,27 +159,20 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         private void SendIPAddress_TextChanged(object sender, EventArgs e)
         {
             SendIPAddress = null;
-            sendIpAddressHasError = false;
 
             if (Helper.IsNullOrEmpty(m_SendIPAddress.Text) == true)
             {
-                //m_SendIPAddress.ForeColor = Color.LightGray;
-
                 return;
             }
 
-            m_SendIPAddress.ForeColor = Control.DefaultForeColor;
-
-            IPAddress address;
-
-            if (IPAddress.TryParse(m_SendIPAddress.Text, out address) == false ||
+            if (IPAddress.TryParse(m_SendIPAddress.Text, out IPAddress address) == false ||
                 address.AddressFamily == AddressFamily.InterNetworkV6)
             {
-                m_SendIPAddress.ForeColor = Color.Red;
-                sendIpAddressHasError = true;
+                m_SendIPAddress.HasError = true;
             }
             else
             {
+                m_SendIPAddress.HasError = false;
                 SendIPAddress = address;
             }
         }
@@ -229,28 +180,20 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         private void SendPort_TextChanged(object sender, EventArgs e)
         {
             SendPort = -1;
-            sendPortHasError = false;
-
-            //if (m_SendPort.Text == m_SendPortHelpText)
+            
             if (Helper.IsNullOrEmpty(m_SendPort.Text) == true)
             {
-                //m_SendPort.ForeColor = Color.LightGray;
-
                 return;
             }
 
-            m_SendPort.ForeColor = Control.DefaultForeColor;
-
-            ushort port;
-
-            if (ushort.TryParse(m_SendPort.Text, out port) == false ||
+            if (ushort.TryParse(m_SendPort.Text, out ushort port) == false ||
                 port == 0)
             {
-                m_SendPort.ForeColor = Color.Red;
-                sendPortHasError = true;
+                m_SendPort.HasError = true;
             }
             else
             {
+                m_SendPort.HasError = false;
                 SendPort = (int)port;
             }
         }
@@ -294,11 +237,6 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
         private void UdpConnectionDialog_Load(object sender, EventArgs e)
         {
-            m_SendIPAddress.HelpTextColor = Color.LightGray;
-            m_SendIPAddress.HelpText = addressHelpText;
-            m_SendPort.HelpTextColor = Color.LightGray;
-            m_SendPort.HelpText = sendPortHelpText;
-
             UdpConnectionInfo defaults = new UdpConnectionInfo();
 
             m_AdapterIPAddress.Items.Add(new IntefaceInfo() { NetworkInterface = defaults.NetworkAdapter, String = defaults.AdapterName, InterfaceName = defaults.AdapterName, IpAddress = defaults.AdapterIPAddress });
@@ -318,11 +256,10 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
                 foreach (var ip in ipProps.UnicastAddresses)
                 {
-                    if (// (adapter.OperationalStatus == OperationalStatus.Up) &&
-                        ((ip.Address.AddressFamily == AddressFamily.InterNetwork) ||
-                        (OnlyIpV4 == false && ip.Address.AddressFamily == AddressFamily.InterNetworkV6)))
+                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork ||
+                        OnlyIpV4 == false && ip.Address.AddressFamily == AddressFamily.InterNetworkV6)
                     {
-                        m_AdapterIPAddress.Items.Add(new IntefaceInfo() { NetworkInterface = adapter, String = adapter.Description.ToString() + " (" + ip.Address.ToString() + ")", InterfaceName = adapter.Description.ToString(), IpAddress = ip.Address });
+                        m_AdapterIPAddress.Items.Add(new IntefaceInfo() { NetworkInterface = adapter, String = adapter.Description + " (" + ip.Address + ")", InterfaceName = adapter.Description, IpAddress = ip.Address });
                     }
                 }
             }
@@ -331,19 +268,17 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
             NetworkAdapter = null;
 
-            m_SendPort.Tag = sendPortHelpText;
-            m_SendPort.HideSelection = true;
-
-            m_SendIPAddress.Tag = addressHelpText;
-            m_SendIPAddress.HideSelection = true;
-
             prefixOscWithName = prefixName.Checked;
+
+            LocalHost_CheckedChanged(this, EventArgs.Empty);
+            SendIPAddress_TextChanged(this, EventArgs.Empty);
+            SendPort_TextChanged(this, EventArgs.Empty);
         }
 
         private bool ValidateValues()
         {
-            if (sendIpAddressHasError == true ||
-                sendPortHasError == true)
+            if (m_SendIPAddress.HasError == true ||
+                m_SendPort.HasError == true)
             {
                 return false;
             }

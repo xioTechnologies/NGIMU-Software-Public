@@ -78,7 +78,6 @@
             this.sdCardFilePathSelector.DialogTitle = "Select File(s) To Process";
             this.sdCardFilePathSelector.Filter = "XIO files|*.xio|All files|*.*";
             this.sdCardFilePathSelector.HelpText = "Select SD card file(s)";
-            this.sdCardFilePathSelector.HelpTextColor = System.Drawing.Color.Gray;
             this.sdCardFilePathSelector.Location = new System.Drawing.Point(126, 12);
             this.sdCardFilePathSelector.Margin = new System.Windows.Forms.Padding(0);
             this.sdCardFilePathSelector.Name = "sdCardFilePathSelector";
@@ -92,7 +91,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.directorySelector.DialogTitle = "Please select a destination directory.";
             this.directorySelector.HelpText = "Select destination directory";
-            this.directorySelector.HelpTextColor = System.Drawing.Color.Gray;
             this.directorySelector.Location = new System.Drawing.Point(126, 39);
             this.directorySelector.Margin = new System.Windows.Forms.Padding(0);
             this.directorySelector.Name = "directorySelector";

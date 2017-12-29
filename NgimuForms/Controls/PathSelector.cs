@@ -50,19 +50,28 @@ namespace NgimuForms.Controls
         [DefaultValue(1)]
         public int FilterIndex { get; set; } = 1;
 
-        public string HelpText { get { return textbox.HelpText; } set { textbox.HelpText = value; } }
+        public string HelpText
+        {
+            get => textbox.HelpText;
+            set => textbox.HelpText = value;
+        }
 
-        public Color HelpTextColor { get { return textbox.HelpTextColor; } set { textbox.HelpTextColor = value; } }
+        public Color HelpTextColor
+        {
+            get => textbox.HelpTextColor;
+            set => textbox.HelpTextColor = value;
+        }
 
-        public string SelectedPath { get { return textbox.Text; } set { textbox.Text = value; } }
+        public string SelectedPath
+        {
+            get => textbox.Text;
+            set => textbox.Text = value;
+        }
 
         [DefaultValue(PathSelectorType.OpenFile)]
         public PathSelectorType SelectorType
         {
-            get
-            {
-                return selectorType;
-            }
+            get => selectorType;
 
             set
             {

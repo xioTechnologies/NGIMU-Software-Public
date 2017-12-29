@@ -166,7 +166,7 @@ namespace NgimuGui.Panels
             catch (Exception ex)
             {
                 // explicitly tell the user why the address failed to parse
-                RC.WriteException(001, "Error parsing osc message", ex);
+                RC.WriteException(001, "Error parsing OSC message", ex);
             }
         }
 
@@ -193,7 +193,7 @@ namespace NgimuGui.Panels
             catch (Exception ex)
             {
                 // explicitly tell the user why the address failed to parse
-                RC.WriteException(002, "Error parsing osc address", ex);
+                RC.WriteException(002, "Error parsing OSC address", ex);
             }
             finally
             {

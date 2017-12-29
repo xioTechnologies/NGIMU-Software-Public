@@ -6,22 +6,23 @@ using System.Windows.Forms;
 using NgimuApi;
 using NgimuForms.Controls;
 using NgimuForms.DialogsAndWindows;
+using System.Linq; 
 
 namespace NgimuSynchronisedNetworkManager.Controls
 {
     public static class ConnectionGuiExtentions
     {
-        public static void SendCommand(this Control control, Connection connection, Command command, params object[] args)
+        public static void SendCommand(this Control control, ConnectionRow connection, bool errorsInRow, Command command, params object[] args)
         {
-            control.SendCommand(new List<Connection> { connection }, Commands.GetCommandMetaData(command), args);
+            control.SendCommand(new List<ConnectionRow> { connection }, errorsInRow, Commands.GetCommandMetaData(command), args);
         }
 
-        public static void SendCommand(this Control control, List<Connection> connections, Command command, params object[] args)
+        public static void SendCommand(this Control control, List<ConnectionRow> connections, bool errorsInRow, Command command, params object[] args)
         {
-            control.SendCommand(connections, Commands.GetCommandMetaData(command), args);
+            control.SendCommand(connections, errorsInRow, Commands.GetCommandMetaData(command), args);
         }
 
-        public static void SendCommand(this Control control, List<Connection> connections, CommandMetaData commandMetaData, params object[] args)
+        public static void SendCommand(this Control control, List<ConnectionRow> connections, bool errorsInRow, CommandMetaData commandMetaData, params object[] args)
         {
             using (ProgressDialog dialog = new ProgressDialog()
             {
@@ -41,21 +42,26 @@ namespace NgimuSynchronisedNetworkManager.Controls
                             do
                             {
                                 Reporter reporter = new Reporter();
-                                CommandProcess process = new CommandProcess(connection, reporter, new CommandCallback(commandMetaData.GetMessage(args)), 100, 3);
+                                CommandProcess process = new CommandProcess(connection.Connection, reporter, new CommandCallback(commandMetaData.GetMessage(args)), 100, 3);
 
                                 result = process.Send();
 
                                 StringBuilder fullMessageString = new StringBuilder();
 
-                                fullMessageString.AppendLine("Error while communicating with " + connection.Settings.GetDeviceDescriptor() + ".");
+                                fullMessageString.AppendLine("Error while communicating with " + connection.Connection.Settings.GetDeviceDescriptor() + ".");
                                 fullMessageString.AppendLine();
 
                                 fullMessageString.Append("Failed to confirm command: " + commandMetaData.OscAddress);
 
                                 messageString = fullMessageString.ToString();
+
+                                if (result != CommunicationProcessResult.Success && errorsInRow == true)
+                                {
+                                    connection.SetError(messageString); 
+                                }
                             }
                             while (result != CommunicationProcessResult.Success &&
-                                   dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
+                                   errorsInRow == false && dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
                         });
 
                     control.Invoke(new MethodInvoker(dialog.Close));
@@ -75,7 +81,7 @@ namespace NgimuSynchronisedNetworkManager.Controls
             });
         }
 
-        public static void WriteSettings(this Control control, IEnumerable<ISettingValue> settingValues)
+        public static void WriteSettings(this Control control, List<ConnectionRow> connectionRows, bool errorsInRow, IEnumerable<ISettingValue> settingValues)
         {
             using (ProgressDialog dialog = new ProgressDialog()
             {
@@ -92,6 +98,8 @@ namespace NgimuSynchronisedNetworkManager.Controls
                             string messageString = "";
                             CommunicationProcessResult result;
 
+                            ConnectionRow row = connectionRows.FirstOrDefault(connectionRow => connectionRow.Connection == settingValue.Category.Connection);
+                            
                             do
                             {
                                 result = settingValue.Write();
@@ -109,8 +117,14 @@ namespace NgimuSynchronisedNetworkManager.Controls
                                 fullMessageString.Append("Failed to confirm write of following setting:" + messageString);
 
                                 messageString = fullMessageString.ToString();
+
+                                if (result != CommunicationProcessResult.Success && errorsInRow == true)
+                                {
+                                    row?.SetError(messageString); 
+                                }
                             }
                             while (result != CommunicationProcessResult.Success &&
+                                   errorsInRow == false && 
                                    dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
                         });
 
@@ -155,7 +169,7 @@ namespace NgimuSynchronisedNetworkManager.Controls
         //}
 
 
-        public static void WriteSettings(this Control control, IEnumerable<SettingCategrory> settingCategrories)
+        public static void WriteSettings(this Control control, List<ConnectionRow> connectionRows, bool errorsInRow, IEnumerable<SettingCategrory> settingCategrories)
         {
             using (ProgressDialog dialog = new ProgressDialog()
             {
@@ -166,7 +180,7 @@ namespace NgimuSynchronisedNetworkManager.Controls
             {
                 Thread thread = new Thread(() =>
                 {
-                    control.WriteSettingsWithExistingProgress(dialog, settingCategrories);
+                    control.WriteSettingsWithExistingProgress(dialog, connectionRows, errorsInRow, settingCategrories);
 
                     control.Invoke(new MethodInvoker(dialog.Close));
                 });
@@ -177,13 +191,15 @@ namespace NgimuSynchronisedNetworkManager.Controls
             }
         }
 
-        public static void WriteSettingsWithExistingProgress(this Control control, ProgressDialog dialog, IEnumerable<SettingCategrory> settingCategrories)
+        public static void WriteSettingsWithExistingProgress(this Control control, ProgressDialog dialog, List<ConnectionRow> connectionRows, bool errorsInRow, IEnumerable<SettingCategrory> settingCategrories)
         {
             Parallel.ForEach(settingCategrories,
                 (settingCategrory) =>
                 {
                     string messageString = "";
                     CommunicationProcessResult result;
+
+                    ConnectionRow row = connectionRows.FirstOrDefault(connectionRow => connectionRow.Connection == settingCategrory.Connection);
 
                     do
                     {
@@ -202,13 +218,19 @@ namespace NgimuSynchronisedNetworkManager.Controls
                         fullMessageString.Append("Failed to confirm write of following settings:" + messageString);
 
                         messageString = fullMessageString.ToString();
+
+                        if (result != CommunicationProcessResult.Success && errorsInRow == true)
+                        {
+                            row?.SetError(messageString);
+                        }
                     }
                     while (result != CommunicationProcessResult.Success &&
+                           errorsInRow == false && 
                            dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
                 });
         }
 
-        public static void ReadSettings(this Control control, IEnumerable<ISettingValue> settingValues)
+        public static void ReadSettings(this Control control, List<ConnectionRow> connectionRows, bool errorsInRow, IEnumerable<ISettingValue> settingValues)
         {
             using (ProgressDialog dialog = new ProgressDialog()
             {
@@ -224,6 +246,8 @@ namespace NgimuSynchronisedNetworkManager.Controls
                         {
                             string messageString = "";
                             CommunicationProcessResult result;
+
+                            ConnectionRow row = connectionRows.FirstOrDefault(connectionRow => connectionRow.Connection == settingValue.Category.Connection);
 
                             do
                             {
@@ -242,8 +266,14 @@ namespace NgimuSynchronisedNetworkManager.Controls
                                 fullMessageString.Append("Failed to read the following setting:" + messageString);
 
                                 messageString = fullMessageString.ToString();
+
+                                if (result != CommunicationProcessResult.Success && errorsInRow == true)
+                                {
+                                    row?.SetError(messageString);
+                                }
                             }
                             while (result != CommunicationProcessResult.Success &&
+                                   errorsInRow == false && 
                                    dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
                         });
 
@@ -256,7 +286,7 @@ namespace NgimuSynchronisedNetworkManager.Controls
             }
         }
 
-        public static void ReadSettings(this Control control, IEnumerable<SettingCategrory> settingCategrories)
+        public static void ReadSettings(this Control control, List<ConnectionRow> connectionRows, bool errorsInRow, IEnumerable<SettingCategrory> settingCategrories)
         {
             using (ProgressDialog dialog = new ProgressDialog()
             {
@@ -272,6 +302,8 @@ namespace NgimuSynchronisedNetworkManager.Controls
                         {
                             string messageString = "";
                             CommunicationProcessResult result;
+
+                            ConnectionRow row = connectionRows.FirstOrDefault(connectionRow => connectionRow.Connection == settingCategrory.Connection);
 
                             do
                             {
@@ -290,8 +322,14 @@ namespace NgimuSynchronisedNetworkManager.Controls
                                 fullMessageString.Append("Failed to read the following settings:" + messageString);
 
                                 messageString = fullMessageString.ToString();
+
+                                if (result != CommunicationProcessResult.Success && errorsInRow == true)
+                                {
+                                    row?.SetError(messageString);
+                                }
                             }
                             while (result != CommunicationProcessResult.Success &&
+                                   errorsInRow == false && 
                                    dialog.InvokeShowError(messageString, MessageBoxButtons.RetryCancel) == DialogResult.Retry);
                         });
 

@@ -7,12 +7,15 @@ namespace NgimuForms.Controls
     public class TextBoxWithHelpText : TextBox
     {
         private string helpText = "";
-        private Color helpTextColor = Color.Gray;
+        private Color helpTextColor = Color.LightGray;
+        private Color textErrorColor = Color.Red;
         private bool helpTextVisible = false;
+        private bool hasError = false;
+        private Color foreColor = Control.DefaultForeColor;
 
         public string HelpText
         {
-            get { return helpText; }
+            get => helpText;
 
             set
             {
@@ -24,11 +27,53 @@ namespace NgimuForms.Controls
 
         public Color HelpTextColor
         {
-            get { return helpTextColor; }
+            get => helpTextColor;
 
             set
             {
                 helpTextColor = value;
+
+                Invalidate();
+            }
+        }
+
+        public Color TextErrorColor
+        {
+            get => textErrorColor;
+
+            set
+            {
+                textErrorColor = value;
+
+                base.ForeColor = hasError ? textErrorColor : foreColor;
+
+                Invalidate();
+            }
+        }
+
+        public bool HasError
+        {
+            get => hasError;
+
+            set
+            {
+                hasError = value;
+
+                base.ForeColor = hasError ? textErrorColor : foreColor;
+
+                Invalidate();
+            }
+        }
+
+        public new Color ForeColor
+        {
+            get => foreColor;
+
+            set
+            {
+                foreColor = value;
+
+                base.ForeColor = hasError ? textErrorColor : foreColor;
 
                 Invalidate();
             }
@@ -53,7 +98,9 @@ namespace NgimuForms.Controls
         }
 
         protected override void OnPaint(PaintEventArgs args)
-        {
+       {
+            base.ForeColor = hasError ? textErrorColor : foreColor; 
+
             base.OnPaint(args);
 
             if (Enabled == false)
@@ -93,6 +140,8 @@ namespace NgimuForms.Controls
                 this.SetStyle(ControlStyles.UserPaint, false);
             }
 
+            HideSelection = true;
+
             Refresh();
         }
 
@@ -102,6 +151,8 @@ namespace NgimuForms.Controls
             {
                 this.SetStyle(ControlStyles.UserPaint, true);
             }
+
+            HideSelection = false;
 
             helpTextVisible = true;
 

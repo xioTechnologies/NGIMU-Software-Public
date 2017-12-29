@@ -66,7 +66,6 @@
             this.pathSelector.DialogTitle = "Select a HEX file to uplaod";
             this.pathSelector.Filter = "HEX files|*.hex|All Files|*.*";
             this.pathSelector.HelpText = "Select a HEX file to upload";
-            this.pathSelector.HelpTextColor = System.Drawing.Color.Gray;
             this.pathSelector.Location = new System.Drawing.Point(66, 11);
             this.pathSelector.Margin = new System.Windows.Forms.Padding(0);
             this.pathSelector.Name = "pathSelector";

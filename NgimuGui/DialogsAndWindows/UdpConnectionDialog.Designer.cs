@@ -38,23 +38,17 @@
             this.m_ReceivePort = new NgimuForms.Controls.TextBoxWithHelpText();
             this.label3 = new System.Windows.Forms.Label();
             this.m_Broadcast = new System.Windows.Forms.CheckBox();
-            this.SuspendLayout();
+            this.SuspendLayout();  
             // 
             // m_SendIPAddress
             // 
-            this.m_SendIPAddress.HelpText = "";
+            this.m_SendIPAddress.HelpText = "Device IP address";
             this.m_SendIPAddress.HelpTextColor = System.Drawing.Color.Gray;
             this.m_SendIPAddress.Location = new System.Drawing.Point(153, 32);
             this.m_SendIPAddress.Name = "m_SendIPAddress";
             this.m_SendIPAddress.Size = new System.Drawing.Size(156, 20);
             this.m_SendIPAddress.TabIndex = 2;
             this.m_SendIPAddress.TextChanged += new System.EventHandler(this.SendIPAddress_TextChanged);
-            this.m_SendIPAddress.Enter += new System.EventHandler(this.BoxWithHelper_Enter);
-            this.m_SendIPAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BoxWithHelper_KeyDown);
-            this.m_SendIPAddress.Leave += new System.EventHandler(this.BoxWithHelper_Leave);
-            this.m_SendIPAddress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendIPAddress.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendIPAddress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
             // 
             // m_Cancel
             // 
@@ -110,35 +104,23 @@
             // 
             // m_SendPort
             // 
-            this.m_SendPort.HelpText = "";
+            this.m_SendPort.HelpText = "Send port";
             this.m_SendPort.HelpTextColor = System.Drawing.Color.Gray;
             this.m_SendPort.Location = new System.Drawing.Point(69, 32);
             this.m_SendPort.Name = "m_SendPort";
             this.m_SendPort.Size = new System.Drawing.Size(78, 20);
             this.m_SendPort.TabIndex = 1;
             this.m_SendPort.TextChanged += new System.EventHandler(this.SendPort_TextChanged);
-            this.m_SendPort.Enter += new System.EventHandler(this.BoxWithHelper_Enter);
-            this.m_SendPort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BoxWithHelper_KeyDown);
-            this.m_SendPort.Leave += new System.EventHandler(this.BoxWithHelper_Leave);
-            this.m_SendPort.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
             // 
             // m_ReceivePort
             // 
-            this.m_ReceivePort.HelpText = "";
+            this.m_ReceivePort.HelpText = "Receive port";
             this.m_ReceivePort.HelpTextColor = System.Drawing.Color.Gray;
             this.m_ReceivePort.Location = new System.Drawing.Point(69, 58);
             this.m_ReceivePort.Name = "m_ReceivePort";
             this.m_ReceivePort.Size = new System.Drawing.Size(78, 20);
             this.m_ReceivePort.TabIndex = 4;
             this.m_ReceivePort.TextChanged += new System.EventHandler(this.ReceivePort_TextChanged);
-            this.m_ReceivePort.Enter += new System.EventHandler(this.BoxWithHelper_Enter);
-            this.m_ReceivePort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BoxWithHelper_KeyDown);
-            this.m_ReceivePort.Leave += new System.EventHandler(this.BoxWithHelper_Leave);
-            this.m_ReceivePort.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_ReceivePort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_ReceivePort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
             // 
             // label3
             // 

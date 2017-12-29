@@ -420,8 +420,8 @@
             // 
             this.m_SendCommandMenuItem.Enabled = false;
             this.m_SendCommandMenuItem.Name = "m_SendCommandMenuItem";
-            this.m_SendCommandMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.m_SendCommandMenuItem.Text = "Command";
+            this.m_SendCommandMenuItem.Size = new System.Drawing.Size(105, 20);
+            this.m_SendCommandMenuItem.Text = "Send Command";
             // 
             // m_GraphsMenuItem
             // 

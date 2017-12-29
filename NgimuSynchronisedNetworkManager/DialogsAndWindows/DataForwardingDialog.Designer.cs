@@ -44,20 +44,14 @@
             // m_SendIPAddress
             // 
             this.m_SendIPAddress.Enabled = false;
-            this.m_SendIPAddress.HelpText = "";
-            this.m_SendIPAddress.HelpTextColor = System.Drawing.Color.Gray;
+            this.m_SendIPAddress.HelpText = "Destination IP address";
+            this.m_SendIPAddress.HelpTextColor = System.Drawing.Color.LightGray;
             this.m_SendIPAddress.Location = new System.Drawing.Point(153, 60);
             this.m_SendIPAddress.Name = "m_SendIPAddress";
             this.m_SendIPAddress.Size = new System.Drawing.Size(156, 20);
             this.m_SendIPAddress.TabIndex = 2;
             this.m_SendIPAddress.Text = "127.0.0.1";
             this.m_SendIPAddress.TextChanged += new System.EventHandler(this.SendIPAddress_TextChanged);
-            this.m_SendIPAddress.Enter += new System.EventHandler(this.BoxWithHelper_Enter);
-            this.m_SendIPAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BoxWithHelper_KeyDown);
-            this.m_SendIPAddress.Leave += new System.EventHandler(this.BoxWithHelper_Leave);
-            this.m_SendIPAddress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendIPAddress.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendIPAddress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
             // 
             // disconnectButton
             // 
@@ -107,19 +101,14 @@
             // 
             // m_SendPort
             // 
-            this.m_SendPort.HelpText = "";
-            this.m_SendPort.HelpTextColor = System.Drawing.Color.Gray;
+            this.m_SendPort.HelpText = "Send port";
+            this.m_SendPort.HelpTextColor = System.Drawing.Color.LightGray;
             this.m_SendPort.Location = new System.Drawing.Point(69, 60);
             this.m_SendPort.Name = "m_SendPort";
             this.m_SendPort.Size = new System.Drawing.Size(78, 20);
             this.m_SendPort.TabIndex = 1;
+            this.m_SendPort.Text = "8000";
             this.m_SendPort.TextChanged += new System.EventHandler(this.SendPort_TextChanged);
-            this.m_SendPort.Enter += new System.EventHandler(this.BoxWithHelper_Enter);
-            this.m_SendPort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BoxWithHelper_KeyDown);
-            this.m_SendPort.Leave += new System.EventHandler(this.BoxWithHelper_Leave);
-            this.m_SendPort.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
-            this.m_SendPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BoxWithHelper_MouseEvent);
             // 
             // label3
             // 

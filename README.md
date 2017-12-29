@@ -1,6 +1,14 @@
 NGIMU-Software
 ==============
 
+v1.10 (Dec 29 2017)
+-------------------
+* Increase ahoy service expiry to 5 seconds to handle Wi-Fi send delays of firmware
+* Rename NGIMU GUI column title "Address" menu to "OSC Address"
+* Rename NGIMU GUI "Command" menu to "Send Command"
+* NGIMU Synchronised Network Manager displays communication errors an icon in the device column
+* NGIMU Synchronised Network Manager displays received error messages an icon in the device column
+
 v1.9 (Dec 01 2017)
 ------------------
 * CSV files represent infinity and NaN as zero

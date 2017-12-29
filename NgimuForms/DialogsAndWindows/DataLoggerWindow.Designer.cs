@@ -100,7 +100,6 @@
             // m_LoggingPeriodBox
             // 
             this.m_LoggingPeriodBox.HelpText = "Unlimited";
-            this.m_LoggingPeriodBox.HelpTextColor = System.Drawing.Color.Gray;
             this.m_LoggingPeriodBox.Location = new System.Drawing.Point(338, 38);
             this.m_LoggingPeriodBox.Name = "m_LoggingPeriodBox";
             this.m_LoggingPeriodBox.Size = new System.Drawing.Size(100, 20);
@@ -133,7 +132,6 @@
             // m_SessionNameBox
             // 
             this.m_SessionNameBox.HelpText = "Enter session name";
-            this.m_SessionNameBox.HelpTextColor = System.Drawing.Color.Gray;
             this.m_SessionNameBox.Location = new System.Drawing.Point(96, 38);
             this.m_SessionNameBox.Name = "m_SessionNameBox";
             this.m_SessionNameBox.Size = new System.Drawing.Size(121, 20);

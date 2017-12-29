@@ -38,7 +38,7 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mute = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Solo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OscAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Average = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.m_DataView)).BeginInit();
@@ -63,7 +63,7 @@
             this.m_DataView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Mute,
             this.Solo,
-            this.Address,
+            this.OscAddress,
             this.Total,
             this.Average});
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -139,10 +139,10 @@
             // 
             // Address
             // 
-            this.Address.DataPropertyName = "Address";
-            this.Address.HeaderText = "Address";
-            this.Address.Name = "Address";
-            this.Address.ReadOnly = true;
+            this.OscAddress.DataPropertyName = "OscAddress";
+            this.OscAddress.HeaderText = "OSC Address";
+            this.OscAddress.Name = "OscAddress";
+            this.OscAddress.ReadOnly = true;
             // 
             // Total
             // 
@@ -190,7 +190,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Mute;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Solo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OscAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn Total;
         private System.Windows.Forms.DataGridViewTextBoxColumn Average;
     }

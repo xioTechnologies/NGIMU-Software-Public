@@ -20,6 +20,63 @@ using Rug.Osc;
 
 namespace NgimuSynchronisedNetworkManager
 {
+    public class ConnectionRow
+    {
+        public object[] Cells;
+        public DateTime[] Timestamps;
+
+        public Connection Connection { get; set; }
+
+        public DataGridViewRow Row { get; set; }
+
+        public ConnectionIcon Icon { get; set; } = ConnectionIcon.Information;
+        public IconInfo Error { get; set; }
+        public IconInfo Warning { get; set; }
+        public IconInfo Information { get; set; }
+
+        private int needsToRedrawIcons = 0;
+
+        public bool CheckForIconRedraw()
+        {
+            return Interlocked.Exchange(ref needsToRedrawIcons, 0) != 0;
+        }
+
+        public void SetError(string message)
+        {
+            Error.Message = message;
+            Error.Visible = true;
+
+            Interlocked.Exchange(ref needsToRedrawIcons, 1);
+        }
+
+        public void SetWarning(string message)
+        {
+            Warning.Message = message;
+            Warning.Visible = true;
+
+            Interlocked.Exchange(ref needsToRedrawIcons, 1);
+        }
+
+        public void SetInformation(string message)
+        {
+            Information.Message = message;
+            Information.Visible = true;
+
+            Interlocked.Exchange(ref needsToRedrawIcons, 1);
+        }
+    }
+
+    public enum ConnectionIcon
+    {
+        None = 0,
+        Question = 1,
+        Asterisk = 2,
+        Exclamation = 3,
+        Error = 4,
+        Information = 5,
+        Warning = 6,
+    }
+
     public partial class MainForm : BaseForm
     {
         public const int SynchronisationMasterPort = 9000;
@@ -42,63 +99,6 @@ namespace NgimuSynchronisedNetworkManager
         };
 
         private string title;
-
-        class ConnectionRow
-        {
-            public object[] Cells;
-            public DateTime[] Timestamps;
-
-            public Connection Connection { get; set; }
-
-            public DataGridViewRow Row { get; set; }
-
-            public ConnectionIcon Icon { get; set; } = ConnectionIcon.Information;
-            public IconInfo Error { get; set; }
-            public IconInfo Warning { get; set; }
-            public IconInfo Information { get; set; }
-
-            private int needsToRedrawIcons = 0; 
-
-            public bool CheckForIconRedraw()
-            {
-                return Interlocked.Exchange(ref needsToRedrawIcons, 0) != 0; 
-            }
-
-            public void SetError(string message)
-            {
-                Error.Message = message;
-                Error.Visible = true;
-
-                Interlocked.Exchange(ref needsToRedrawIcons, 1);
-            }
-
-            public void SetWarning(string message)
-            {
-                Warning.Message = message;
-                Warning.Visible = true;
-
-                Interlocked.Exchange(ref needsToRedrawIcons, 1);
-            }
-
-            public void SetInformation(string message)
-            {
-                Information.Message = message;
-                Information.Visible = true;
-
-                Interlocked.Exchange(ref needsToRedrawIcons, 1);
-            }
-        }
-
-        enum ConnectionIcon
-        {
-            None = 0,
-            Question = 1,
-            Asterisk = 2,
-            Exclamation = 3,
-            Error = 4,
-            Information = 5,
-            Warning = 6,
-        }
 
         private DataLoggerWindow dataLogger;
         private SendRatesWindow sendRates;
@@ -157,13 +157,13 @@ namespace NgimuSynchronisedNetworkManager
                 {
                     ToolStripMenuItem item = menuSender as ToolStripMenuItem;
 
-                    this.SendCommand(connectionsRows.Select(connectionRow => connectionRow.Connection).ToList(), item.Tag as CommandMetaData);
+                    this.SendCommand(connectionsRows, true, item.Tag as CommandMetaData);
                 };
 
                 commandItems.Add(menuItem);
             }
 
-            commandsToolStripMenuItem.DropDownItems.AddRange(commandItems.ToArray());
+            sendCommandToolStripMenuItem.DropDownItems.AddRange(commandItems.ToArray());
         }
 
         private Image GetImage(Icon icon)
@@ -204,7 +204,7 @@ namespace NgimuSynchronisedNetworkManager
                     connectionsRows.Add(connectionRow);
 
                     dataLogger?.ActiveConnections.Add(connection);
-                    sendRates?.ActiveConnections.Add(connection);
+                    sendRates?.ActiveConnections.Add(connectionRow);
 
                     StringBuilder sb = new StringBuilder();
 
@@ -245,7 +245,17 @@ namespace NgimuSynchronisedNetworkManager
                     (connectionRow.Row.Cells[(int)ColumnIndex.Device] as TextAndIconCell).Add(connectionRow.Information);
                     (connectionRow.Row.Cells[(int)ColumnIndex.Device] as TextAndIconCell).Add(connectionRow.Warning);
                     (connectionRow.Row.Cells[(int)ColumnIndex.Device] as TextAndIconCell).Add(connectionRow.Error);
-  
+
+                    connectionRow.Connection.DeviceError.Received += (s, args) =>
+                    {
+                        StringBuilder stringBuilder = new StringBuilder();
+
+                        stringBuilder.AppendLine("Error message received:");
+                        stringBuilder.AppendLine();
+                        stringBuilder.AppendLine(connectionRow.Connection.DeviceError.Message); 
+
+                        connectionRow.SetInformation(stringBuilder.ToString());
+                    };
 
                     connectionRow.Connection.Battery.Received += (s, arg) =>
                     {
@@ -278,6 +288,12 @@ namespace NgimuSynchronisedNetworkManager
             sendRates?.UpdateColumns();
 
             if (result == DialogResult.Cancel)
+            {
+                DisconnectAll();
+                return;
+            }
+
+            if (connectionsRows.Count == 0)
             {
                 DisconnectAll();
                 return;
@@ -366,7 +382,7 @@ namespace NgimuSynchronisedNetworkManager
                 {
                     case DialogResult.OK:
                         this.SetSettingValueOnAllDevices(connectionsRows.Select(connectionRow => connectionRow.Connection.Settings.WifiReceivePort), (ushort)MainForm.SynchronisationMasterPort);
-                        this.WriteSettings(connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.WifiReceivePort));
+                        this.WriteSettings(connectionsRows, true, connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.WifiReceivePort));
 
                         DisconnectAll();
                         return;
@@ -390,7 +406,7 @@ namespace NgimuSynchronisedNetworkManager
                 {
                     case DialogResult.OK:
                         this.SetSettingValueOnAllDevices(connectionsRows.Select(connectionRow => connectionRow.Connection.Settings.SynchronisationMasterPort), (ushort)MainForm.SynchronisationMasterPort);
-                        this.WriteSettings(connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.SynchronisationMasterPort));
+                        this.WriteSettings(connectionsRows, true, connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.SynchronisationMasterPort));
 
                         break;
                     case DialogResult.Cancel:
@@ -455,7 +471,7 @@ namespace NgimuSynchronisedNetworkManager
                 {
                     case DialogResult.OK:
                         this.SetSettingValueOnAllDevices(connectionsRows.Select(connectionRow => connectionRow.Connection.Settings.SendRateRssi), 2f);
-                        this.WriteSettings(connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.SendRateRssi));
+                        this.WriteSettings(connectionsRows, true, connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.SendRateRssi));
                         break;
                     case DialogResult.Cancel:
                         DisconnectAll();
@@ -879,12 +895,13 @@ namespace NgimuSynchronisedNetworkManager
             {
                 ConnectionRow synchronisationMasterRow = SynchronisationMasterRow;
 
-                this.SendCommand(synchronisationMasterRow.Connection, Command.Time, OscTimeTag.Now);
+                this.SendCommand(synchronisationMasterRow, true, Command.Time, OscTimeTag.Now);
 
                 this.SendCommand(
                     (from connectionRow in connectionsRows
                      where connectionRow != synchronisationMasterRow
-                     select connectionRow.Connection).ToList(),
+                     select connectionRow).ToList(), 
+                    true, 
                     Command.Time, new OscTimeTag(0));
             }
             catch (Exception ex)
@@ -991,7 +1008,7 @@ namespace NgimuSynchronisedNetworkManager
                 case ColumnIndex.Signal:
                     break;
                 case ColumnIndex.Identify:
-                    this.SendCommand((dataGridView1.Rows[e.RowIndex].Tag as ConnectionRow).Connection, Command.Identify);
+                    this.SendCommand((dataGridView1.Rows[e.RowIndex].Tag as ConnectionRow), true, Command.Identify);
                     break;
                 default:
                     break;
@@ -1004,7 +1021,7 @@ namespace NgimuSynchronisedNetworkManager
 
             selectedConnectionRow.Connection.Settings.SynchronisationMasterEnabled.Value = true;
 
-            this.WriteSettings(connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.SynchronisationMasterEnabled));
+            this.WriteSettings(connectionsRows, true, connectionsRows.Select(connectionRowItem => connectionRowItem.Connection.Settings.SynchronisationMasterEnabled));
 
             foreach (ConnectionRow connectionRow in connectionsRows)
             {
@@ -1104,7 +1121,7 @@ namespace NgimuSynchronisedNetworkManager
 
             foreach (ConnectionRow row in connectionsRows)
             {
-                sendRates?.ActiveConnections.Add(row.Connection);
+                sendRates?.ActiveConnections.Add(row);
             }
 
             sendRates.Show();
@@ -1204,7 +1221,7 @@ namespace NgimuSynchronisedNetworkManager
 
                         progress.UpdateProgress(0, $"Writing settings to device {deviceDescriptor}.");
 
-                        this.WriteSettingsWithExistingProgress(progress, new[] { connection.Settings });
+                        this.WriteSettingsWithExistingProgress(progress, connectionsRows, true, new[] { connection.Settings });
                     }
 
                     //if (hasBeenCanceled == true)

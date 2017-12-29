@@ -203,7 +203,8 @@ namespace NgimuApi.SearchForConnections
 
         private void BeginSearchUdp()
         {
-            queriesList.Add(AhoyQuery.CreateQuery());
+            // Set service expiery period to 5 seconds to deal with IMU wifi send delays
+            queriesList.Add(AhoyQuery.CreateQuery(5000));
 
             foreach (IAhoyQuery query in queriesList)
             {

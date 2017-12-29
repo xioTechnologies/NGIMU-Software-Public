@@ -40,10 +40,7 @@ namespace NgimuGui.DialogsAndWindows
 
         private void OnAutoConnectRequest()
         {
-            if (AutoConnectRequest != null)
-            {
-                AutoConnectRequest(this, EventArgs.Empty);
-            }
+            AutoConnectRequest?.Invoke(this, EventArgs.Empty);
         }
 
         private void UploadFirmwareDialog_Load(object sender, EventArgs e)

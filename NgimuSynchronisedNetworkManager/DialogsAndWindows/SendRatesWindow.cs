@@ -15,14 +15,14 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         private readonly Settings settings = new Settings();
 
         private readonly Dictionary<string, DataGridViewRow> settingsToRowLookup = new Dictionary<string, DataGridViewRow>();
-        private readonly Dictionary<Connection, DataGridViewSettingsValueColumn> connectionToColumnLookup = new Dictionary<Connection, DataGridViewSettingsValueColumn>();
+        private readonly Dictionary<ConnectionRow, DataGridViewSettingsValueColumn> connectionToColumnLookup = new Dictionary<ConnectionRow, DataGridViewSettingsValueColumn>();
 
         private readonly DataGridViewCellStyle dataGridViewCellStyle;
 
         private readonly DataGridViewCellStyle dataGridViewCellStyleBold;
         private readonly List<DataGridViewCell> selectedCells = new List<DataGridViewCell>();
 
-        public List<Connection> ActiveConnections { get; } = new List<Connection>();
+        public List<ConnectionRow> ActiveConnections { get; } = new List<ConnectionRow>();
 
         public SendRatesWindow()
         {
@@ -52,12 +52,12 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
             sendRatesGrid.SuspendLayout(); 
 
-            foreach (Connection connection in ActiveConnections)
+            foreach (ConnectionRow connection in ActiveConnections)
             {
                 StringBuilder sb = new StringBuilder();
 
-                sb.AppendLine(connection.Settings.DeviceInformation.DeviceName.Value);
-                sb.Append(connection.Settings.DeviceInformation.SerialNumber.Value);
+                sb.AppendLine(connection.Connection.Settings.DeviceInformation.DeviceName.Value);
+                sb.Append(connection.Connection.Settings.DeviceInformation.SerialNumber.Value);
 
                 DataGridViewSettingsValueColumn column = new DataGridViewSettingsValueColumn
                 {
@@ -97,7 +97,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
         private void readAllButton_Click(object sender, EventArgs e)
         {
-            this.ReadSettings(ActiveConnections.Select(connection => connection.Settings.SendRates));
+            this.ReadSettings(ActiveConnections, true, ActiveConnections.Select(connection => connection.Connection.Settings.SendRates));
 
             CopyValuesToGrid();
         }
@@ -106,14 +106,14 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         {
             CopyValuesFromGrid();
 
-            this.WriteSettings(ActiveConnections.Select(connection => connection.Settings.SendRates));
+            this.WriteSettings(ActiveConnections, true, ActiveConnections.Select(connection => connection.Connection.Settings.SendRates));
 
             CopyValuesToGrid();
         }
 
         private void CopyValuesToGrid()
         {
-            foreach (Connection connection in ActiveConnections)
+            foreach (ConnectionRow connection in ActiveConnections)
             {
                 DataGridViewSettingsValueColumn column;
                 if (connectionToColumnLookup.TryGetValue(connection, out column) == false)
@@ -123,7 +123,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
                 int cellIndex = column.Index;
 
-                foreach (ISettingValue settingValue in connection.Settings.SendRates.Values)
+                foreach (ISettingValue settingValue in connection.Connection.Settings.SendRates.Values)
                 {
                     object value = settingValue.GetValue();
 
@@ -155,7 +155,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
         private void CopyValuesFromGrid()
         {
-            foreach (Connection connection in ActiveConnections)
+            foreach (ConnectionRow connection in ActiveConnections)
             {
                 DataGridViewSettingsValueColumn column;
                 if (connectionToColumnLookup.TryGetValue(connection, out column) == false)
@@ -165,7 +165,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
 
                 int cellIndex = column.Index;
 
-                foreach (ISettingValue settingValue in connection.Settings.SendRates.Values)
+                foreach (ISettingValue settingValue in connection.Connection.Settings.SendRates.Values)
                 {
                     object value = settingsToRowLookup[settingValue.OscAddress].Cells[cellIndex].Value;
 

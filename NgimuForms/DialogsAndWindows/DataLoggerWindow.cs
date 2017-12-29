@@ -292,13 +292,8 @@ namespace NgimuForms.DialogsAndWindows
 
         private void SessionNameBox_TextChanged(object sender, EventArgs e)
         {
-            m_SessionNameBox.ForeColor = Control.DefaultForeColor;
-
-            if (string.IsNullOrEmpty(m_SessionNameBox.Text) == true ||
-                Helper.IsInvalidFileName(m_SessionNameBox.Text) == true)
-            {
-                m_SessionNameBox.ForeColor = Color.Red;
-            }
+            m_SessionNameBox.HasError = string.IsNullOrEmpty(m_SessionNameBox.Text) == true ||
+                                        Helper.IsInvalidFileName(m_SessionNameBox.Text) == true;
         }
 
         private void openDirectory_Click(object sender, EventArgs e)

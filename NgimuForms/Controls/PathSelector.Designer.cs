@@ -49,7 +49,6 @@
             this.textbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textbox.HelpText = "";
-            this.textbox.HelpTextColor = System.Drawing.Color.Gray;
             this.textbox.Location = new System.Drawing.Point(0, 2);
             this.textbox.Name = "textbox";
             this.textbox.Size = new System.Drawing.Size(162, 20);

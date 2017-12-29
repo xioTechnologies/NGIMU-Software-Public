@@ -45,7 +45,7 @@
             this.disconnectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendRatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.commandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendCommandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataLoggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataForwardingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -173,7 +173,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectionsToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.commandsToolStripMenuItem,
+            this.sendCommandToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -222,11 +222,11 @@
             this.sendRatesToolStripMenuItem.Text = "Send Rates";
             this.sendRatesToolStripMenuItem.Click += new System.EventHandler(this.sendRatesToolStripMenuItem_Click);
             // 
-            // commandsToolStripMenuItem
+            // sendCommandToolStripMenuItem
             // 
-            this.commandsToolStripMenuItem.Name = "commandsToolStripMenuItem";
-            this.commandsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.commandsToolStripMenuItem.Text = "Commands";
+            this.sendCommandToolStripMenuItem.Name = "sendCommandToolStripMenuItem";
+            this.sendCommandToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
+            this.sendCommandToolStripMenuItem.Text = "Send Command";
             // 
             // toolsToolStripMenuItem
             // 
@@ -316,7 +316,7 @@
         private System.Windows.Forms.Timer timerFast;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataLoggerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem commandsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendCommandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendRatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
