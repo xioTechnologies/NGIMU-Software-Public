@@ -1,6 +1,12 @@
 NGIMU-Software
 ==============
 
+v1.11 (Jan 10 2018)
+-------------------
+* Allow device name to be edited in NGIMU Synchronised Network Manager
+* Fix bug affecting SLIP packets greater than 1024 bytes
+* Fix message filter tab bug
+
 v1.10 (Dec 29 2017)
 -------------------
 * Increase ahoy service expiry to 5 seconds to handle Wi-Fi send delays of firmware

@@ -32,13 +32,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.synchronisationMasterTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Device = new NgimuForms.Controls.TextAndIconColumn();
-            this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.MessagesReceived = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MessagesSent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BatteryPercentage = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
-            this.Signal = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
-            this.Identify = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.connectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchForConnectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +46,13 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerFast = new System.Windows.Forms.Timer(this.components);
+            this.Device = new NgimuForms.Controls.TextAndIconColumn();
+            this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MessagesReceived = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MessagesSent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BatteryPercentage = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
+            this.Signal = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
+            this.Identify = new System.Windows.Forms.DataGridViewButtonColumn();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -95,78 +95,16 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(784, 515);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
-            // 
-            // Device
-            // 
-            this.Device.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Device.HeaderText = "Device";
-            this.Device.MinimumWidth = 100;
-            this.Device.Name = "Device";
-            this.Device.ReadOnly = true;
-            // 
-            // Master
-            // 
-            this.Master.HeaderText = "Master";
-            this.Master.MinimumWidth = 60;
-            this.Master.Name = "Master";
-            this.Master.ReadOnly = true;
-            this.Master.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Master.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Master.Width = 60;
-            // 
-            // MessagesReceived
-            // 
-            this.MessagesReceived.HeaderText = "Received";
-            this.MessagesReceived.MinimumWidth = 90;
-            this.MessagesReceived.Name = "MessagesReceived";
-            this.MessagesReceived.ReadOnly = true;
-            this.MessagesReceived.Width = 90;
-            // 
-            // MessagesSent
-            // 
-            this.MessagesSent.HeaderText = "Sent";
-            this.MessagesSent.MinimumWidth = 90;
-            this.MessagesSent.Name = "MessagesSent";
-            this.MessagesSent.ReadOnly = true;
-            this.MessagesSent.Width = 90;
-            // 
-            // BatteryPercentage
-            // 
-            this.BatteryPercentage.HeaderText = "Battery";
-            this.BatteryPercentage.MinimumWidth = 120;
-            this.BatteryPercentage.Name = "BatteryPercentage";
-            this.BatteryPercentage.ReadOnly = true;
-            this.BatteryPercentage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.BatteryPercentage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.BatteryPercentage.Width = 120;
-            // 
-            // Signal
-            // 
-            this.Signal.HeaderText = "Signal";
-            this.Signal.MinimumWidth = 120;
-            this.Signal.Name = "Signal";
-            this.Signal.ReadOnly = true;
-            this.Signal.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Signal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Signal.Width = 120;
-            // 
-            // Identify
-            // 
-            this.Identify.HeaderText = "";
-            this.Identify.MinimumWidth = 60;
-            this.Identify.Name = "Identify";
-            this.Identify.ReadOnly = true;
-            this.Identify.Text = "Send";
-            this.Identify.Width = 60;
             // 
             // menuStrip1
             // 
@@ -280,6 +218,68 @@
             this.timerFast.Enabled = true;
             this.timerFast.Interval = 50;
             this.timerFast.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // Device
+            // 
+            this.Device.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Device.HeaderText = "Device";
+            this.Device.MinimumWidth = 100;
+            this.Device.Name = "Device";
+            // 
+            // Master
+            // 
+            this.Master.HeaderText = "Master";
+            this.Master.MinimumWidth = 60;
+            this.Master.Name = "Master";
+            this.Master.ReadOnly = true;
+            this.Master.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Master.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Master.Width = 60;
+            // 
+            // MessagesReceived
+            // 
+            this.MessagesReceived.HeaderText = "Received";
+            this.MessagesReceived.MinimumWidth = 90;
+            this.MessagesReceived.Name = "MessagesReceived";
+            this.MessagesReceived.ReadOnly = true;
+            this.MessagesReceived.Width = 90;
+            // 
+            // MessagesSent
+            // 
+            this.MessagesSent.HeaderText = "Sent";
+            this.MessagesSent.MinimumWidth = 90;
+            this.MessagesSent.Name = "MessagesSent";
+            this.MessagesSent.ReadOnly = true;
+            this.MessagesSent.Width = 90;
+            // 
+            // BatteryPercentage
+            // 
+            this.BatteryPercentage.HeaderText = "Battery";
+            this.BatteryPercentage.MinimumWidth = 120;
+            this.BatteryPercentage.Name = "BatteryPercentage";
+            this.BatteryPercentage.ReadOnly = true;
+            this.BatteryPercentage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.BatteryPercentage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.BatteryPercentage.Width = 120;
+            // 
+            // Signal
+            // 
+            this.Signal.HeaderText = "Signal";
+            this.Signal.MinimumWidth = 120;
+            this.Signal.Name = "Signal";
+            this.Signal.ReadOnly = true;
+            this.Signal.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Signal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Signal.Width = 120;
+            // 
+            // Identify
+            // 
+            this.Identify.HeaderText = "";
+            this.Identify.MinimumWidth = 60;
+            this.Identify.Name = "Identify";
+            this.Identify.ReadOnly = true;
+            this.Identify.Text = "Send";
+            this.Identify.Width = 60;
             // 
             // MainForm
             // 

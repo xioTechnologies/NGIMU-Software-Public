@@ -20,68 +20,12 @@ using Rug.Osc;
 
 namespace NgimuSynchronisedNetworkManager
 {
-    public class ConnectionRow
-    {
-        public object[] Cells;
-        public DateTime[] Timestamps;
-
-        public Connection Connection { get; set; }
-
-        public DataGridViewRow Row { get; set; }
-
-        public ConnectionIcon Icon { get; set; } = ConnectionIcon.Information;
-        public IconInfo Error { get; set; }
-        public IconInfo Warning { get; set; }
-        public IconInfo Information { get; set; }
-
-        private int needsToRedrawIcons = 0;
-
-        public bool CheckForIconRedraw()
-        {
-            return Interlocked.Exchange(ref needsToRedrawIcons, 0) != 0;
-        }
-
-        public void SetError(string message)
-        {
-            Error.Message = message;
-            Error.Visible = true;
-
-            Interlocked.Exchange(ref needsToRedrawIcons, 1);
-        }
-
-        public void SetWarning(string message)
-        {
-            Warning.Message = message;
-            Warning.Visible = true;
-
-            Interlocked.Exchange(ref needsToRedrawIcons, 1);
-        }
-
-        public void SetInformation(string message)
-        {
-            Information.Message = message;
-            Information.Visible = true;
-
-            Interlocked.Exchange(ref needsToRedrawIcons, 1);
-        }
-    }
-
-    public enum ConnectionIcon
-    {
-        None = 0,
-        Question = 1,
-        Asterisk = 2,
-        Exclamation = 3,
-        Error = 4,
-        Information = 5,
-        Warning = 6,
-    }
-
     public partial class MainForm : BaseForm
     {
-        public const int SynchronisationMasterPort = 9000;
-        public const string DefaultWifiClientSSID = "NGIMU Router 5 GHz (Hidden)";
-        public const float DefaultSendRateRssi = 2;
+        public static int SynchronisationMasterPort = 9000;
+        public static string DefaultWifiClientSSID = "NGIMU Router 5 GHz (Hidden)";
+        public static string DefaultWifiClientPassword = "";
+        public static float DefaultSendRateRssi = 2;
 
         List<ConnectionRow> connectionsRows = new List<ConnectionRow>();
 
@@ -206,17 +150,17 @@ namespace NgimuSynchronisedNetworkManager
                     dataLogger?.ActiveConnections.Add(connection);
                     sendRates?.ActiveConnections.Add(connectionRow);
 
-                    StringBuilder sb = new StringBuilder();
-
-                    sb.AppendLine(connection.Settings.DeviceInformation.DeviceName.Value);
-                    sb.AppendLine(connection.Settings.DeviceInformation.SerialNumber.Value);
-
                     connection.Message += Connection_Message;
 
                     object[] cells = new object[Enum.GetNames(typeof(ColumnIndex)).Length];
                     DateTime[] timestamps = new DateTime[cells.Length];
 
-                    cells[(int)ColumnIndex.Device] = sb.ToString().Trim();
+                    StringBuilder nameBuilder = new StringBuilder();
+
+                    nameBuilder.AppendLine(connection.Settings.DeviceInformation.DeviceName.Value);
+                    nameBuilder.AppendLine(connection.Settings.DeviceInformation.SerialNumber.Value);
+
+                    cells[(int)ColumnIndex.Device] = nameBuilder.ToString().Trim();
 
                     cells[(int)ColumnIndex.Master] = connectionRow.Connection.Settings.SynchronisationMasterEnabled.Value;
                     cells[(int)ColumnIndex.MessagesReceived] = "Unknown";
@@ -1040,6 +984,15 @@ namespace NgimuSynchronisedNetworkManager
             foreach (ConnectionRow connection in connectionsRows)
             {
                 {
+                    StringBuilder nameBuilder = new StringBuilder();
+
+                    nameBuilder.AppendLine(connection.Connection.Settings.DeviceInformation.DeviceName.Value);
+                    nameBuilder.Append(connection.Connection.Settings.DeviceInformation.SerialNumber.Value);
+
+                    connection.Cells[(int)ColumnIndex.Device] = nameBuilder.ToString();
+                }
+
+                {
                     StringBuilder sb = new StringBuilder();
 
                     sb.AppendLine("Total: " + connection.Connection.CommunicationStatistics.MessagesReceived.Total.ToString());
@@ -1143,6 +1096,14 @@ namespace NgimuSynchronisedNetworkManager
 
         private void ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //using (WifiSettingsDialog dialog = new WifiSettingsDialog())
+            //{
+            //    if (dialog.ShowDialog(this) != DialogResult.OK)
+            //    {
+            //        return; 
+            //    }
+            //}
+
             ProgressDialog progress = new ProgressDialog
             {
                 Text = "Configure Wireless Settings Via USB",
@@ -1217,6 +1178,7 @@ namespace NgimuSynchronisedNetworkManager
 
                         connection.Settings.WifiMode.Value = WifiMode.Client;
                         connection.Settings.WifiClientSSID.Value = DefaultWifiClientSSID;
+                        //connection.Settings.WifiClientKey.Value = DefaultWifiClientPassword; 
                         connection.Settings.SendRateRssi.Value = DefaultSendRateRssi;
 
                         progress.UpdateProgress(0, $"Writing settings to device {deviceDescriptor}.");
@@ -1258,6 +1220,53 @@ namespace NgimuSynchronisedNetworkManager
         private void DataForwardingDialog_FormClosed(object sender, FormClosedEventArgs e)
         {
             dataForwardingDialog = null;
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            switch ((ColumnIndex)e.ColumnIndex)
+            {
+                case ColumnIndex.Device:
+                    break;
+                default:
+                    return;
+            }
+        
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+            ConnectionRow connectionRow = row.Tag as ConnectionRow;
+
+            connectionRow.Connection.Settings.DeviceName.Value = row.Cells[(int) ColumnIndex.Device].Value.ToString();
+
+            this.WriteSettings(connectionsRows, true,  new[] {  connectionRow.Connection.Settings.DeviceName });
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            switch ((ColumnIndex)e.ColumnIndex)
+            {
+                case ColumnIndex.Device:
+                    break;                
+                default:
+                    e.Cancel = true; 
+                    return;
+            }
+
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+            ConnectionRow connectionRow = row.Tag as ConnectionRow;
+
+            row.Cells[(int) ColumnIndex.Device].Value = connectionRow.Connection.Settings.DeviceInformation.DeviceName.Value; 
         }
     }
 

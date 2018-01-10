@@ -212,7 +212,7 @@ namespace NgimuGui.Panels
                 return;
             }
 
-            string address = m_DataView.Rows[e.RowIndex].Cells["Address"].Value.ToString();
+            string address = m_DataView.Rows[e.RowIndex].Cells["OscAddress"].Value.ToString();
 
             DataGridViewColumn column = m_DataView.Columns[e.ColumnIndex];
 
@@ -304,7 +304,7 @@ namespace NgimuGui.Panels
 
         private void DataView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            string address = e.Row.Cells["Address"].Value.ToString();
+            string address = e.Row.Cells["OscAddress"].Value.ToString();
 
             Delete(address);
         }
