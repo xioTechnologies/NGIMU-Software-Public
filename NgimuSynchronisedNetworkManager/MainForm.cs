@@ -22,9 +22,9 @@ namespace NgimuSynchronisedNetworkManager
 {
     public partial class MainForm : BaseForm
     {
-        public static int SynchronisationMasterPort = 9000;
-        public static string DefaultWifiClientSSID = "NGIMU Router 5 GHz (Hidden)";
-        public static string DefaultWifiClientPassword = "";
+        public static ushort SynchronisationMasterPort = 9000;
+        public static string DefaultWifiClientSSID = "NGIMU Network";
+        public static string DefaultWifiClientKey = "xiotechnologies";
         public static float DefaultSendRateRssi = 2;
 
         List<ConnectionRow> connectionsRows = new List<ConnectionRow>();
@@ -230,6 +230,7 @@ namespace NgimuSynchronisedNetworkManager
             }
 
             sendRates?.UpdateColumns();
+            dataLogger?.UpdateConnections();
 
             if (result == DialogResult.Cancel)
             {
@@ -242,6 +243,8 @@ namespace NgimuSynchronisedNetworkManager
                 DisconnectAll();
                 return;
             }
+
+            sendCommandToolStripMenuItem.Enabled = true; 
 
             SetTitle();
 
@@ -670,6 +673,7 @@ namespace NgimuSynchronisedNetworkManager
         private void DisconnectAll()
         {
             synchronisationMasterListener?.Dispose();
+            sendCommandToolStripMenuItem.Enabled = false;
 
             if (connectionsRows.Count == 0)
             {
@@ -678,6 +682,7 @@ namespace NgimuSynchronisedNetworkManager
 
             dataLogger?.Stop();
             dataLogger?.ActiveConnections.Clear();
+            dataLogger?.UpdateConnections();
 
             sendRates?.ActiveConnections.Clear();
             sendRates?.UpdateColumns();
@@ -1051,6 +1056,7 @@ namespace NgimuSynchronisedNetworkManager
                 dataLogger?.ActiveConnections.Add(row.Connection);
             }
 
+            dataLogger?.UpdateConnections();
             dataLogger.Show();
         }
 
@@ -1096,111 +1102,13 @@ namespace NgimuSynchronisedNetworkManager
 
         private void ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //using (WifiSettingsDialog dialog = new WifiSettingsDialog())
-            //{
-            //    if (dialog.ShowDialog(this) != DialogResult.OK)
-            //    {
-            //        return; 
-            //    }
-            //}
-
-            ProgressDialog progress = new ProgressDialog
+            using (WifiSettingsDialog dialog = new WifiSettingsDialog())
             {
-                Text = "Configure Wireless Settings Via USB",
-                Style = ProgressBarStyle.Marquee,
-                CancelButtonEnabled = true,
-                ProgressMessage = "",
-                Progress = 0,
-                ProgressMaximum = 1
-            };
-
-            ManualResetEvent contiueResetEvent = new ManualResetEvent(false);
-
-            bool hasBeenCanceled = false;
-
-            progress.OnCancel += delegate (object s, FormClosingEventArgs fce)
-            {
-                hasBeenCanceled = true;
-                contiueResetEvent.Set();
-            };
-
-            progress.FormClosed += delegate (object s, FormClosedEventArgs fce)
-            {
-                contiueResetEvent.Set();
-            };
-
-            Thread configureWirelessSettingsViaUSBThread = new Thread(() =>
-            {
-                while (hasBeenCanceled == false)
+                if (dialog.ShowDialog(this) != DialogResult.OK)
                 {
-                    progress.UpdateProgress(0, "Connect next NGIMU to be configured.");
-
-                    bool found = false;
-                    ConnectionSearchResult foundConnectionSearchResult = null;
-
-                    // search for serial only connections
-                    using (SearchForConnections searchForConnections = new SearchForConnections(ConnectionSearchTypes.Serial))
-                    {
-                        searchForConnections.DeviceDiscovered += delegate (ConnectionSearchResult connectionSearchResult)
-                        {
-                            found = true;
-                            foundConnectionSearchResult = connectionSearchResult;
-                            contiueResetEvent.Set();
-                        };
-
-                        contiueResetEvent.Reset();
-
-                        searchForConnections.BeginSearch();
-
-                        contiueResetEvent.WaitOne();
-
-                        searchForConnections.EndSearch();
-                    }
-
-                    if (hasBeenCanceled == true)
-                    {
-                        break;
-                    }
-
-                    if (foundConnectionSearchResult == null)
-                    {
-                        break;
-                    }
-
-                    string deviceDescriptor = foundConnectionSearchResult.DeviceDescriptor;
-
-                    // open connection to first device found 
-                    progress.UpdateProgress(0, $"Found device {deviceDescriptor}.");
-
-                    using (Connection connection = new Connection(foundConnectionSearchResult))
-                    {
-                        connection.Connect();
-
-                        connection.Settings.WifiMode.Value = WifiMode.Client;
-                        connection.Settings.WifiClientSSID.Value = DefaultWifiClientSSID;
-                        //connection.Settings.WifiClientKey.Value = DefaultWifiClientPassword; 
-                        connection.Settings.SendRateRssi.Value = DefaultSendRateRssi;
-
-                        progress.UpdateProgress(0, $"Writing settings to device {deviceDescriptor}.");
-
-                        this.WriteSettingsWithExistingProgress(progress, connectionsRows, true, new[] { connection.Settings });
-                    }
-
-                    //if (hasBeenCanceled == true)
-                    //{
-                    //    break;
-                    //}
-
-                    this.InvokeShowInformation($@"Configuration of ""{deviceDescriptor}"" complete.{Environment.NewLine}{Environment.NewLine}Disconnect the device then click OK");
+                    return; 
                 }
-
-                Invoke(new MethodInvoker(() => { progress.Close(); }));
-            });
-
-            configureWirelessSettingsViaUSBThread.Name = "Configure Wireless Settings Via USB";
-            configureWirelessSettingsViaUSBThread.Start();
-
-            progress.ShowDialog(this);
+            }            
         }
 
         private void dataForwardingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1222,6 +1130,8 @@ namespace NgimuSynchronisedNetworkManager
             dataForwardingDialog = null;
         }
 
+        private string deviceNameEditOriginalValue; 
+
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -1236,12 +1146,19 @@ namespace NgimuSynchronisedNetworkManager
                 default:
                     return;
             }
-        
+
             DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
             ConnectionRow connectionRow = row.Tag as ConnectionRow;
 
-            connectionRow.Connection.Settings.DeviceName.Value = row.Cells[(int) ColumnIndex.Device].Value.ToString();
+            string newValue = row.Cells[(int) ColumnIndex.Device].Value.ToString();
+
+            if (newValue.Equals(deviceNameEditOriginalValue) == true)
+            {
+                return; 
+            }
+            
+            connectionRow.Connection.Settings.DeviceName.Value = newValue;
 
             this.WriteSettings(connectionsRows, true,  new[] {  connectionRow.Connection.Settings.DeviceName });
         }
@@ -1266,7 +1183,14 @@ namespace NgimuSynchronisedNetworkManager
 
             ConnectionRow connectionRow = row.Tag as ConnectionRow;
 
+            deviceNameEditOriginalValue = row.Cells[(int) ColumnIndex.Device].Value.ToString();
+            
             row.Cells[(int) ColumnIndex.Device].Value = connectionRow.Connection.Settings.DeviceInformation.DeviceName.Value; 
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 

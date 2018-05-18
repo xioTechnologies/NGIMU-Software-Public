@@ -33,6 +33,7 @@
             this.writeButton = new System.Windows.Forms.Button();
             this.readButton = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sendRatesGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,6 +70,7 @@
             // writeButton
             // 
             this.writeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.writeButton.Enabled = false;
             this.writeButton.Location = new System.Drawing.Point(537, 346);
             this.writeButton.Name = "writeButton";
             this.writeButton.Size = new System.Drawing.Size(75, 23);
@@ -80,6 +82,7 @@
             // readButton
             // 
             this.readButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.readButton.Enabled = false;
             this.readButton.Location = new System.Drawing.Point(456, 346);
             this.readButton.Name = "readButton";
             this.readButton.Size = new System.Drawing.Size(75, 23);
@@ -97,11 +100,22 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
+            // label
+            // 
+            this.label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label.AutoSize = true;
+            this.label.Location = new System.Drawing.Point(12, 351);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(188, 13);
+            this.label.TabIndex = 5;
+            this.label.Text = "Hold Shift or Ctrl to select multiple cells";
+            // 
             // SendRatesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 381);
+            this.Controls.Add(this.label);
             this.Controls.Add(this.writeButton);
             this.Controls.Add(this.readButton);
             this.Controls.Add(this.sendRatesGrid);
@@ -112,6 +126,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SendRates_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.sendRatesGrid)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -122,5 +137,6 @@
         private System.Windows.Forms.Button readButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn SettingName;
+        private System.Windows.Forms.Label label;
     }
 }

@@ -32,6 +32,13 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.synchronisationMasterTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Device = new NgimuForms.Controls.TextAndIconColumn();
+            this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MessagesReceived = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MessagesSent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BatteryPercentage = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
+            this.Signal = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
+            this.Identify = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.connectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchForConnectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,13 +53,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerFast = new System.Windows.Forms.Timer(this.components);
-            this.Device = new NgimuForms.Controls.TextAndIconColumn();
-            this.Master = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.MessagesReceived = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MessagesSent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BatteryPercentage = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
-            this.Signal = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
-            this.Identify = new System.Windows.Forms.DataGridViewButtonColumn();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -105,119 +105,7 @@
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectionsToolStripMenuItem,
-            this.settingsToolStripMenuItem,
-            this.sendCommandToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // connectionsToolStripMenuItem
-            // 
-            this.connectionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.searchForConnectionsToolStripMenuItem,
-            this.disconnectAllToolStripMenuItem});
-            this.connectionsToolStripMenuItem.Name = "connectionsToolStripMenuItem";
-            this.connectionsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.connectionsToolStripMenuItem.Text = "Connection";
-            // 
-            // searchForConnectionsToolStripMenuItem
-            // 
-            this.searchForConnectionsToolStripMenuItem.Name = "searchForConnectionsToolStripMenuItem";
-            this.searchForConnectionsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.searchForConnectionsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.searchForConnectionsToolStripMenuItem.Text = "Search For Connections";
-            this.searchForConnectionsToolStripMenuItem.Click += new System.EventHandler(this.searchForConnectionsToolStripMenuItem_Click);
-            // 
-            // disconnectAllToolStripMenuItem
-            // 
-            this.disconnectAllToolStripMenuItem.Name = "disconnectAllToolStripMenuItem";
-            this.disconnectAllToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.disconnectAllToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.disconnectAllToolStripMenuItem.Text = "Disconnect All";
-            this.disconnectAllToolStripMenuItem.Click += new System.EventHandler(this.disconnectAllToolStripMenuItem_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sendRatesToolStripMenuItem});
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // sendRatesToolStripMenuItem
-            // 
-            this.sendRatesToolStripMenuItem.Name = "sendRatesToolStripMenuItem";
-            this.sendRatesToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.sendRatesToolStripMenuItem.Text = "Send Rates";
-            this.sendRatesToolStripMenuItem.Click += new System.EventHandler(this.sendRatesToolStripMenuItem_Click);
-            // 
-            // sendCommandToolStripMenuItem
-            // 
-            this.sendCommandToolStripMenuItem.Name = "sendCommandToolStripMenuItem";
-            this.sendCommandToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
-            this.sendCommandToolStripMenuItem.Text = "Send Command";
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dataLoggerToolStripMenuItem,
-            this.dataForwardingToolStripMenuItem,
-            this.configureWirelessSettingsViaUSBToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // dataLoggerToolStripMenuItem
-            // 
-            this.dataLoggerToolStripMenuItem.Name = "dataLoggerToolStripMenuItem";
-            this.dataLoggerToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
-            this.dataLoggerToolStripMenuItem.Text = "Data Logger";
-            this.dataLoggerToolStripMenuItem.Click += new System.EventHandler(this.dataLoggerToolStripMenuItem_Click);
-            // 
-            // dataForwardingToolStripMenuItem
-            // 
-            this.dataForwardingToolStripMenuItem.Name = "dataForwardingToolStripMenuItem";
-            this.dataForwardingToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
-            this.dataForwardingToolStripMenuItem.Text = "Data Forwarding";
-            this.dataForwardingToolStripMenuItem.Click += new System.EventHandler(this.dataForwardingToolStripMenuItem_Click);
-            // 
-            // configureWirelessSettingsViaUSBToolStripMenuItem
-            // 
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Name = "configureWirelessSettingsViaUSBToolStripMenuItem";
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Text = "Configure Wireless Settings Via USB";
-            this.configureWirelessSettingsViaUSBToolStripMenuItem.Click += new System.EventHandler(this.ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // timerFast
-            // 
-            this.timerFast.Enabled = true;
-            this.timerFast.Interval = 50;
-            this.timerFast.Tick += new System.EventHandler(this.timer1_Tick);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // Device
             // 
@@ -280,6 +168,120 @@
             this.Identify.ReadOnly = true;
             this.Identify.Text = "Send";
             this.Identify.Width = 60;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectionsToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.sendCommandToolStripMenuItem,
+            this.toolsToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // connectionsToolStripMenuItem
+            // 
+            this.connectionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.searchForConnectionsToolStripMenuItem,
+            this.disconnectAllToolStripMenuItem});
+            this.connectionsToolStripMenuItem.Name = "connectionsToolStripMenuItem";
+            this.connectionsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.connectionsToolStripMenuItem.Text = "Connection";
+            // 
+            // searchForConnectionsToolStripMenuItem
+            // 
+            this.searchForConnectionsToolStripMenuItem.Name = "searchForConnectionsToolStripMenuItem";
+            this.searchForConnectionsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.searchForConnectionsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.searchForConnectionsToolStripMenuItem.Text = "Search For Connections";
+            this.searchForConnectionsToolStripMenuItem.Click += new System.EventHandler(this.searchForConnectionsToolStripMenuItem_Click);
+            // 
+            // disconnectAllToolStripMenuItem
+            // 
+            this.disconnectAllToolStripMenuItem.Name = "disconnectAllToolStripMenuItem";
+            this.disconnectAllToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.disconnectAllToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.disconnectAllToolStripMenuItem.Text = "Disconnect All";
+            this.disconnectAllToolStripMenuItem.Click += new System.EventHandler(this.disconnectAllToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendRatesToolStripMenuItem});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // sendRatesToolStripMenuItem
+            // 
+            this.sendRatesToolStripMenuItem.Name = "sendRatesToolStripMenuItem";
+            this.sendRatesToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.sendRatesToolStripMenuItem.Text = "Send Rates";
+            this.sendRatesToolStripMenuItem.Click += new System.EventHandler(this.sendRatesToolStripMenuItem_Click);
+            // 
+            // sendCommandToolStripMenuItem
+            // 
+            this.sendCommandToolStripMenuItem.Enabled = false;
+            this.sendCommandToolStripMenuItem.Name = "sendCommandToolStripMenuItem";
+            this.sendCommandToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
+            this.sendCommandToolStripMenuItem.Text = "Send Command";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dataLoggerToolStripMenuItem,
+            this.dataForwardingToolStripMenuItem,
+            this.configureWirelessSettingsViaUSBToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // dataLoggerToolStripMenuItem
+            // 
+            this.dataLoggerToolStripMenuItem.Name = "dataLoggerToolStripMenuItem";
+            this.dataLoggerToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.dataLoggerToolStripMenuItem.Text = "Data Logger";
+            this.dataLoggerToolStripMenuItem.Click += new System.EventHandler(this.dataLoggerToolStripMenuItem_Click);
+            // 
+            // dataForwardingToolStripMenuItem
+            // 
+            this.dataForwardingToolStripMenuItem.Name = "dataForwardingToolStripMenuItem";
+            this.dataForwardingToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.dataForwardingToolStripMenuItem.Text = "Data Forwarding";
+            this.dataForwardingToolStripMenuItem.Click += new System.EventHandler(this.dataForwardingToolStripMenuItem_Click);
+            // 
+            // configureWirelessSettingsViaUSBToolStripMenuItem
+            // 
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Name = "configureWirelessSettingsViaUSBToolStripMenuItem";
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Text = "Configure Wireless Settings Via USB";
+            this.configureWirelessSettingsViaUSBToolStripMenuItem.Click += new System.EventHandler(this.ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // timerFast
+            // 
+            this.timerFast.Enabled = true;
+            this.timerFast.Interval = 50;
+            this.timerFast.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MainForm
             // 

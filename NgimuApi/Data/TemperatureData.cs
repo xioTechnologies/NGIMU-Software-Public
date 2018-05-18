@@ -13,11 +13,6 @@ namespace NgimuApi.Data
         public override string OscAddress { get { return "/temperature"; } }
 
         /// <summary>
-        /// Gets the temperature of the processor in degrees Celsius.
-        /// </summary>
-        public float Processor { get; private set; }
-
-        /// <summary>
         /// Gets the temperature of the gyroscope and accelerometer in degrees Celsius.
         /// </summary>
         public float GyroscopeAndAccelerometer { get; private set; }
@@ -34,7 +29,7 @@ namespace NgimuApi.Data
         /// <returns>True if the OSC message was successfully parsed.</returns>
         protected override bool OnMessageReceived(OscMessage message)
         {
-            if (message.Count != 3)
+            if (message.Count != 2)
             {
                 return false;
             }
@@ -49,14 +44,8 @@ namespace NgimuApi.Data
                 return false;
             }
 
-            if (!(message[2] is float))
-            {
-                return false;
-            }
-
-            Processor = (float)message[0];
-            GyroscopeAndAccelerometer = (float)message[1];
-            EnvironmentalSensor = (float)message[2];
+            GyroscopeAndAccelerometer = (float)message[0];
+            EnvironmentalSensor = (float)message[1];
 
             return true;
         }
@@ -67,7 +56,6 @@ namespace NgimuApi.Data
             {
                 return Helper.ToCsv(
                         "Time (s)",
-                        "Processor (degC)",
                         "Gyroscope And Accelerometer (degC)",
                         "Environmental Sensor (degC)"
                         );
@@ -79,7 +67,6 @@ namespace NgimuApi.Data
             return Helper.ToCsv(
                     CreateTimestampString(firstTimestamp),
 
-                    Processor,
                     GyroscopeAndAccelerometer,
                     EnvironmentalSensor
                     );

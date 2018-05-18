@@ -1,6 +1,19 @@
 NGIMU-Software
 ==============
 
+v1.12 (May 18 2018)
+-------------------
+* Redesign wireless settings configuration tool in Synchronised Network Manager
+* Change 3D model colour to match actual product
+* Auto-populate the firmware uploader hex file path
+* Firmware uploading will retry 3 times
+* Do not create a Settings.txt file if it will be empty
+* Disable command and settings read/write controls when Synchronised Network Manager not connected
+* Modify some error messages to be more meaningful
+* Remove processor temperature
+* Add help text to send rates window in Synchronised Network Manager
+* Fix bug caused duplicated text when editing device name in Synchronised Network Manager
+
 v1.11 (Jan 10 2018)
 -------------------
 * Allow device name to be edited in NGIMU Synchronised Network Manager

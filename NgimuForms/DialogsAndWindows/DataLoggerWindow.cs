@@ -25,6 +25,11 @@ namespace NgimuForms.DialogsAndWindows
             InitializeComponent();
         }
 
+        public void UpdateConnections()
+        {
+            m_StartButton.Enabled = ActiveConnections.Count > 0; 
+        }
+
         private void DataLoggerWindow_Load(object sender, EventArgs e)
         {
             //if (WindowManager.Get(ID).Bounds != Rectangle.Empty)
@@ -40,16 +45,29 @@ namespace NgimuForms.DialogsAndWindows
             pathSelector.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         }
 
-        private bool CheckFileName(string fileName)
+        private bool CheckFileName(string fileName, out string errorMessage)
         {
+            errorMessage = ""; 
+
             try
             {
-                new System.IO.FileInfo(fileName);
+                FileInfo fileinfo = new System.IO.FileInfo(fileName);
 
-                return System.IO.Path.IsPathRooted(fileName);
+                if (System.IO.Path.IsPathRooted(fileName) == true)
+                {
+                    return true; 
+                }
+                else
+                {
+                    errorMessage = "Directory in the path '" + fileName + "' is invalid."; 
+
+                    return false; 
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                errorMessage = "The path '" + fileName + "' is invalid.";
+
                 return false;
             }
         }
@@ -63,19 +81,21 @@ namespace NgimuForms.DialogsAndWindows
                 return;
             }
 
+            string errorMessage; 
+
             // check the filename is good
-            if (CheckFileName(pathSelector.SelectedPath) == false)
+            if (CheckFileName(pathSelector.SelectedPath, out errorMessage) == false)
             {
-                this.ShowError("The file name \"" + pathSelector.SelectedPath + "\" is not valid.");
+                this.ShowError(errorMessage); // "The file name \"" + pathSelector.SelectedPath + "\" is not valid.");
                 return;
             }
 
             string fullpath = Path.Combine(pathSelector.SelectedPath, m_SessionNameBox.Text);
 
             // check the filename is good
-            if (CheckFileName(fullpath) == false)
+            if (CheckFileName(fullpath, out errorMessage) == false)
             {
-                this.ShowError("The session path \"" + fullpath + "\" is not valid.");
+                this.ShowError(errorMessage); // "The session path \"" + fullpath + "\" is not valid.");
                 return;
             }
 
@@ -130,7 +150,7 @@ namespace NgimuForms.DialogsAndWindows
         {
             if (ActiveConnections.Count == 0)
             {
-                this.ShowError("No connection.");
+                this.ShowError("Not connected.");
 
                 return false;
             }

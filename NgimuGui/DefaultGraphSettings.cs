@@ -190,9 +190,8 @@ namespace NgimuGui
                     VerticalAutoscaleIndex = int.MaxValue,
                     
                 };
-                settings.Traces.Add(new Trace() { Color = Colors.Red, Name = "Processor", MaxDataPoints = graphSampleBufferSize });
-                settings.Traces.Add(new Trace() { Color = Colors.Green, Name = "Gyroscope And Accelerometer", MaxDataPoints = graphSampleBufferSize });
-                settings.Traces.Add(new Trace() { Color = Colors.Blue, Name = "Environmental Sensor", MaxDataPoints = graphSampleBufferSize });
+                settings.Traces.Add(new Trace() { Color = Colors.Blue, Name = "Gyroscope And Accelerometer", MaxDataPoints = graphSampleBufferSize });
+                settings.Traces.Add(new Trace() { Color = Colors.Cyan, Name = "Environmental Sensor", MaxDataPoints = graphSampleBufferSize });
 
                 settings.ShowLegend = settings.Traces.Count > 1;
                 graphSettings.Add(settings.Title, settings);

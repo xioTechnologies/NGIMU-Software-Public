@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using NgimuApi;
@@ -36,6 +37,17 @@ namespace NgimuGui.DialogsAndWindows
             m_Progress.Text = "Uploading Firmware";
             m_Progress.CancelButtonEnabled = true;
             m_Progress.OnCancel += new FormClosingEventHandler(Progress_OnCancel);
+
+            FileInfo fileInfo = new FileInfo(Application.ExecutablePath);
+
+            DirectoryInfo bootloaderDirectory = new DirectoryInfo(Path.Combine(fileInfo.Directory.FullName, "Bootloader"));
+
+            FileInfo hexFiles = bootloaderDirectory.GetFiles("*.hex").FirstOrDefault();
+
+            if (hexFiles != null)
+            {
+                m_FilePath = hexFiles.FullName; 
+            }
         }
 
         private void OnAutoConnectRequest()

@@ -10,25 +10,32 @@ namespace NgimuApi.Bootloader
         /// <param name="hexFile">Full path to a hex file to upload.</param>
         /// <param name="portName">The name of the serial port.</param>
         /// <returns>True if the upload was successful.</returns>
-        public bool UploadFirmware(string hexFile, string portName)
+        public bool UploadFirmware(string hexFile, string portName, int retryLimit = 3)
         {
-            //long totalProgress = 0;
+            do
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo(Helper.ResolvePath("~/Bootloader/ds30LoaderConsole.exe"));
+                processInfo.Arguments = "\"-f=" + hexFile + "\"" +
+                                        " -d=PIC32MX470F512L " +
+                                        "\"-k=" + portName + "\"" +
+                                        " -r=115200 --writef --ht=1000 --polltime=100 --timeout=500 -o";
 
-            ProcessStartInfo processInfo = new ProcessStartInfo(Helper.ResolvePath("~/Bootloader/ds30LoaderConsole.exe"));
-            processInfo.Arguments = "\"-f=" + hexFile + "\"" +
-                                    " -d=PIC32MX470F512L " +
-                                    "\"-k=" + portName + "\"" +
-                                    " -r=115200 --writef --ht=1000 --polltime=100 --timeout=500 -o";
+                processInfo.UseShellExecute = false;
+                processInfo.RedirectStandardOutput = true;
+                processInfo.CreateNoWindow = true;
 
-            processInfo.UseShellExecute = false;
-            processInfo.RedirectStandardOutput = true;
-            processInfo.CreateNoWindow = true;
+                Process process = Process.Start(processInfo);
 
-            Process process = Process.Start(processInfo);
+                process.WaitForExit();
 
-            process.WaitForExit();
+                if (process.ExitCode == 0)
+                {
+                    return true;
+                }
+            }
+            while (retryLimit-- > 0);
 
-            return process.ExitCode == 0;
+            return false; 
         }
     }
 }

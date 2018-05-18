@@ -42,7 +42,7 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
         }
 
         public void UpdateColumns()
-        {
+        {   
             foreach (DataGridViewSettingsValueColumn column in connectionToColumnLookup.Values)
             {
                 sendRatesGrid.Columns.Remove(column);
@@ -79,6 +79,9 @@ namespace NgimuSynchronisedNetworkManager.DialogsAndWindows
             sendRatesGrid.ResumeLayout(true); 
 
             CopyValuesToGrid();
+
+            readButton.Enabled = ActiveConnections.Count > 0;
+            writeButton.Enabled = ActiveConnections.Count > 0;
         }
 
         private void SendRates_Load(object sender, EventArgs e)

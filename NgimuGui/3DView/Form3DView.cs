@@ -140,6 +140,7 @@ namespace NgimuGui
                 Directional = true,
             };
 
+
             lightingArguments = new LightingArguments();
 
             Quaternion = NgimuApi.Maths.Quaternion.Identity;
@@ -457,6 +458,7 @@ namespace NgimuGui
                 float Alpha = 1f;
 
                 OpenTK.Vector3 color = new OpenTK.Vector3(1f, 1f, 1f);
+                OpenTK.Vector3 modelColor = new OpenTK.Vector3(0.6f, 0.6f, 0.6f);
                 Vector2 surface = new Vector2(1f - (Emissivity * Emissivity), Alpha);
 
                 lightingArguments.NormalWorldMatrix = view.NormalWorld;
@@ -472,7 +474,7 @@ namespace NgimuGui
 
                 if (imuModelToolStripMenuItem.Checked == true)
                 {
-                    material.Render(ref model, ref normal, ref color, ref surface, null, lightingArguments, ref light, imuModel.Vertices);
+                    material.Render(ref model, ref normal, ref modelColor, ref surface, null, lightingArguments, ref light, imuModel.Vertices);
                 }
 
                 if (earthToolStripMenuItem.Checked == true)

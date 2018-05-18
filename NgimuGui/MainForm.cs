@@ -301,6 +301,7 @@ namespace NgimuGui
             {
                 m_LogDataDialog.Stop();
                 m_LogDataDialog.ActiveConnections.Clear();
+                m_LogDataDialog.UpdateConnections();
             }
 
             m_Connection.Dispose();
@@ -366,8 +367,9 @@ namespace NgimuGui
             m_Connection.DeviceError.Received += new EventHandler(DeviceError_Received);
 
             if (m_LogDataDialog != null)
-            {
+            {   
                 m_LogDataDialog.ActiveConnections.Add(m_Connection);
+                m_LogDataDialog.UpdateConnections();
             }
 
             if (m_UploadFirmwareDialog != null)
@@ -466,6 +468,7 @@ namespace NgimuGui
                 {
                     m_LogDataDialog.Stop();
                     m_LogDataDialog.ActiveConnections.Clear();
+                    m_LogDataDialog.UpdateConnections();
                 }
 
                 UncheckAllConnections();
@@ -597,7 +600,7 @@ namespace NgimuGui
         void Temperature_Updated(object sender, EventArgs e)
         {
 
-            AddGraphData("Temperature", m_Connection.Temperature.Timestamp.ToDataTime(), m_Connection.Temperature.Processor, m_Connection.Temperature.GyroscopeAndAccelerometer, m_Connection.Temperature.EnvironmentalSensor);
+            AddGraphData("Temperature", m_Connection.Temperature.Timestamp.ToDataTime(), m_Connection.Temperature.GyroscopeAndAccelerometer, m_Connection.Temperature.EnvironmentalSensor);
         }
 
         void AuxiliarySerial_Updated(object sender, EventArgs e)
@@ -1184,7 +1187,13 @@ namespace NgimuGui
             if (m_LogDataMenuItem.Checked == true)
             {
                 m_LogDataDialog = new DataLoggerWindow();
-                m_LogDataDialog.ActiveConnections.Add(m_Connection);
+
+                if (m_Connection != null)
+                {
+                    m_LogDataDialog.ActiveConnections.Add(m_Connection);
+                    m_LogDataDialog.UpdateConnections();
+                }
+
                 m_LogDataDialog.FormClosed += new FormClosedEventHandler(LogDataDialog_FormClosed);
                 //m_LogDataDialog.Show(this);
                 m_LogDataDialog.Show();

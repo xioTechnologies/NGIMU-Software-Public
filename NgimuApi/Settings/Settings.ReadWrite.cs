@@ -248,6 +248,22 @@ namespace NgimuApi
         {
             lock (readWriteLock)
             {
+                bool allValuesUndefined = true;
+
+                foreach (ISettingValue value in AllValues)
+                {
+                    if (value.IsValueUndefined == false)
+                    {
+                        allValuesUndefined = false;
+                        break;
+                    }
+                }
+
+                if (allValuesUndefined == true)
+                {
+                    return;
+                }
+
                 using (OscFileWriter fileWriter = new OscFileWriter(Helper.ResolvePath(filePath), System.IO.FileMode.Create, OscPacketFormat.String))
                 {
                     foreach (ISettingValue value in AllValues)

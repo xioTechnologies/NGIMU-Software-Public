@@ -117,4 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="instructionsLabel.Text" xml:space="preserve">
+    <value>Use this tool to configure the wireless settings on each NGIMU so that all NGIMUs connect to the Wi-Fi router.
+
+Instructions:
+1. Enter the Wi-Fi Network Name and Wi-Fi Key of the router below.
+2. Connect an NGIMU to a USB port.
+3. Click Configure.
+
+Repeat this for each NGIMU until all NGIMUs are configured.</value>
+  </data>
 </root>
