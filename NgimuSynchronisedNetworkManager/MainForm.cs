@@ -781,8 +781,7 @@ namespace NgimuSynchronisedNetworkManager
                 return;
             }
 
-            if (Equals(((UdpConnectionInfo)synchronisationMasterRow.Connection.ConnectionInfo).SendIPAddress, message.Origin.Address) == false ||
-                message.Origin.Port != SynchronisationMasterPort)
+            if (Equals(((UdpConnectionInfo)synchronisationMasterRow.Connection.ConnectionInfo).SendIPAddress, message.Origin.Address) == false)
             {
 
                 StringBuilder sb = new StringBuilder();

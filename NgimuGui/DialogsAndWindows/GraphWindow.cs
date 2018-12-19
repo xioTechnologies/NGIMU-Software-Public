@@ -294,9 +294,14 @@ namespace NgimuGui.DialogsAndWindows
             horizonatalZoomInMenuItem.Enabled = !anyChecked;
 
             graph.TrackHorizontalTraceIndex = (int)modeOrIndex;
-            graph.TrackHorizontalTrace = modeOrIndex >= 0;
+            graph.TrackHorizontalTrace = !paused && modeOrIndex >= 0;
 
             graphSettings.HorizontalAutoscaleIndex = (int)modeOrIndex;
+
+            if (paused && modeOrIndex >= 0)
+            {
+                graph.SnapToHorizontalRange(); 
+            }
         }
 
         private void SetVerticalAutoscaleIndex(TrackingMode modeOrIndex, bool @override)
@@ -405,8 +410,14 @@ namespace NgimuGui.DialogsAndWindows
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             paused = pauseToolStripMenuItem.Checked;
+
+            AxesRange range = graph.AxesRange;
+//            range.XOffset = 0;
+//            graph.AxesRange = range; 
+//            graph.Rolling = false;
             graph.LockXMouse = !paused;
             graph.ZoomFromXMin = graph.LockXMouse;
+            graph.TrackHorizontalTrace = !paused && horizontalAutoscaleMenuItem.Checked; 
             horizontalScrollLeftToolStripMenuItem.Enabled = paused;
             horizontalScrollRightToolStripMenuItem.Enabled = paused;
         }

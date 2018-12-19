@@ -1137,38 +1137,19 @@ namespace NgimuApi
         }
     }
 
-
     public enum Wifi5GHzChannel : int
     {
         [Description("36")]
         Channel36 = 36,
+
+        [Description("40")]
+        Channel40 = 40,
 
         [Description("44")]
         Channel44 = 44,
 
         [Description("48")]
         Channel48 = 48,
-
-        [Description("100")]
-        Channel100 = 100,
-
-        [Description("104")]
-        Channel104 = 104,
-
-        [Description("108")]
-        Channel108 = 108,
-
-        [Description("112")]
-        Channel112 = 112,
-
-        [Description("132")]
-        Channel132 = 132,
-
-        [Description("136")]
-        Channel136 = 136,
-
-        [Description("140")]
-        Channel140 = 140,
 
         [Description("149")]
         Channel149 = 149,

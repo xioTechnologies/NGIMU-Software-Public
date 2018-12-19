@@ -1,6 +1,13 @@
 NGIMU-Software
 ==============
 
+v1.13 (Dec 19 2018)
+-------------------
+* Fix bug that caused constant warnings about Synchronisation master
+* Remove invalid 5 GHz channels from Wi-Fi settings
+* Fix graph centring issue when paused in horizontal auto-scale mode
+* Fix bug affecting conversion of rotation matrix to quaternion
+
 v1.12 (May 18 2018)
 -------------------
 * Redesign wireless settings configuration tool in Synchronised Network Manager

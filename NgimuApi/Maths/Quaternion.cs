@@ -237,7 +237,7 @@ namespace NgimuApi.Maths
                 z = 0.25f * S;
             }
 
-            return new Quaternion(w, x, y, z);
+            return Conjugate(new Quaternion(w, x, y, z));
         }
 
         /// <summary>
