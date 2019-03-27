@@ -1,6 +1,10 @@
 NGIMU-Software
 ==============
 
+v1.14 (Mar 27 2019)
+-------------------
+* Update firmware version
+
 v1.13 (Dec 19 2018)
 -------------------
 * Fix bug that caused constant warnings about Synchronisation master
