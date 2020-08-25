@@ -1,6 +1,14 @@
 NGIMU-Software
 ==============
 
+v1.16 (Aug 25 2020)
+-------------------
+* Update firmware version
+
+v1.15 (Aug 25 2020)
+-------------------
+* Update firmware version
+
 v1.14 (Mar 27 2019)
 -------------------
 * Update firmware version
