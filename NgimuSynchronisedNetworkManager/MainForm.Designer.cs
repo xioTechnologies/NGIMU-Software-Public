@@ -50,9 +50,14 @@
             this.dataLoggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataForwardingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureWirelessSettingsViaUSBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timestampToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerFast = new System.Windows.Forms.Timer(this.components);
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewProgressColumn1 = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
+            this.dataGridViewProgressColumn2 = new NgimuSynchronisedNetworkManager.Controls.DataGridViewProgressColumn();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -73,7 +78,7 @@
             // synchronisationMasterTimeLabel
             // 
             this.synchronisationMasterTimeLabel.Name = "synchronisationMasterTimeLabel";
-            this.synchronisationMasterTimeLabel.Size = new System.Drawing.Size(76, 17);
+            this.synchronisationMasterTimeLabel.Size = new System.Drawing.Size(75, 17);
             this.synchronisationMasterTimeLabel.Tag = "Master Time: {0}";
             this.synchronisationMasterTimeLabel.Text = "Master Time:";
             // 
@@ -105,7 +110,6 @@
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
-            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // Device
             // 
@@ -235,9 +239,10 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dataLoggerToolStripMenuItem,
             this.dataForwardingToolStripMenuItem,
-            this.configureWirelessSettingsViaUSBToolStripMenuItem});
+            this.configureWirelessSettingsViaUSBToolStripMenuItem,
+            this.timestampToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // dataLoggerToolStripMenuItem
@@ -261,6 +266,13 @@
             this.configureWirelessSettingsViaUSBToolStripMenuItem.Text = "Configure Wireless Settings Via USB";
             this.configureWirelessSettingsViaUSBToolStripMenuItem.Click += new System.EventHandler(this.ConfigureWirelessSettingsViaUSBToolStripMenuItem_Click);
             // 
+            // timestampToolStripMenuItem
+            // 
+            this.timestampToolStripMenuItem.Name = "timestampToolStripMenuItem";
+            this.timestampToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
+            this.timestampToolStripMenuItem.Text = "Timestamp";
+            this.timestampToolStripMenuItem.Click += new System.EventHandler(this.timestampToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -282,6 +294,42 @@
             this.timerFast.Enabled = true;
             this.timerFast.Interval = 50;
             this.timerFast.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Received";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 90;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 90;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Sent";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 90;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 90;
+            // 
+            // dataGridViewProgressColumn1
+            // 
+            this.dataGridViewProgressColumn1.HeaderText = "Battery";
+            this.dataGridViewProgressColumn1.MinimumWidth = 120;
+            this.dataGridViewProgressColumn1.Name = "dataGridViewProgressColumn1";
+            this.dataGridViewProgressColumn1.ReadOnly = true;
+            this.dataGridViewProgressColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewProgressColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewProgressColumn1.Width = 120;
+            // 
+            // dataGridViewProgressColumn2
+            // 
+            this.dataGridViewProgressColumn2.HeaderText = "Signal";
+            this.dataGridViewProgressColumn2.MinimumWidth = 120;
+            this.dataGridViewProgressColumn2.Name = "dataGridViewProgressColumn2";
+            this.dataGridViewProgressColumn2.ReadOnly = true;
+            this.dataGridViewProgressColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewProgressColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewProgressColumn2.Width = 120;
             // 
             // MainForm
             // 
@@ -333,6 +381,11 @@
         private Controls.DataGridViewProgressColumn BatteryPercentage;
         private Controls.DataGridViewProgressColumn Signal;
         private System.Windows.Forms.DataGridViewButtonColumn Identify;
+        private System.Windows.Forms.ToolStripMenuItem timestampToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private Controls.DataGridViewProgressColumn dataGridViewProgressColumn1;
+        private Controls.DataGridViewProgressColumn dataGridViewProgressColumn2;
     }
 }
 

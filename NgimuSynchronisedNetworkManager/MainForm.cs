@@ -44,6 +44,7 @@ namespace NgimuSynchronisedNetworkManager
 
         private string title;
 
+        private TimestampWindow timestamp;
         private DataLoggerWindow dataLogger;
         private SendRatesWindow sendRates;
 
@@ -196,7 +197,7 @@ namespace NgimuSynchronisedNetworkManager
 
                         stringBuilder.AppendLine("Error message received:");
                         stringBuilder.AppendLine();
-                        stringBuilder.AppendLine(connectionRow.Connection.DeviceError.Message); 
+                        stringBuilder.AppendLine(connectionRow.Connection.DeviceError.Message);
 
                         connectionRow.SetInformation(stringBuilder.ToString());
                     };
@@ -244,7 +245,7 @@ namespace NgimuSynchronisedNetworkManager
                 return;
             }
 
-            sendCommandToolStripMenuItem.Enabled = true; 
+            sendCommandToolStripMenuItem.Enabled = true;
 
             SetTitle();
 
@@ -293,7 +294,7 @@ namespace NgimuSynchronisedNetworkManager
 
                 if (this.TryGetIncompatableFirmwareWarningMessage(settings, out string message) == true)
                 {
-                    connectionRow.SetWarning(message); 
+                    connectionRow.SetWarning(message);
                 }
 
                 if (settings.SynchronisationMasterEnabled.Value == true)
@@ -848,8 +849,8 @@ namespace NgimuSynchronisedNetworkManager
                 this.SendCommand(
                     (from connectionRow in connectionsRows
                      where connectionRow != synchronisationMasterRow
-                     select connectionRow).ToList(), 
-                    true, 
+                     select connectionRow).ToList(),
+                    true,
                     Command.Time, new OscTimeTag(0));
             }
             catch (Exception ex)
@@ -898,14 +899,14 @@ namespace NgimuSynchronisedNetworkManager
                 return;
             }
 
-            switch ((ColumnIndex) e.ColumnIndex)
+            switch ((ColumnIndex)e.ColumnIndex)
             {
                 case ColumnIndex.Device:
                     Point mousePoint = dataGridView1.PointToClient(Control.MousePosition);
 
                     if ((dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex] as TextAndIconCell).TryClick(mousePoint, out IconInfo iconInfo) == false)
                     {
-                        return; 
+                        return;
                     }
 
                     iconInfo.Visible = false;
@@ -915,7 +916,7 @@ namespace NgimuSynchronisedNetworkManager
                         case MessageBoxIcon.None:
                             break;
                         case MessageBoxIcon.Warning:
-                            this.ShowWarning(iconInfo.Message, MessageBoxButtons.OK); 
+                            this.ShowWarning(iconInfo.Message, MessageBoxButtons.OK);
                             break;
                         case MessageBoxIcon.Error:
                             this.ShowError(iconInfo.Message, MessageBoxButtons.OK);
@@ -1031,7 +1032,7 @@ namespace NgimuSynchronisedNetworkManager
 
                 if (connection.CheckForIconRedraw())
                 {
-                    dataGridView1.InvalidateCell(connection.Row.Cells[0]); 
+                    dataGridView1.InvalidateCell(connection.Row.Cells[0]);
                 }
             }
 
@@ -1063,6 +1064,32 @@ namespace NgimuSynchronisedNetworkManager
         {
             dataLogger.Dispose();
             dataLogger = null;
+        }
+
+        private void timestampToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (timestamp != null)
+            {
+                timestamp.Show();
+
+                return;
+            }
+
+            timestamp = new TimestampWindow();
+            timestamp.FormClosed += Timestamp_FormClosed;
+
+            foreach (ConnectionRow row in connectionsRows)
+            {
+                timestamp?.Connections.Add(row.Connection);
+            }
+
+            timestamp.Show();
+        }
+
+        private void Timestamp_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            timestamp.Dispose();
+            timestamp = null;
         }
 
         private void sendRatesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1105,9 +1132,9 @@ namespace NgimuSynchronisedNetworkManager
             {
                 if (dialog.ShowDialog(this) != DialogResult.OK)
                 {
-                    return; 
+                    return;
                 }
-            }            
+            }
         }
 
         private void dataForwardingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1129,7 +1156,7 @@ namespace NgimuSynchronisedNetworkManager
             dataForwardingDialog = null;
         }
 
-        private string deviceNameEditOriginalValue; 
+        private string deviceNameEditOriginalValue;
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -1150,16 +1177,16 @@ namespace NgimuSynchronisedNetworkManager
 
             ConnectionRow connectionRow = row.Tag as ConnectionRow;
 
-            string newValue = row.Cells[(int) ColumnIndex.Device].Value.ToString();
+            string newValue = row.Cells[(int)ColumnIndex.Device].Value.ToString();
 
             if (newValue.Equals(deviceNameEditOriginalValue) == true)
             {
-                return; 
+                return;
             }
-            
+
             connectionRow.Connection.Settings.DeviceName.Value = newValue;
 
-            this.WriteSettings(connectionsRows, true,  new[] {  connectionRow.Connection.Settings.DeviceName });
+            this.WriteSettings(connectionsRows, true, new[] { connectionRow.Connection.Settings.DeviceName });
         }
 
         private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -1172,9 +1199,9 @@ namespace NgimuSynchronisedNetworkManager
             switch ((ColumnIndex)e.ColumnIndex)
             {
                 case ColumnIndex.Device:
-                    break;                
+                    break;
                 default:
-                    e.Cancel = true; 
+                    e.Cancel = true;
                     return;
             }
 
@@ -1182,14 +1209,9 @@ namespace NgimuSynchronisedNetworkManager
 
             ConnectionRow connectionRow = row.Tag as ConnectionRow;
 
-            deviceNameEditOriginalValue = row.Cells[(int) ColumnIndex.Device].Value.ToString();
-            
-            row.Cells[(int) ColumnIndex.Device].Value = connectionRow.Connection.Settings.DeviceInformation.DeviceName.Value; 
-        }
+            deviceNameEditOriginalValue = row.Cells[(int)ColumnIndex.Device].Value.ToString();
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-
+            row.Cells[(int)ColumnIndex.Device].Value = connectionRow.Connection.Settings.DeviceInformation.DeviceName.Value;
         }
     }
 

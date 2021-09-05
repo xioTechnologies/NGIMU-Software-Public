@@ -70,6 +70,12 @@
     <Compile Include="Controls\ConnectionGuiExtentions.cs" />
     <Compile Include="Controls\DataGridViewProgressColumn.cs" />
     <Compile Include="Controls\DataGridViewSettingsValueColumn.cs" />
+    <Compile Include="DialogsAndWindows\TimestampWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\TimestampWindow.Designer.cs">
+      <DependentUpon>TimestampWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="DialogsAndWindows\WifiSettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DialogsAndWindows\TimestampWindow.resx">
+      <DependentUpon>TimestampWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DialogsAndWindows\WifiSettingsDialog.resx">
       <DependentUpon>WifiSettingsDialog.cs</DependentUpon>
     </EmbeddedResource>
